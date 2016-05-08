@@ -1,0 +1,18 @@
+remove mod1 = Alt_L
+remove mod1 = Alt_R
+remove Control = Control_L
+remove Control = Control_R
+keysym Control_L = Alt_L
+keysym Control_R = Super_R
+keysym Alt_R = Control_R
+keysym Alt_L = Control_L
+add mod1 = Alt_L
+add mod1 = Alt_R
+add Control = Control_L
+add Control = Control_R
+
+! Map Caps Lock -> Escape
+remove Lock = Caps_Lock
+! ! keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock

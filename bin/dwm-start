@@ -1,0 +1,12 @@
+#!/bin/sh
+#relaunch DWM if the binary changes, otherwise bail
+python3 /usr/local/bin/clipster -d -f $HOME/clipster.ini &
+compton --inactive-dim=0.2 &
+nm-applet &
+
+while true; do
+  dwm &
+  PID=$!
+  inotifywait -qqe close_write $(which dwm)
+  kill $PID
+done

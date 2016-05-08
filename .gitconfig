@@ -1,0 +1,8 @@
+[user]
+	email = joetoth@gmail.com
+	name = Joe Toth
+[status]
+  relativePaths = true
+[pager]
+	diff = diff-so-fancy | less --tabs=4 -RFX
+	show = diff-so-fancy | less --tabs=4 -RFX

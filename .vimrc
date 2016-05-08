@@ -4,30 +4,20 @@
 "    ..ActivateAddons(["github:user/repo", .. => github://user/repo
 " Also see section "2.2. names of addons and addon sources
 
-"    \'github:Shougo/neosnippet.vim',
-"    \'github:Shougo/neosnippet-snippets',
-"    \'github:Shougo/neomru.vim',
-"    \'unite',
-"    \'unite-outline',
-"    \'github:osyo-manga/unite-quickfix',
-"    \'github:dart-lang/dart-vim-plugin',
-"    \'github:parkr/vim-jekyll',
-"    \'github:fatih/vim-go',
-"    \'GoldenView.Vim',
-"    \'github:klen/python-mode',
-"    \'github:SirVer/ultisnips',
-"    \'github:honza/vim-snippets',
+" tpope/vim-tbone
 let s:plugins = [
     \'github:davidhalter/jedi-vim',
     \'github:Valloric/YouCompleteMe',
     \'github:Chiel92/vim-autoformat',
     \'github:junegunn/fzf',
     \'github:junegunn/fzf.vim',
+    \'github:junegunn/gv.vim',
     \'github:chriskempson/base16-vim',
     \'github:christoomey/vim-tmux-navigator', 
     \'github:majutsushi/tagbar', 
     \'github:scrooloose/syntastic',
     \'github:tpope/vim-unimpaired',
+    \'github:wellle/tmux-complete.vim',
     \'The_NERD_tree',
     \'The_NERD_Commenter',
     \'fugitive',
@@ -668,5 +658,4 @@ map <leader>sg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>sf :split <CR>:YcmCompleter GoToDefinition<CR>
 map <leader>sd :split <CR>:YcmCompleter GoToDefinition<CR>
 
-let g:ycm_filetype_specific_completion_to_disable = { 'python' : 1 }
-let g:ycm_filetype_blacklist = { 'python' : 1 }
+let g:tmuxcomplete#trigger = 'omnifunc'

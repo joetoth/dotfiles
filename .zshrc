@@ -3,7 +3,8 @@ source $HOME/.zplug/init.zsh
 
 zplug "djui/alias-tips"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
-zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh"
+zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
+zplug "junegunn/fzf", as:command, use:"bin/*"
 zplug "hchbaw/zce.zsh"
 bindkey "^Xz" zce
 
@@ -147,7 +148,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PYTHONIOENCODING="utf-8"
-
+ 
 # ALIASES
 # ------------------------------------------------------------------------------
 alias cpg='rsync --progress -a'
@@ -170,11 +171,11 @@ alias gmail='google-chrome --app="https://mail.google.com/mail/u/0/#inbox"'
 alias what_port_app='sudo netstat -nlp | grep'
 
 alias pomo='(sleep 1500 && notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK")&'
-alias learnd='python $HOME/bin/learn.py --daemon=true'
-alias learn='python $HOME/bin/learn.py --concept '
-alias learn-printall='python $HOME/bin/learn.py --printall=true'
-alias rekall='python $HOME/bin/learn.py --rekall=true --concept'
-alias learn-remove='python $HOME/bin/learn.py --remove=true --concept'
+alias learnd='python $HOME/bin/python/learn.py --daemon=true'
+alias learn-concept='python $HOME/bin/python/learn.py --concept '
+alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
+alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
+alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
 
 alias ve='vim ~/.vimrc'
 alias ze='$EDITOR $HOME/.zshrc'
@@ -206,21 +207,10 @@ source_if_exists() {
 }
 
 # PATH for the Google Cloud SDK and completion
-source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
-source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
+#source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
+#source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
 source_if_exists $HOME/wdf/work.zsh
-source_if_exists $HOME/.fzf.zsh
-
-if [ -n "$TMUX" ]; then                                                                               
-  function refresh {                                                                                
-    export $(tmux show-environment | grep "^SSH_AUTH_SOCK")                                       
-    export $(tmux show-environment | grep "^DISPLAY")                                             
-  }                                                                                                 
-else                                                                                                  
-  function refresh { }                                                                              
-fi
-
 
 # GIT
 #

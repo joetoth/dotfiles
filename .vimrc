@@ -6,28 +6,31 @@
 
 " tpope/vim-tbone
 let s:plugins = [
-    \'github:davidhalter/jedi-vim',
-    \'github:Valloric/YouCompleteMe',
-    \'github:Chiel92/vim-autoformat',
+    \'github:sjl/gundo.vim',
     \'github:junegunn/fzf',
     \'github:junegunn/fzf.vim',
-    \'github:junegunn/gv.vim',
     \'github:chriskempson/base16-vim',
     \'github:christoomey/vim-tmux-navigator', 
     \'github:majutsushi/tagbar', 
     \'github:scrooloose/syntastic',
     \'github:tpope/vim-unimpaired',
     \'github:wellle/tmux-complete.vim',
+    \'github:SirVer/ultisnips',
+    \'github:honza/vim-snippets',
+    \'github:easymotion/vim-easymotion',
     \'The_NERD_tree',
     \'The_NERD_Commenter',
     \'fugitive',
     \'vimux', 
     \'github:epeli/slimux',
     \'repeat',
-    \'surround',
-    \'taglist-plus',
-    \'vimshell',
-    \'vimproc']
+    \'surround']
+
+if !filereadable(glob("~/wdf/work.vim")) 
+  call add(s:plugins, 'github:Valloric/YouCompleteMe')
+  call add(s:plugins, 'github:Chiel92/vim-autoformat')
+endif
+
 let s:plugin_autoinstall = 1
 
 " load vam
@@ -88,16 +91,13 @@ call SetupVAM()
 "
 
 " <Leader> & <LocalLeader> mapping {{{
-
 let mapleader=','
-let maplocalleader= ' '
 
+set nocompatible
 " Load work vim
 if filereadable(glob("~/wdf/work.vim")) 
     source ~/wdf/work.vim
 endif
-
-
 " }}}
 
 " Basic options {{{
@@ -156,13 +156,13 @@ set ignorecase                  " ignore case letters
 
 " text options
 " ------------
-set expandtab
 set shiftwidth=2
 set tabstop=2
 set softtabstop=2
 set autoindent
-set smarttab
-set smartindent
+"set expandtab
+"set smarttab
+"set smartindent
 set textwidth=80
 set colorcolumn=81
 set encoding=utf-8
@@ -343,11 +343,6 @@ function! QuickfixToggle()
     endif
 endfunction
 
-" Close window
-nnoremap <silent> <c-w> :q<CR>
-
-"nmap <Leader>nt :NERDTreeToggle<cr>
-nmap <Leader>nt :NERDTreeFind<cr>
 
 " Golang
 
@@ -376,30 +371,6 @@ augroup myvimrc
   au BufWritePost .vimrc,.vimrc.after,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC
 augroup END
 
-" Easy Motion
-" These keys are easier to type than the default set
-
-" i and l are too easy to mistake for each other slowing
-" down recognition. The home keys and the immediate keys
-" accessible by middle fingers are available 
-"let g:EasyMotion_keys='asdfjkoweriop'
-" Require tpope/vim-repeat to enable dot repeat support
-" Jump to anywhere with only `s{char}{target}`
-" `s<CR>` repeat last find motion.
-nmap s <Plug>(easymotion-s)
-" Bidirectional & within line 't' motion
-" nmap t <Plug>(easymotion-bd-tl)
-" Use uppercase target labels and type as a lower case
-let g:EasyMotion_use_upper = 1
- " type `l` and match `l`&`L`
-let g:EasyMotion_smartcase = 1
-" Smartsign (type `3` and match `3`&`#`)
-let g:EasyMotion_use_smartsign_us = 1
-
-" Make nerdtree look nice
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let g:NERDTreeWinSize = 30
 
 " Golden View
 "call vam#ActivateAddons(['GoldenView.Vim'], {'auto_install' : 1})
@@ -468,25 +439,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
-
-"
-"" Don't autofold code
-"let g:pymode_f
-
 "python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
 
 set foldenable              " can slow Vim down with some plugins
 set foldlevelstart=99       " can slow Vim down with some plugins
@@ -499,65 +460,44 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
+"if has('conceal')
+"  set conceallevel=2 concealcursor=i
+"endif
 
 
 " set autochdir
 "
-" ECLIM
-"let g:EclimCompletionMethod = 'omnifunc'
-""------------------ Eclim shortcut mappings:
-""see Eclim cheatsheet /usr/share/vim/vimfiles/eclim/doc/vim/cheatsheet.txt
-"map <leader>pp :ProjectProblems<CR>    
-"map <leader>pp :ProjectProblems<CR>    
+
+"function! Auto_complete_string()                               
+"    if pumvisible()                                            
+"        return "\<C-n>"                                        
+"    else                                                       
+"        return "\<C-x>\<C-o>\<C-r>=Auto_complete_opened()\<CR>"
+"    end                                                        
+"endfunction                                                    
 "
-"autocmd FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
+"function! Auto_complete_opened()                               
+"    if pumvisible()                                            
+"        return "\<c-n>\<c-p>\<c-n>"                            
+"    else                                                       
+"        return "\<bs>\<C-n>"                                   
+"    end                                                        
+"endfunction                                                    
 "
-""au filetype java map <cr> :JavaSearchContext<cr>
-"map <leader>jd :JavaDocSearch -x all<cr>
-"map <leader>jj :JavaImport<cr>
-"map <leader>jo :JavaImport<cr>
-"map <leader>jf :JavaFormat<CR>
-"map <leader>jr :JavaRename 
-"map <leader>jm :JavaMove
-"map <leader>js :JavaSearch<CR>
-"map <leader>jc :JavaSearchContext<CR>  
-"map <leader>jh :JavaHierarchy<CR>
-"map <leader>ji :JavaImport<CR>
-"map <leader>je :JavaCorrect<CR>
+"inoremap <expr> <Nul> Auto_complete_string()
 
-function! Auto_complete_string()                               
-    if pumvisible()                                            
-        return "\<C-n>"                                        
-    else                                                       
-        return "\<C-x>\<C-o>\<C-r>=Auto_complete_opened()\<CR>"
-    end                                                        
-endfunction                                                    
+"au Filetype java set makeprg=:ProjectBuild
 
-function! Auto_complete_opened()                               
-    if pumvisible()                                            
-        return "\<c-n>\<c-p>\<c-n>"                            
-    else                                                       
-        return "\<bs>\<C-n>"                                   
-    end                                                        
-endfunction                                                    
-
-inoremap <expr> <Nul> Auto_complete_string()
-
-au Filetype java set makeprg=:ProjectBuild
-
-vnoremap <silent> s :call Pick()<CR><CR>
-
-function! Pick()
-  let query = s:get_visual_selection()
-  call DebugPrintMsg('query='.query)
-  let url = '"https://www.google.com/search?q=' . query. '"'
-  call DebugPrintMsg(url)
-  call Open(url)
-  redraw!
-endfunction
+"vnoremap <silent> s :call Pick()<CR><CR>
+"
+"function! Pick()
+"  let query = s:get_visual_selection()
+"  call DebugPrintMsg('query='.query)
+"  let url = '"https://www.google.com/search?q=' . query. '"'
+"  call DebugPrintMsg(url)
+"  call Open(url)
+"  redraw!
+"endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 "s:get_visual_selection()                                                    {{{
@@ -605,24 +545,38 @@ function! DebugEnable(enable)
     endif
 endfunction
 
+function! ToggleVerbose()
+    if !&verbose
+        set verbosefile=~/vim.log
+        set verbose=15
+    else
+        set verbose=0
+        set verbosefile=
+    endif
+endfunction
 
 " UltiSnips
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsExpandTrigger = "<nop>"
 let g:ulti_expand_or_jump_res = 0
-function! ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
+"function! ExpandSnippetOrCarriageReturn()
+"    let snippet = UltiSnips#ExpandSnippetOrJump()
+"    if g:ulti_expand_or_jump_res > 0
+"        return snippet
+"    else
+"        return "\<CR>"
+"    endif
+"endfunction
+"inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
-" Advanced customization using autoload functions
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+" Example for completion using FZF
+"inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '13%'})
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " File
 nnoremap <leader>ff :Files<cr>
@@ -630,9 +584,9 @@ nnoremap <leader>fa :Ag<cr>
 nnoremap <leader>fs :w!<cr>
 
 " Buffer
-map <leader>bb :Buffers<cr>
+map <leader>B :Buffers<cr>
 map <silent> <c-f> :BLines<cr>
-map <leader>bf :Autoformat<cr>
+map <leader>F :Autoformat<cr>
 "nnoremap <silent> <c-F> :Lines!<cr>
 "nnoremap <silent> <c-F> :Lines!<cr>
 
@@ -649,13 +603,40 @@ nnoremap <leader>wv :vsplit<cr>
 nnoremap <leader><leader>v :vsplit<cr>
 
 " YCM / Semantic
-"let g:ycm_python_binary_path = '/usr/bin/python3'
+"let g:ycm_python_binary_path = '/usr/local/google/home/joetoth/projects/abe/google3/gpython'
 "let g:ycm_autoclose_preview_window_after_completion=1
-let g:pyclewn_python = '/usr/bin/python'
+"let g:pyclewn_python = '/usr/bin/python'
 
-map <leader>sg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>d :YcmCompleter GetDoc<CR>
+
 "map <leader>sd :YcmCompleter GoToDeclaration<CR>
 map <leader>sf :split <CR>:YcmCompleter GoToDefinition<CR>
 map <leader>sd :split <CR>:YcmCompleter GoToDefinition<CR>
+
+"let g:ycm_filetype_specific_completion_to_disable = { 'python' : 1 }
+"let g:ycm_filetype_blacklist = { 'python' : 1 }
+
+" Close window
+nnoremap <silent> <c-w> :q<CR>
+
+" NERDtree
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinSize = 30
+
+nmap <Leader>nt :NERDTreeToggle<cr>
+nmap <Leader>nn :NERDTreeFind<cr>
+
+" NERDCommenter
+"nmap z<Plug>NERDCommenterToggle
+nmap <leader>cc <plug>NERDCommenterInvert
+
+" Easy Motion
+" i and l are too easy to mistake for each other slowing
+" down recognition. The home keys and the immediate keys
+" accessible by middle fingers are available 
+" let g:EasyMotion_keys='asdfjkoweriop'
+nmap s <Plug>(easymotion-overwin-f)
 
 let g:tmuxcomplete#trigger = 'omnifunc'

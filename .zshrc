@@ -1,10 +1,13 @@
 # Set up the prompt
 source $HOME/.zplug/init.zsh
 
+zplugs=() # Reset zplugs
+
 zplug "djui/alias-tips"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
 zplug "junegunn/fzf", as:command, use:"bin/*"
+zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
 zplug "hchbaw/zce.zsh"
 bindkey "^Xz" zce
 
@@ -25,8 +28,9 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load 
+zplug load --verbose
 
+alias zr='source $HOME/.zshrc'
 
 # Load
 #
@@ -52,16 +56,12 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt share_history
 setopt ignoreeof
+setopt inc_append_history
 
 # HISTORY
 HISTSIZE=1000000
 HISTFILESIZE=
 HISTFILE=~/.eternal_history
-
-#setopt INC_APPEND_HISTORY
-#setopt HIST_REDUCE_BLANKS
-#setopt SH_WORD_SPLIT
-
 
 
 # VIM
@@ -194,11 +194,10 @@ alias gz='tar -zcvf'
 
 alias touchpadoff='synclient Touchpadoff=1'
 alias touchpadon='synclient Touchpadoff=0'
-alias tbc='rm -rf /tmp/tfwork/*'
 
 # create __init__.py files in every directory, allowing Intellj to treat each directory as a python module and now all imports will work.
 alias python_add_init="find . -type d -exec touch '{}/__init__.py' \;"
-alias tbc='rm -rf /tmp/tb/*'
+alias tbc='yes | rm -rf /tmp/tb/*'
 alias tb='tensorboard --logdir=/tmp/tfwork'
 
 # FUNCTIONS
@@ -572,24 +571,40 @@ fzf-clipster-widget() {
 zle     -N   fzf-clipster-widget
 bindkey '^B' fzf-clipster-widget
 
-__termjt() {
-  f="/tmp/termjt"
-  echo "" >! $f
-  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
-  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
-  ##termjt -outputFilename $f
-  value=$(cat $f) 
-  echo "$value"
+# CTRL-S - Complete word on screen
+__tmuxcomplete() {
+  local cmd="tmuxcomplete"
+  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+    printf '%q ' "$item"
+  done
+  echo
 }
 
-termjt-screen-widget() {
-  LBUFFER="${LBUFFER}$(__termjt)"
+fzf-tmuxcomplete-widget() {
+  LBUFFER="${LBUFFER}$(__tmuxcomplete)"
   zle redisplay
 }
+zle     -N   fzf-tmuxcomplete-widget
+bindkey '^S' fzf-tmuxcomplete-widget
 
-zle     -N   termjt-screen-widget
-bindkey '^S' 'termjt-screen-widget'
-#bindkey -s '^S' 'tmux-copy\n'
+#__termjt() {
+#  f="/tmp/termjt"
+#  echo "" >! $f
+#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
+#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
+#  ##termjt -outputFilename $f
+#  value=$(cat $f) 
+#  echo "$value"
+#}
+#
+#termjt-screen-widget() {
+#  LBUFFER="${LBUFFER}$(__termjt)"
+#  zle redisplay
+#}
+#
+#zle     -N   termjt-screen-widget
+#bindkey '^S' 'termjt-screen-widget'
+##bindkey -s '^S' 'tmux-copy\n'
 
 
 for script in $HOME/bin/python/*; do

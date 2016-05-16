@@ -159,6 +159,7 @@ alias psg="ps aux | grep "
 alias alsg="alias | grep "
 alias cdb='cd -'
 alias ll='ls -alGh --color=auto'
+alias lt='ls -alGhrt --color=auto'
 alias ls='ls -Gh --color=auto'
 alias lss='ls -SlaGh --color=auto'
 alias topdirs='du -m . | sort -nr | head -n 100'

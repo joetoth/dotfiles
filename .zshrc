@@ -158,6 +158,7 @@ alias psg="ps aux | grep "
 alias alsg="alias | grep "
 alias cdb='cd -'
 alias ll='ls -alGh --color=auto'
+alias lt='ls -alGhrt --color=auto'
 alias ls='ls -Gh --color=auto'
 alias lss='ls -SlaGh --color=auto'
 alias topdirs='du -m . | sort -nr | head -n 100'
@@ -187,6 +188,7 @@ alias l='less'
 alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
+alias pyserve='python -m SimpleHTTPServer 8000'
 
 # Zippin
 alias gz='tar -zcvf'

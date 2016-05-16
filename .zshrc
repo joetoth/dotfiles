@@ -3,6 +3,7 @@ source $HOME/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
+zplug "mrichar1/clipster", as:command, use:"clipster"
 zplug "djui/alias-tips"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
@@ -30,8 +31,6 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
-alias zr='source $HOME/.zshrc'
-
 # Load
 #
 #------------------------------------------------------------------------------
@@ -44,28 +43,29 @@ zmodload -i zsh/parameter
 # Zsh options
 #
 #------------------------------------------------------------------------------
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushdminus
-setopt dotglob
-
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt share_history
-setopt ignoreeof
-setopt inc_append_history
-
-# HISTORY
-HISTSIZE=1000000
-HISTFILESIZE=
+#
+HISTSIZE=10000000
+SAVEHIST=10000000
 HISTFILE=~/.eternal_history
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 
 # VIM
 bindkey -v
+bindkey -M vicmd v edit-command-line
+autoload edit-command-line; zle -N edit-command-line
 
 KEYTIMEOUT=10
 
@@ -109,7 +109,6 @@ zstyle ':completion:*:*:*:*:*' menu select
 # Debian / Ubuntu sets these to vi-up-line-or-history etc,
 # which places the cursor at the start of line, not end of line.
 # See: http://www.zsh.org/mla/users/2009/msg00878.html
-bindkey -v
 bindkey -M viins "\e[A" up-line-or-history
 bindkey -M viins "\e[B" down-line-or-history
 bindkey -M viins "\eOA" up-line-or-history
@@ -197,8 +196,10 @@ alias touchpadon='synclient Touchpadoff=0'
 
 # create __init__.py files in every directory, allowing Intellj to treat each directory as a python module and now all imports will work.
 alias python_add_init="find . -type d -exec touch '{}/__init__.py' \;"
-alias tbc='yes | rm -rf /tmp/tb/*'
-alias tb='tensorboard --logdir=/tmp/tfwork'
+alias tbc='yes | rm -rf /tmp/tf/*'
+alias tb='tensorboard --logdir=/tmp/tf'
+
+alias clipster-daemon='clipster -f ~/clipster.ini -d'
 
 # FUNCTIONS
 source_if_exists() {
@@ -587,6 +588,22 @@ fzf-tmuxcomplete-widget() {
 zle     -N   fzf-tmuxcomplete-widget
 bindkey '^S' fzf-tmuxcomplete-widget
 
+# CTRL-P - Copy word on screen to clipboard
+__tmuxcopy() {
+  local cmd="tmuxcomplete"
+  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+    print "$item" | xclip -sel clip -i 
+  done
+  echo
+}
+
+fzf-tmuxcopy-widget() {
+  LBUFFER="${LBUFFER}$(__tmuxcopy)"
+  zle redisplay
+}
+zle     -N   fzf-tmuxcopy-widget
+bindkey '^P' fzf-tmuxcopy-widget
+
 #__termjt() {
 #  f="/tmp/termjt"
 #  echo "" >! $f
@@ -638,7 +655,8 @@ BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 #ulimit -Sv 500000     # Set ~500 mb limit
 #
 
-RPROMPT=""
+#RPROMPT=""
+#PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
 
 autoload compinit
 

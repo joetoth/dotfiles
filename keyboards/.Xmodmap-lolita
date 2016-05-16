@@ -1,18 +1,22 @@
-remove mod1 = Alt_L
-remove mod1 = Alt_R
-remove Control = Control_L
-remove Control = Control_R
+clear Mod1
+clear Mod4
+clear Control
+clear Lock
+
 keysym Control_L = Super_L
 keysym Alt_R = Control_R
 keysym Alt_L = Control_L
+keysym Super_L = Alt_L
+keysym Super_R = Alt_R
 keysym Menu = Super_R
-add mod1 = Alt_L
-add mod1 = Alt_R
+keysym Caps_Lock = Escape
+
 add Control = Control_L
 add Control = Control_R
+add Mod1  = Alt_L
+add Mod1 = Alt_R
+add Mod4 = Super_L
+add Mod4 = Super_R
 
-! Map Caps Lock -> Escape
-remove Lock = Caps_Lock
-! ! keysym Escape = Caps_Lock
-keysym Caps_Lock = Escape
-add Lock = Caps_Lock
+
+

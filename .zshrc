@@ -198,10 +198,11 @@ alias touchpadon='synclient Touchpadoff=0'
 
 # create __init__.py files in every directory, allowing Intellj to treat each directory as a python module and now all imports will work.
 alias python_add_init="find . -type d -exec touch '{}/__init__.py' \;"
-alias tbc='yes | rm -rf /tmp/tf/*'
+alias tfc='rm -rf /tmp/tf'
 alias tb='tensorboard --logdir=/tmp/tf'
 
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
+alias lock='xscreensaver-command -lock'
 
 # FUNCTIONS
 source_if_exists() {
@@ -273,11 +274,14 @@ d() {
 }
 
 alias gac='git commit -a -m'
+alias gco='git checkout'
 alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
 alias gn='git diff --name-only --relative | uniq'
 alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
 alias grc='git add -A && git rebase --continue'
 alias gaa='git add -A'
+alias gs='git stash'
+alias gsp='git stash pop'
 
 
 function lvar() {
@@ -379,6 +383,13 @@ qq() {
 
 tmux-append-paste() {
   tmux send-keys "y" && tmux send-keys "Y"
+}
+
+dev() {
+  while inotifywait -e modify -e create -e delete $1; do
+		echo "$2"
+		eval "$2"
+  done
 }
 
 # fbr - checkout git branch

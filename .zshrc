@@ -258,10 +258,6 @@ gc() {
 }
 
 D() {
-  git diff --staged --color | diff-so-fancy | less -R
-}
-
-d() {
   if test "$#" = 0; then
     (
       git diff --color | diff-so-fancy
@@ -270,6 +266,10 @@ d() {
   else
     git diff "$@"
   fi
+}
+
+d() {
+  git diff 
 }
 
 alias gac='git commit -a -m'

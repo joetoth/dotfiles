@@ -9,6 +9,7 @@ zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd6
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
 zplug "junegunn/fzf", as:command, use:"bin/*"
 zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
+zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
 bindkey "^Xz" zce
 

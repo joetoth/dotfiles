@@ -392,6 +392,13 @@ dev() {
   done
 }
 
+record_changes() {
+	while true; do 
+    filename=$(inotifywait -e close_write -r -q --format %w%f $1)
+		echo "$filename"
+  done
+}
+
 # fbr - checkout git branch
 fbr() {
   local branches branch
@@ -585,7 +592,7 @@ fzf-clipster-widget() {
 zle     -N   fzf-clipster-widget
 bindkey '^B' fzf-clipster-widget
 
-# CTRL-S - Complete word on screen
+# CTRL-E - Complete word on screen
 __tmuxcomplete() {
   local cmd="tmuxcomplete"
   eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
@@ -599,7 +606,7 @@ fzf-tmuxcomplete-widget() {
   zle redisplay
 }
 zle     -N   fzf-tmuxcomplete-widget
-bindkey '^S' fzf-tmuxcomplete-widget
+bindkey '^E' fzf-tmuxcomplete-widget
 
 # CTRL-P - Copy word on screen to clipboard
 __tmuxcopy() {
@@ -617,24 +624,24 @@ fzf-tmuxcopy-widget() {
 zle     -N   fzf-tmuxcopy-widget
 bindkey '^P' fzf-tmuxcopy-widget
 
-#__termjt() {
-#  f="/tmp/termjt"
-#  echo "" >! $f
-#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
-#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
-#  ##termjt -outputFilename $f
-#  value=$(cat $f) 
-#  echo "$value"
-#}
-#
-#termjt-screen-widget() {
-#  LBUFFER="${LBUFFER}$(__termjt)"
-#  zle redisplay
-#}
-#
-#zle     -N   termjt-screen-widget
-#bindkey '^S' 'termjt-screen-widget'
-##bindkey -s '^S' 'tmux-copy\n'
+__termjt() {
+  f="/tmp/termjt"
+  echo "" >! $f
+  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
+  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
+  ##termjt -outputFilename $f
+  value=$(cat $f) 
+  echo "$value"
+}
+
+termjt-screen-widget() {
+  LBUFFER="${LBUFFER}$(__termjt)"
+  zle redisplay
+}
+
+zle     -N   termjt-screen-widget
+bindkey '^S' 'termjt-screen-widget'
+#bindkey -s '^S' 'tmux-copy\n'
 
 
 for script in $HOME/bin/python/*; do

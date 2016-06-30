@@ -78,7 +78,7 @@ func main() {
 
 	r := regexp.MustCompile(*rf)
 	indexes := r.FindAllStringIndex(string(runes), -1)
-	ascii := 'A'
+	ascii := 'a'
 	for index := range indexes {
 		sc := section{begin: indexes[index][0], end: indexes[index][1]}
 		s.matches[sc.begin] = &sc

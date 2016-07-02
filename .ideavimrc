@@ -1,0 +1,53 @@
+set visualbell
+set noerrorbells
+set clipboard=unnamed
+
+map ; :
+map ,vim :vsp ~/.ideavimrc<cr>
+map ,isc :action IdeScriptingConsole<cr>
+map ,vip :vsp ~/present.html<cr>
+map <Space>r :source ~/.ideavimrc<cr>
+map <Space>n gt
+map <Space>p gT
+
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+# copy current file path from google3
+
+map ,g :action GotoDeclaration<CR>
+map ,r :action Refactorings.QuickListPopupAction<CR>
+map ,p :action ParameterInfo<CR>
+
+#map ,, :action EasyMotion<CR>
+#map ,, :action AceJumpAction<CR>
+#map ,bp :action ToggleLineBreakpoint<CR>
+#map ,p :action ToggleLineBreakpoint<CR>
+#map ,l :action LastCommand<CR>
+#map ,fip :action FindInPath<CR>
+#map ,th :action TypeHierarchy<CR>
+#map ,cp :action CurrentFileRelativeGoogle3PathCopyClipboard<CR>
+#map ,cs :action OpenWithCodeSearch<CR>
+#map ,bb :action BlazeBuildSelectedFile<CR>
+#map ,bd :action BlazeDebug<CR>
+#map ,bt :action BlazeTest<CR>
+#map ,bo :action OpenBlazeBuild<CR>
+#map ,bj :action OpenBlazeBuild<CR>
+
+#map ,grc :action Git.ResolveConflicts<CR>
+#map ,gi :action GotoImplementation<CR>
+#map ,gsm :action GotoSuperMethod<CR>
+#map ,gcc :action Compare.SameVersion<CR>
+#map ,gcb :action Git.CompareWithBranch<CR>
+
+#map :action print<CR>
+#vmap 8 :action OpenSelectedWithCodeSearch<CR>
+#map ,sw :action SurroundWith<CR>
+
+
+# ctrl+shift+d Declaration
+
+
+

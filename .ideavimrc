@@ -17,6 +17,7 @@ map <C-l> <C-w>l
 
 # copy current file path from google3
 
+map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>

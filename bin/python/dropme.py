@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Create's a drag and drop operation
+
 import gtk
 import os
 import sys

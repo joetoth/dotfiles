@@ -151,7 +151,7 @@ export PYTHONIOENCODING="utf-8"
  
 # ALIASES
 # ------------------------------------------------------------------------------
-alias cpg='rsync --progress -a'
+alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias xo='xdg-open'
 alias psa="ps aux"

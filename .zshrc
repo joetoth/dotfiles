@@ -121,11 +121,11 @@ bindkey '^P' down-line-or-search
 #
 # Exports
 # ------------------------------------------------------------------------------
-export GOROOT=/usr/lib/google-golang
+#export GOROOT=/usr/lib/google-golang
 
-if [ ! -d $GOROOT ]; then
-  export GOROOT=$HOME/opt/go
-fi
+#if [ ! -d $GOROOT ]; then
+#  export GOROOT=$HOME/opt/go
+#fi
 
 export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.pub-cache/bin:/usr/lib/dart/bin/
@@ -671,6 +671,12 @@ BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 
 # Network Manager Command Line
 # nmcli c up id joetoth.com
+# nmcli dev wifi con "myssid" password "myssidpassword"
+#
+# You can also get a list of available access points with:
+#
+# nmcli dev wifi list
+# 
 #
 #
 #ulimit -Sv 500000     # Set ~500 mb limit

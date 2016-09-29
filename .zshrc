@@ -17,7 +17,7 @@ zplug "TBSliver/zsh-plugin-tmux-simple"
 zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 zplug "zsh-users/zsh-completions"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
-zplug "sindresorhus/pure"
+zplug "sindresorhus/pure", use:pure.zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zaw"
 zplug "so-fancy/diff-so-fancy", as:command

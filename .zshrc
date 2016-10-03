@@ -17,7 +17,7 @@ zplug "TBSliver/zsh-plugin-tmux-simple"
 zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 zplug "zsh-users/zsh-completions"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
-zplug "sindresorhus/pure"
+zplug "sindresorhus/pure", use:pure.zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zaw"
 zplug "so-fancy/diff-so-fancy", as:command
@@ -121,11 +121,11 @@ bindkey '^P' down-line-or-search
 #
 # Exports
 # ------------------------------------------------------------------------------
-export GOROOT=/usr/lib/google-golang
+#export GOROOT=/usr/lib/google-golang
 
-if [ ! -d $GOROOT ]; then
-  export GOROOT=$HOME/opt/go
-fi
+#if [ ! -d $GOROOT ]; then
+#  export GOROOT=$HOME/opt/go
+#fi
 
 export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.pub-cache/bin:/usr/lib/dart/bin/
@@ -151,7 +151,7 @@ export PYTHONIOENCODING="utf-8"
  
 # ALIASES
 # ------------------------------------------------------------------------------
-alias cpg='rsync --progress -a'
+alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias xo='xdg-open'
 alias psa="ps aux"
@@ -671,6 +671,12 @@ BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 
 # Network Manager Command Line
 # nmcli c up id joetoth.com
+# nmcli dev wifi con "myssid" password "myssidpassword"
+#
+# You can also get a list of available access points with:
+#
+# nmcli dev wifi list
+# 
 #
 #
 #ulimit -Sv 500000     # Set ~500 mb limit

@@ -23,6 +23,7 @@ map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>
 map ,e :action Run<CR>
 map ,nn :action SelectIn<CR>
+map ,o :action Tool_External Tools_OpenBuild<CR>
 
 #map ,, :action EasyMotion<CR>
 #map ,, :action AceJumpAction<CR>
@@ -36,7 +37,6 @@ map ,nn :action SelectIn<CR>
 #map ,bb :action BlazeBuildSelectedFile<CR>
 #map ,bd :action BlazeDebug<CR>
 #map ,bt :action BlazeTest<CR>
-#map ,bo :action OpenBlazeBuild<CR>
 #map ,bj :action OpenBlazeBuild<CR>
 
 #map ,grc :action Git.ResolveConflicts<CR>

@@ -654,10 +654,8 @@ done
 BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 [[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 
-#export TERM=xterm-256color
-#case "$TERM" in
-#  xterm-color) color_prompt=yes;;
-#esac
+# Kill app on port
+# fuser -k 2222/tcp
 
 
 #ag -l Scoped.Singleton java | xargs sed -i '/Scoped.Singleton/s/Scoped.Singleton/Singleton/g'

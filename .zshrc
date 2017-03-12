@@ -204,6 +204,7 @@ alias tb='tensorboard --logdir=/tmp/tf'
 
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
+alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 
 # FUNCTIONS
 source_if_exists() {
@@ -666,6 +667,9 @@ BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 # "p.replace('\"//java/com/google/apps/framework/backends/harpoon\",',
 # '\"//java/com/google/apps/framework/backends/harpoon\",')" >! $line
 # done
+#
+# Battery
+# upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"
 
 # Network Manager Command Line
 # nmcli c up id joetoth.com

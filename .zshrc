@@ -11,6 +11,8 @@ zplug "junegunn/fzf", as:command, use:"bin/*"
 zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
 zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
+zplug "chriskempson/base16-shell"
+
 bindkey "^Xz" zce
 
 zplug "TBSliver/zsh-plugin-tmux-simple"
@@ -117,6 +119,11 @@ bindkey -M viins "\eOB" down-line-or-history
 bindkey '^N' up-line-or-search
 bindkey '^P' down-line-or-search
 #bindkey -M viins 'jj' vi-cmd-mode
+#
+
+BASE16_SHELL=$HOME/.zplug/repos/chriskempson/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
 #
 #
 # Exports
@@ -652,8 +659,8 @@ for script in $HOME/bin/python/*; do
 done
 
 # Base16 Shell
-BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
-[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+#BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
+#[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 
 # Kill app on port
 # fuser -k 2222/tcp

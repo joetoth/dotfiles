@@ -29,6 +29,9 @@ map ,o :action Tool_External Tools_OpenBuild<CR>
 map ,f :action FindInPath<CR>
 map ,u :action FileStructurePopup<CR>
 map ,l :action LintBlaze<CR>
+map Q :action FillParagraph<CR>
+nmap ,d :action ShowErrorDescription<cr>
+nmap ,h :action FileStructurePopup<cr>
 
 #map ,, :action EasyMotion<CR>
 #map ,, :action AceJumpAction<CR>

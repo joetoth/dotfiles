@@ -11,6 +11,8 @@ zplug "junegunn/fzf", as:command, use:"bin/*"
 zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
 zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
+zplug "chriskempson/base16-shell"
+
 bindkey "^Xz" zce
 
 #zplug "plugins/git",   from:oh-my-zsh
@@ -121,6 +123,11 @@ bindkey '^N' up-line-or-search
 bindkey '^P' down-line-or-search
 #bindkey -M viins 'jj' vi-cmd-mode
 #
+
+BASE16_SHELL=$HOME/.zplug/repos/chriskempson/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+#
 #
 # Exports
 # ------------------------------------------------------------------------------
@@ -207,6 +214,7 @@ alias tb='tensorboard --logdir=/tmp/tf'
 
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
+alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 
 # FUNCTIONS
 source_if_exists() {
@@ -654,8 +662,8 @@ for script in $HOME/bin/python/*; do
 done
 
 # Base16 Shell
-BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
-[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+#BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
+#[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 
 # Kill app on port
 # fuser -k 2222/tcp
@@ -669,6 +677,9 @@ BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 # "p.replace('\"//java/com/google/apps/framework/backends/harpoon\",',
 # '\"//java/com/google/apps/framework/backends/harpoon\",')" >! $line
 # done
+#
+# Battery
+# upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"
 
 # Network Manager Command Line
 # nmcli c up id joetoth.com
@@ -693,3 +704,38 @@ autoload compinit
 #    source /home/joetoth/.tnsrc 
 #fi
 ###-tns-completion-end-###
+#
+#
+# TensorFlow
+#==========================================
+#Skipping cancelled enqueue attempt with queue not closed
+#=========================================
+#
+#string_input_producer is a FIFOQueue + QueueRunner. You get more control if you use a FIFOQueue and enqueue things manually. Something like this
+#
+#filename_queue = tf.FIFOQueue(100, tf.string)
+#enqueue_placeholder = tf.placeholder(dtype=tf.string)
+#enqueue_op = filename_queue.enqueue(enqueue_placeholder)
+#
+#config = tf.ConfigProto()
+#config.operation_timeout_in_ms=2000  # for debugging queue hangs
+#sess = tf.InteractiveSession(config=config)
+#coord = tf.train.Coordinator()
+#threads = tf.train.start_queue_runners(coord=coord)
+#
+#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir1/0"})
+#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir1/1"})
+#
+## do stats for /temp/dir1
+#
+#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir2/0"})
+#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir2/1"})
+#
+## do stats for /temp/dir2
+#
+#coord.request_stop()
+#coord.join(threads)
+#
+#==============
+#config.operation_timeout_in_ms=5000  # for debugging queue hangs
+#==============

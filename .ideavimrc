@@ -1,6 +1,8 @@
 set visualbell
 set noerrorbells
 set clipboard=unnamed
+set shiftwidth=2
+set textwidth=80
 
 map ; :
 map ,vim :vsp ~/.ideavimrc<cr>
@@ -24,6 +26,9 @@ map ,p :action ParameterInfo<CR>
 map ,e :action Run<CR>
 map ,nn :action SelectIn<CR>
 map ,o :action Tool_External Tools_OpenBuild<CR>
+map ,f :action FindInPath<CR>
+map ,u :action FileStructurePopup<CR>
+map ,l :action LintBlaze<CR>
 
 #map ,, :action EasyMotion<CR>
 #map ,, :action AceJumpAction<CR>

@@ -13,6 +13,7 @@ zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
 bindkey "^Xz" zce
 
+#zplug "plugins/git",   from:oh-my-zsh
 zplug "TBSliver/zsh-plugin-tmux-simple"
 zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 zplug "zsh-users/zsh-completions"
@@ -84,7 +85,9 @@ setopt noflowcontrol
 # ------------------------------------------------------------------------------
 zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:*:*:*' menu select
-
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' completer _expand _complete _correct _approximate
 #cache-path must exist
 #
 #zstyle ':completion:*' use-cache on

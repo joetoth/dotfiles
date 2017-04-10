@@ -268,7 +268,7 @@ autocmd BufReadPost *
 "nmap <leader>w :w!<cr>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-"command W w !sudo tee > /dev/null %
+command W w !sudo tee > /dev/null %
 
 " turn off search highlighting
 nnoremap <leader><space> :nohlsearch<cr>

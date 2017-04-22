@@ -59,7 +59,7 @@ setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming 
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+#setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
@@ -222,8 +222,8 @@ source_if_exists() {
 }
 
 # PATH for the Google Cloud SDK and completion
-#source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
-#source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
+source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
+source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
 source_if_exists $HOME/wdf/work.zsh
 
@@ -739,3 +739,4 @@ autoload compinit
 #==============
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
+

@@ -6,23 +6,28 @@
 
 " tpope/vim-tbone
 let s:plugins = [
+		\'github:ludovicchabant/vim-lawrencium',
+    \'github:davidhalter/jedi-vim',
     \'github:sjl/gundo.vim',
     \'github:junegunn/fzf',
     \'github:junegunn/fzf.vim',
+    \'github:vim-airline/vim-airline',
+    \'github:vim-airline/vim-airline-themes',
     \'github:chriskempson/base16-vim',
+    \'github:edkolev/tmuxline.vim',
     \'github:christoomey/vim-tmux-navigator', 
+    \'vimux', 
+    \'github:wellle/tmux-complete.vim',
+    \'github:epeli/slimux',
     \'github:majutsushi/tagbar', 
     \'github:scrooloose/syntastic',
     \'github:tpope/vim-unimpaired',
-    \'github:wellle/tmux-complete.vim',
     \'github:SirVer/ultisnips',
     \'github:honza/vim-snippets',
     \'github:easymotion/vim-easymotion',
     \'The_NERD_tree',
     \'The_NERD_Commenter',
     \'fugitive',
-    \'vimux', 
-    \'github:epeli/slimux',
     \'repeat',
     \'surround']
 
@@ -391,26 +396,14 @@ set noshowmode
 set timeoutlen=1000
 set laststatus=2
 let g:airline_powerline_fonts = 0
-"let g:airline_theme = "wombat"
+let g:airline_theme = "base16_tomorrow"
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-" Python-mode
-" " Activate rope
-" " Keys:
-" " K             Show python docs
-" " <Ctrl-Space>  Rope autocomplete
-" " <Ctrl-c>g     Rope goto definition
-" " <Ctrl-c>d     Rope show documentation
-" " <Ctrl-c>f     Rope find occurrences
-" " <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" " [[            Jump on previous class or function (normal, visual, operator
-" modes)
-" " ]]            Jump on next class or function (normal, visual, operator
-" modes)
-" " [M            Jump on previous class or method (normal, visual, operator
-" modes)
-" " ]M            Jump on next class or method (normal, visual, operator modes)
-" let g:pymode_rope = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Documentation
 "let g:pymode_doc = 1
@@ -453,11 +446,6 @@ set foldenable              " can slow Vim down with some plugins
 set foldlevelstart=99       " can slow Vim down with some plugins
 set foldmethod=syntax       " can slow Vim down with some pluginsolding = 0
 
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 " For snippet_complete marker.
 "if has('conceal')
@@ -589,7 +577,24 @@ map <silent> <c-f> :BLines<cr>
 map <leader>F :Autoformat<cr>
 "nnoremap <silent> <c-F> :Lines!<cr>
 "nnoremap <silent> <c-F> :Lines!<cr>
+function! s:list_buffers()
+  redir => buffers
+  silent ls
+  redir END
+  return split(buffers, "\n")
+endfunction
 
+function! s:delete_buffers(lines)
+  for bufno in map(a:lines, {_, line -> matchstr(line, '[0-9]\+')})
+    echom 'Delete buffer '.bufno
+    silent! execute 'bd' bufno
+  endfor
+endfunction
+
+command! -bang DeleteBuffers
+  \ call fzf#run(fzf#wrap({'source':  s:list_buffers(),
+  \                        'options': '--multi --bind alt-a:select-all',
+  \                        'sink*':   {lines -> s:delete_buffers(lines)}}, <bang>0))
 " Command History
 nnoremap <silent> <c-r> :History:<cr>
 
@@ -618,7 +623,7 @@ map <leader>sd :split <CR>:YcmCompleter GoToDefinition<CR>
 "let g:ycm_filetype_blacklist = { 'python' : 1 }
 
 " Close window
-nnoremap <silent> <c-w> :q<CR>
+"nnoremap <silent> <c-w> :q<CR>
 
 " NERDtree
 let NERDTreeMinimalUI = 1
@@ -640,3 +645,4 @@ nmap <leader>cc <plug>NERDCommenterInvert
 nmap s <Plug>(easymotion-overwin-f)
 
 let g:tmuxcomplete#trigger = 'omnifunc'
+

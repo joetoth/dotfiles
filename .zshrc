@@ -222,8 +222,8 @@ source_if_exists() {
 }
 
 # PATH for the Google Cloud SDK and completion
-#source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
-#source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
+source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
+source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
 source_if_exists $HOME/wdf/work.zsh
 
@@ -739,3 +739,4 @@ autoload compinit
 #==============
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
+

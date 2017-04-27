@@ -79,13 +79,15 @@ function! BuildYCM(info)
   endif
 endfunction
 
-if IsWork()
-  Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python'], 'do': function('BuildYCM') }
+if !IsWork()
+  Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
   Plug 'Chiel92/vim-autoformat'
+  Plug 'google/vim-maktaba'
+  Plug 'bazelbuild/vim-bazel'
 endif
 
-" Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
-" Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
+Plug 'honza/vim-snippets'
 
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
@@ -109,6 +111,7 @@ Plug 'justinmk/vim-gtfo'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-lawrencium'
 if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
@@ -1734,7 +1737,7 @@ endif
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-" nnoremap <silent> <Leader><Leader> :Files<CR>
+nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>

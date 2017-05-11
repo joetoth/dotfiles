@@ -140,7 +140,7 @@ Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
 
 " Joe
 Plug 'christoomey/vim-tmux-navigator' 
-Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
 Plug 'davidhalter/jedi-vim'
 call plug#end()
 endif
@@ -860,14 +860,14 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft =~ 'mkd\|markdown'
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
-          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
-      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
-    endfor
+    "for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
+    "      \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
+    "  call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+    "endfor
 
-    highlight def link Snip Folded
-    setlocal textwidth=78
-    setlocal completefunc=emoji#complete
+    "highlight def link Snip Folded
+    "setlocal textwidth=80
+    "setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
     call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
   endif
@@ -1730,21 +1730,21 @@ autocmd vimrc FileType c,cpp,py    nnoremap <buffer> K  :YcmCompleter GetType<CR
 " FZF {{{
 " ============================================================================
 
-if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-endif
-
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
+"if has('nvim')
+"  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+"  " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+"endif
+"
+"command! -bang -nargs=? -complete=dir Files
+"  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+"
 nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
-xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
+nnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 " nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>
@@ -1883,7 +1883,7 @@ nnoremap U :redo<CR>
 nmap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeToggle<CR>
 
-nmap s <Plug>(easymotion-overwin-f)
+"nmap s <Plug>(easymotion-overwin-f)
 
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>p :YcmCompleter GetDoc<CR>
@@ -1897,8 +1897,8 @@ map <leader>f :Autoformat<cr>
 let g:formatters_python = ['yapf']
 let g:formatter_yapf_style = 'google'
 
-let g:jedi#force_py_version = 3
-au FileType python setlocal omnifunc=python3complete#Complete
+"let g:jedi#force_py_version = 3
+"au FileType python setlocal omnifunc=python3complete#Complete
 
 let g:jedi#goto_command = ""
 let g:jedi#goto_assignments_command = ""

@@ -84,6 +84,7 @@ if !IsWork()
   Plug 'Chiel92/vim-autoformat'
   Plug 'google/vim-maktaba'
   Plug 'bazelbuild/vim-bazel'
+  Plug 'bazelbuild/vim-ft-bzl'
 endif
 
 Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }

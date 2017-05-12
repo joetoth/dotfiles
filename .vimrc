@@ -49,12 +49,7 @@ Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
-if v:version >= 703
-  Plug 'junegunn/vim-after-object'
-endif
-if s:darwin
-  Plug 'junegunn/vim-xmark'
-endif
+Plug 'junegunn/vim-after-object'
 unlet! g:plug_url_format
 
 " Colors
@@ -105,17 +100,13 @@ augroup nerd_loader
         \| endif
 augroup END
 
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
-endif
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 Plug 'justinmk/vim-gtfo'
 
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
-if v:version >= 703
-  Plug 'mhinz/vim-signify'
-endif
+Plug 'mhinz/vim-signify'
 
 " Lang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -160,7 +151,7 @@ endif
   set nu
   set autoindent
   set smartindent
-  set lazyredraw
+"  set lazyredraw
   set laststatus=2
   set showcmd
   set visualbell
@@ -185,24 +176,14 @@ endif
   set nojoinspaces
   set diffopt=filler,vertical
   set autoread
-  set clipboard=unnamedplus
+  set clipboard=unnamed
   set foldlevelstart=99
   set grepformat=%f:%l:%c:%m,%f:%l:%m
   set nocursorline
   set completeopt=menuone,preview
   set nrformats=hex
   silent! set cryptmethod=blowfish2
-
   set formatoptions+=1
-  if has('patch-7.3.541')
-    set formatoptions+=j
-  endif
-  if has('patch-7.4.338')
-    let &showbreak = '↳ '
-    set breakindent
-    set breakindentopt=sbr
-  endif
-
   if has('termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -315,20 +296,13 @@ endif
   set modelines=2
   set synmaxcol=1000
 
-  " For MacVim
-  set noimd
-  set imi=1
-  set ims=-1
-
   " ctags
   set tags=./tags;/
 
   " Annoying temporary files
   set backupdir=/tmp//,.
   set directory=/tmp//,.
-  if v:version >= 703
-    set undodir=/tmp//,.
-  endif
+  set undodir=/tmp//,.
 
   " Shift-tab on GNU screen
   " http://superuser.com/questions/195794/gnu-screen-shift-tab-issue
@@ -364,9 +338,7 @@ endif
     silent! colo seoul256
   endif
 
-  " }}}
-" ============================================================================
-" MAPPINGS {{{
+  " }}}" MAPPINGS {{{
 " ============================================================================
 
   " ----------------------------------------------------------------------------
@@ -406,17 +378,15 @@ endif
   nnoremap <F10> :NERDTreeToggle<cr>
 
   " <F11> | Tagbar
-  if v:version >= 703
-    inoremap <F11> <esc>:TagbarToggle<cr>
-    nnoremap <F11> :TagbarToggle<cr>
-    let g:tagbar_sort = 0
-  endif
+  inoremap <F11> <esc>:TagbarToggle<cr>
+  nnoremap <F11> :TagbarToggle<cr>
+  let g:tagbar_sort = 0
 
   " jk | Escaping!
-  inoremap jk <Esc>
-  xnoremap jk <Esc>
-  cnoremap jk <C-c>
-
+"  inoremap jk <Esc>
+"  xnoremap jk <Esc>
+"  cnoremap jk <C-c>
+"
   " Movement in insert mode
   noremap <C-l> <C-w>l
   noremap <C-h> <C-w>h
@@ -443,16 +413,6 @@ endif
 
   " Last inserted text
   nnoremap g. :normal! `[v`]<cr><left>
-
-  " ----------------------------------------------------------------------------
-  " nvim
-  " ----------------------------------------------------------------------------
-  if has('nvim')
-    tnoremap <a-a> <esc>a
-    tnoremap <a-b> <esc>b
-    tnoremap <a-d> <esc>d
-    tnoremap <a-f> <esc>f
-  endif
 
   " ----------------------------------------------------------------------------
   " Quickfix
@@ -662,12 +622,10 @@ endif
   " ----------------------------------------------------------------------------
   " <leader>ij | Open in IntelliJ
   " ----------------------------------------------------------------------------
-  if s:darwin
-    nnoremap <silent> <leader>ij
-    \ :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
-  endif
+    nnoremap <silent> <leader>ij :call system('"clion" '.expand('%:p'))<cr>
 
   " }}}
+  
 " ============================================================================
 " FUNCTIONS & COMMANDS {{{
 " ============================================================================
@@ -691,37 +649,6 @@ function! s:colors(...)
         \           'fnamemodify(v:val, ":t:r")'),
         \       '!a:0 || stridx(v:val, a:1) >= 0')
 endfunction
-
-function! s:copy_rtf(line1, line2, ...)
-  let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
-  let lines = getline(1, '$')
-
-  tab new
-  setlocal buftype=nofile bufhidden=wipe nonumber
-  let &filetype = ft
-  call setline(1, lines)
-
-  execute 'colo' get(a:000, 0, 'seoul256-light')
-  hi Normal ctermbg=NONE guibg=NONE
-
-  let lines = getline(a:line1, a:line2)
-  let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
-  call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
-
-  call tohtml#Convert2HTML(a:line1, a:line2)
-  g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
-  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
-
-  bd!
-  tabclose
-
-  let &l:nu = nu
-  execute 'colorscheme' cs
-endfunction
-
-if s:darwin
-  command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
-endif
 
 " ----------------------------------------------------------------------------
 " :Root | Change directory to the root of the Git repository
@@ -1481,7 +1408,7 @@ nmap gaa ga_
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
-let g:github_dashboard = { 'username': 'junegunn' }
+let g:github_dashboard = { 'username': 'joetoth' }
 
 " ----------------------------------------------------------------------------
 " indentLine
@@ -1788,9 +1715,7 @@ augroup vimrc
   au FileType slim IndentLinesEnable
 
   " File types
-  au BufNewFile,BufRead *.icc               set filetype=cpp
-  au BufNewFile,BufRead *.pde               set filetype=java
-  au BufNewFile,BufRead *.coffee-processing set filetype=coffee
+  au BufNewFile,BufRead *.cc               set filetype=cpp
   au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
 
   " Included syntax

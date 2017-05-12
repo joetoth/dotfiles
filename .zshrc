@@ -200,6 +200,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
+alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 # Zippin
 alias gz='tar -zcvf'

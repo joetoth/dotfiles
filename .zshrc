@@ -168,8 +168,8 @@ alias psa="ps aux"
 alias psg="ps aux | grep "
 alias alsg="alias | grep "
 alias cdb='cd -'
-alias ll='ls -alGh --color=auto'
-alias lt='ls -alGhrt --color=auto'
+alias ll='ls -alh --color=auto'
+alias lt='ls -alhrt --color=auto'
 alias ls='ls -h --color=auto'
 alias lss='ls -SlaGh --color=auto'
 alias topdirs='du -m . | sort -nr | head -n 100'

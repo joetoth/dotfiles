@@ -1,6 +1,3 @@
-" vim: set foldmethod=marker foldlevel=0:
-" ============================================================================
-
 function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
@@ -151,7 +148,7 @@ endif
   set nu
   set autoindent
   set smartindent
-"  set lazyredraw
+  set lazyredraw
   set laststatus=2
   set showcmd
   set visualbell
@@ -299,10 +296,24 @@ endif
   " ctags
   set tags=./tags;/
 
-  " Annoying temporary files
-  set backupdir=/tmp//,.
-  set directory=/tmp//,.
-  set undodir=/tmp//,.
+  " directory
+  set directory=.
+
+  " Backup
+  let bkdir = expand('~/.vim/backup')
+  call system('mkdir ' . bkdir)
+  let &backupdir = bkdir
+  set backup
+
+    " Create dirs
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand('~/.vim/undo')
+    " Create dirs
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif
 
   " Shift-tab on GNU screen
   " http://superuser.com/questions/195794/gnu-screen-shift-tab-issue

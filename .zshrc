@@ -161,6 +161,7 @@ export PYTHONIOENCODING="utf-8"
  
 # ALIASES
 # ------------------------------------------------------------------------------
+alias note='vi ~/drive/note.txt'
 alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias xo='xdg-open'
@@ -216,6 +217,7 @@ alias tb='tensorboard --logdir=/tmp/tf'
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
+alias cdp='cd ~/projects'
 
 # FUNCTIONS
 source_if_exists() {
@@ -227,6 +229,9 @@ source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
 source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
 source_if_exists $HOME/wdf/work.zsh
+
+# OPAM configuration
+source_if_exists $HOME/.opam/opam-init/init.zsh
 
 # GIT
 #

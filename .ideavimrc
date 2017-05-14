@@ -1,6 +1,6 @@
 set visualbell
 set noerrorbells
-set clipboard=unnamed
+set clipboard=unnamedplus
 set shiftwidth=2
 set textwidth=80
 

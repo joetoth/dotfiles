@@ -1,6 +1,6 @@
 set visualbell
 set noerrorbells
-set clipboard=unnamed
+set clipboard=unnamedplus
 set shiftwidth=2
 set textwidth=80
 
@@ -33,6 +33,7 @@ map Q :action FillParagraph<CR>
 nmap ,d :action ShowErrorDescription<cr>
 nmap ,h :action FileStructurePopup<cr>
 nmap ,m :action GotoRelated<cr>
+map ,x :action Rerun<CR>
 
 #map ,, :action EasyMotion<CR>
 #map ,, :action AceJumpAction<CR>

@@ -161,6 +161,7 @@ export PYTHONIOENCODING="utf-8"
  
 # ALIASES
 # ------------------------------------------------------------------------------
+alias note='vi ~/drive/note.txt'
 alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias xo='xdg-open'
@@ -168,9 +169,9 @@ alias psa="ps aux"
 alias psg="ps aux | grep "
 alias alsg="alias | grep "
 alias cdb='cd -'
-alias ll='ls -alGh --color=auto'
-alias lt='ls -alGhrt --color=auto'
-alias ls='ls --color=auto'
+alias ll='ls -alh --color=auto'
+alias lt='ls -alhrt --color=auto'
+alias ls='ls -h --color=auto'
 alias lss='ls -SlaGh --color=auto'
 alias topdirs='du -m . | sort -nr | head -n 100'
 alias lsg='ll | grep'
@@ -200,6 +201,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
+alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 # Zippin
 alias gz='tar -zcvf'
@@ -215,6 +217,7 @@ alias tb='tensorboard --logdir=/tmp/tf'
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
+alias cdp='cd ~/projects'
 
 # FUNCTIONS
 source_if_exists() {
@@ -226,6 +229,9 @@ source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
 source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
 source_if_exists $HOME/wdf/work.zsh
+
+# OPAM configuration
+source_if_exists $HOME/.opam/opam-init/init.zsh
 
 # GIT
 #

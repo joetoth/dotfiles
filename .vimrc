@@ -79,8 +79,8 @@ if !IsWork()
   Plug 'bazelbuild/vim-ft-bzl'
 endif
 
-Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
-Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
+"Plug 'honza/vim-snippets'
 
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
@@ -384,7 +384,7 @@ endif
   nnoremap g[ :pop<cr>
 
   " Jump list (to newer position)
-  nnoremap <C-p> <C-i>
+  "nnoremap <C-p> <C-i>
 
   " <F10> | NERD Tree
   nnoremap <F10> :NERDTreeToggle<cr>

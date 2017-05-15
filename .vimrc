@@ -86,7 +86,7 @@ if !IsWork()
   Plug 'bazelbuild/vim-bazel'
 endif
 
-Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
+"Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
 Plug 'honza/vim-snippets'
 
 " Browsing

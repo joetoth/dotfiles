@@ -129,7 +129,7 @@ Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
 " Joe
 Plug 'christoomey/vim-tmux-navigator' 
 Plug 'justinmk/vim-sneak'
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 call plug#end()
 endif
 
@@ -356,9 +356,6 @@ endif
   " ----------------------------------------------------------------------------
   " Basic mappings
   " ----------------------------------------------------------------------------
-
-  noremap <C-F> <C-D>
-  noremap <C-B> <C-U>
 
   " Save
   inoremap <C-s>     <C-O>:update<cr>
@@ -1569,37 +1566,9 @@ endfor
 echo
 endfunction
 
-function! s:figwheel()
-call system('tmux send-keys -t right C-u "(start-figwheel!)" Enter')
-call system('open-chrome localhost:3449')
-call s:countdown('Piggieback', 5)
-Piggieback (figwheel-sidecar.repl-api/repl-env)
-endfunction
-
-augroup vimrc
-autocmd FileType lisp,clojure,scheme RainbowParentheses
-autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
-
-" Clojure
-autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
-autocmd FileType clojure nmap <buffer> <Enter> cpp
-
-" Figwheel
-autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
-augroup END
-
-let g:clojure_maxlines = 60
-
-set lispwords+=match
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
 
-" vim-cljfmt
-let g:clj_fmt_autosave = 0
-autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
-autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -1664,7 +1633,10 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 autocmd vimrc FileType c,cpp,go,py nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
 
 autocmd vimrc FileType c,cpp,py    nnoremap <buffer> K  :YcmCompleter GetType<CR>
+autocmd vimrc FileType c,cpp,py    nnoremap <buffer> m   :YcmCompleter GoToReferences<CR>
 " }}}
+"
+
 " ============================================================================
 " FZF {{{
 " ============================================================================
@@ -1803,6 +1775,23 @@ function! QuickfixToggle()
     endif
 endfunction
 
+" Toggle LocationList Window
+nnoremap <silent> <c-b> :call LocationListToggle()<cr>
+
+let g:ll_is_open = 0
+
+function! LocationListToggle()
+    if g:ll_is_open
+        cclose
+        let g:ll_is_open = 0
+        execute g:ll_return_to_window . "wincmd w"
+    else
+        let g:ll_return_to_window = winnr()
+        lopen
+        let g:ll_is_open = 1
+    endif
+endfunction
+
 " Upgrade my ability to enter command mode.
 nnoremap ; :
 
@@ -1820,7 +1809,7 @@ nnoremap U :redo<CR>
 nmap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeToggle<CR>
 
-"nmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f)
 
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>p :YcmCompleter GetDoc<CR>
@@ -1833,18 +1822,20 @@ map <leader>f :Autoformat<cr>
 
 let g:formatters_python = ['yapf']
 let g:formatter_yapf_style = 'google'
-
+autocmd FileType python set shiftwidth=2
+autocmd FileType python set tabstop=2
+autocmd FileType python set softtabstop=2
 "let g:jedi#force_py_version = 3
 "au FileType python setlocal omnifunc=python3complete#Complete
 
-let g:jedi#goto_command = ""
-let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = ""
-let g:jedi#usages_command = "<c-g>"
-let g:jedi#completions_command = ""
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "1"
+"let g:jedi#goto_command = ""
+"let g:jedi#goto_assignments_command = ""
+"let g:jedi#goto_definitions_command = ""
+"let g:jedi#documentation_command = ""
+"let g:jedi#usages_command = "<c-g>"
+"let g:jedi#completions_command = ""
+"let g:jedi#rename_command = "<leader>r"
+"let g:jedi#show_call_signatures = "1"
 
 " }}}
 

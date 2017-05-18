@@ -1685,7 +1685,6 @@ nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 nnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
-" nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>
 
 inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
@@ -1825,7 +1824,9 @@ nnoremap <leader>N :NERDTreeToggle<CR>
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>p :YcmCompleter GetDoc<CR>
 " Command History
-map <silent> <c-r> :History:<cr>
+map <silent><c-r> :History:<cr>
+map <silent><c-e>  :History<cr>
+map <silent><leader>/  :History/<cr>
 map <silent> <c-f> :BLines<cr>
 
 map <leader>b :Buffers<cr>

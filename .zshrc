@@ -323,7 +323,7 @@ function athome() {
 
 function atmobile() {
   reset-keyboard
-  ln -s ~/.Xmodmap-lenovo ~/.Xmodmap
+  cp ~/.Xmodmap-lenovo ~/.Xmodmap
   xmodmap ~/.Xmodmap
 }
 
@@ -687,6 +687,21 @@ done
 # Battery
 # upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"
 
+
+
+# Wireless commands
+# iw dev
+# ip link set wlan0 up  
+# ip link wlan0 show
+# iw wlan0 scan
+# Add wireless network
+# wpa_passphrase gorilla >> /etc/wpa_supplicant.conf 
+# ...type in the passphrase and hit enter...
+#
+# wpa_supplicant -B -D wext -i wlan0 -c /etc/wpa_supplicant.conf
+# dhclient wlan0
+# edit /etc/network/interfaces and add wpa/psk
+#
 # Network Manager Command Line
 # nmcli c up id joetoth.com
 # nmcli dev wifi con "myssid" password "myssidpassword"

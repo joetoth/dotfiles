@@ -1864,6 +1864,15 @@ function! ShowPyDoc(word)
 "  execute ":pedit! " . dst
 endfunction
 command! -nargs=1 Pyd :call ShowPyDoc('<args>')
+if has("gui_running")
+  if has("gui_gtk2") || has("gui_gtk3")
+    set guifont=Source\ Code\ Pro\ 10
+  else
+    set guifont=Courier_New:h11:cDEFAULT
+  endif
+endif
+
+" }}}
 " ============================================================================
 " WORK
 "" ============================================================================ ============================================================================

@@ -10,26 +10,26 @@ unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
 let s:darwin = has('mac')
-
+silent! if plug#begin('~/.vim/plugged')
 " }}}
 " ============================================================================
 " VIM-PLUG BLOCK {{{
 " ============================================================================
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-if plug#begin('~/.vim/plugged')
-
-if s:darwin
-  let g:plug_url_format = 'git@github.com:%s.git'
-else
-  let $GIT_SSL_NO_VERIFY = 'true'
-endif
+"if empty(glob('~/.vim/autoload/plug.vim'))
+"  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+"endif
+"if plug#begin('~/.vim/plugged')
+"
+"if s:darwin
+"  let g:plug_url_format = 'git@github.com:%s.git'
+"else
+"  let $GIT_SSL_NO_VERIFY = 'true'
+"endif
 
 " My plugins
-Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+"Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-pseudocl'
@@ -129,6 +129,8 @@ Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
 " Joe
 Plug 'christoomey/vim-tmux-navigator' 
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-scriptease'
+"Plug 'hokorobi/vim-hg'
 "Plug 'davidhalter/jedi-vim'
 call plug#end()
 endif
@@ -321,7 +323,7 @@ endif
   "set t_kB=[Z
 
   " set complete=.,w,b,u,t
-  set complete-=i
+  " set complete-=i
 
   silent! set ttymouse=xterm2
   " mousee
@@ -1402,13 +1404,13 @@ let g:easy_align_delimiters = {
 \   }
 \ }
 
-" Start interactive EasyAlign in visual mode
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign with a Vim movement
-nmap ga <Plug>(EasyAlign)
-nmap gaa ga_
-
+"" Start interactive EasyAlign in visual mode
+"xmap ga <Plug>(EasyAlign)
+"
+"" Start interactive EasyAlign with a Vim movement
+"nmap ga <Plug>(EasyAlign)
+"nmap gaa ga_
+"
 " xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
@@ -1545,9 +1547,9 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " clojure
 " ----------------------------------------------------------------------------
 function! s:lisp_maps()
-nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+"nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+"nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+"nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
 nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
 nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
 nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
@@ -1757,6 +1759,23 @@ nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 
+" Maps Alt-[h,j,k,l] to resizing a window split
+
+noremap <silent> <c-,><c-h> <C-w><
+noremap <silent> <c-,><c-j> <C-w>-
+noremap <silent> <c-,><c-k> <C-w>+
+noremap <silent> <c-,><c-l> <C-w>>
+
+map <silent> <A-h> <C-W><
+map <silent> <A-j> <C-W>-
+map <silent> <A-k> <C-W>+
+map <silent> <A-l> <C-w>>
+" Maps Alt-[s.v] to horizontal and vertical split respectively
+map <silent> <A-s> :split<CR>
+map <silent> <A-v> :vsplit<CR>
+" Maps Alt-[n,p] for moving next and previous window respectively
+map <silent> <A-n> <C-w><C-w>
+map <silent> <A-p> <C-w><S-w>
 " Toggle QuickFix Window
 nnoremap <silent> <c-x> :call QuickfixToggle()<cr>
 
@@ -1804,11 +1823,9 @@ nnoremap Y y$
 " redo
 nnoremap U :redo<CR>
 
-
 nmap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeToggle<CR>
 
-nmap s <Plug>(easymotion-overwin-f)
 
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>p :YcmCompleter GetDoc<CR>
@@ -1839,22 +1856,19 @@ autocmd FileType python set softtabstop=2
 "let g:jedi#show_call_signatures = "1"
 
 " }}}
-
-" ============================================================================
-" LOCAL VIMRC {{{
-" ============================================================================
-let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/vimrc-extra'
-if filereadable(s:local_vimrc)
-  execute 'source' s:local_vimrc
-endif
-
-" }}}
+"Run in the Python interpreter
+function! ShowPyDoc(word) 
+  let dst = tempname()
+  execute 'split __doc__'
+  execute ":silent read ! pydoc " . a:word 
+"  execute ":pedit! " . dst
+endfunction
+command! -nargs=1 Pyd :call ShowPyDoc('<args>')
 " ============================================================================
 " WORK
 "" ============================================================================ ============================================================================
 if IsWork()
     source ~/wdf/work.vim
 endif
-
 " }}}
 

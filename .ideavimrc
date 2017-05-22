@@ -19,6 +19,7 @@ map <C-l> <C-w>l
 
 # copy current file path from google3
 
+map ,, :action SearchEverywhere<CR>
 map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>
@@ -30,6 +31,7 @@ map ,f :action FindInPath<CR>
 map ,u :action FileStructurePopup<CR>
 map ,l :action LintBlaze<CR>
 map Q :action FillParagraph<CR>
+map ,o :action Blaze.OpenCorrespondingBuildFile<CR>
 nmap ,d :action ShowErrorDescription<cr>
 nmap ,h :action FileStructurePopup<cr>
 nmap ,m :action GotoRelated<cr>

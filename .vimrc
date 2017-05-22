@@ -1838,7 +1838,13 @@ autocmd FileType python set softtabstop=2
 "let g:jedi#show_call_signatures = "1"
 
 " }}}
-
+if has("gui_running")
+  if has("gui_gtk2") || has("gui_gtk3")
+    set guifont=Source\ Code\ Pro\ 10
+  else
+    set guifont=Courier_New:h11:cDEFAULT
+  endif
+endif
 " ============================================================================
 " LOCAL VIMRC {{{
 " ============================================================================

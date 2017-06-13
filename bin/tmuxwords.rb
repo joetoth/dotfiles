@@ -52,10 +52,10 @@ end
 
 def tokenize str, prefix, min
   set = Set.new
-  set.merge(chunks = str.split(/\s+/))
-  set.merge(strip_chunks = chunks.map { |t| t.gsub(/^\W+|\W+$/, '') })
+  #set.merge(chunks = str.split(/\s+/))
+  #set.merge(strip_chunks = chunks.map { |t| t.gsub(/^\W+|\W+$/, '') })
   set.merge(lines = str.split($/).map { |e| e.strip })
-  set.merge(words = str.gsub(/\W/, ' ').split(/\s+/))
+  #set.merge(words = str.gsub(/\W/, ' ').split(/\s+/))
 
   prefix &&= /^#{Regexp.escape prefix}/
   case

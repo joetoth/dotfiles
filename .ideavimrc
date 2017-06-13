@@ -23,8 +23,8 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-map ,s :action SearchEverywhere<CR>
 map ,, :action GotoFile<CR>
+map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>
@@ -35,6 +35,7 @@ map ,o :action Tool_External Tools_OpenBuild<CR>
 map ,u :action FileStructurePopup<CR>
 map ,l :action LintBlaze<CR>
 map Q :action FillParagraph<CR>
+map ,o :action Blaze.OpenCorrespondingBuildFile<CR>
 nmap ,d :action ShowErrorDescription<cr>
 nmap ,h :action FileStructurePopup<cr>
 nmap ,m :action GotoRelated<cr>

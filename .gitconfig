@@ -3,8 +3,8 @@
 	name = Joe Toth
 [status]
   relativePaths = true
-[pager]
-	diff = diff-so-fancy | less --tabs=4 -RFX
-	show = diff-so-fancy | less --tabs=4 -RFX
+#[pager]
+#	diff = diff-so-fancy | less --tabs=4 -RFX
+#	show = diff-so-fancy | less --tabs=4 -RFX
 [push]
 	default = simple

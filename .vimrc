@@ -29,20 +29,13 @@ silent! if plug#begin('~/.vim/plugged')
 "endif
 
 " My plugins
-"Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
-Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-slash'
-Plug 'junegunn/vim-fnr'
-Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/vim-journal'
+Plug 'junegunn/vim-slash' " zz after search scrolls to center text
+Plug 'junegunn/vim-fnr' "find and replace
+Plug 'junegunn/vim-pseudocl' " needed for fnr
+Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register 
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/gv.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
-Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
+Plug 'junegunn/gv.vim' " Git commit browser
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -73,6 +66,7 @@ endfunction
 
 if !IsWork()
   Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
+  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
   Plug 'Chiel92/vim-autoformat'
   Plug 'google/vim-maktaba'
   Plug 'bazelbuild/vim-bazel'
@@ -81,10 +75,6 @@ endif
 
 "Plug 'SirVer/ultisnips', { 'on': 'InsertEnter' }
 "Plug 'honza/vim-snippets'
-
-" Browsing
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
-autocmd! User indentLine doautocmd indentLine Syntax
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 augroup nerd_loader
@@ -103,7 +93,7 @@ Plug 'justinmk/vim-gtfo'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
-Plug 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify' " Shows + or - for diffs
 
 " Lang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -119,12 +109,11 @@ Plug 'derekwyatt/vim-scala'
 Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
-Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lint
-Plug 'metakirby5/codi.vim'
-Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
+Plug 'metakirby5/codi.vim' " awesome scratchpad! 
+Plug 'w0rp/ale' " async linter
 
 " Joe
 Plug 'christoomey/vim-tmux-navigator' 
@@ -1302,7 +1291,7 @@ function! s:setup_extra_keys()
 nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
 nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
 nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
-nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
+"nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
 nmap <silent> <buffer> <c-j> <c-n>o
 nmap <silent> <buffer> <c-k> <c-p>o
 
@@ -1810,6 +1799,23 @@ function! LocationListToggle()
     endif
 endfunction
 
+" Toggle QuickFix Window
+" nnoremap <silent> <c-x> :call PreviewToggle()<cr>
+
+ let g:preview_is_open = 0
+
+nnoremap <silent> <c-p> :call PreviewToggle() <CR>
+function! PreviewToggle()
+    if g:preview_is_open
+        pclose
+        let g:preview_is_open = 0
+        execute g:preview_return_to_window . "wincmd w"
+     else
+         let g:preview_return_to_window = winnr()
+         :YcmCompleter GetDoc
+         let g:preview_is_open = 1
+     endif
+ endfunction
 " Upgrade my ability to enter command mode.
 nnoremap ; :
 
@@ -1829,6 +1835,9 @@ nnoremap <leader>N :NERDTreeToggle<CR>
 
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>p :YcmCompleter GetDoc<CR>
+
+
+
 " Command History
 map <silent><c-r> :History:<cr>
 map <silent><c-e>  :History<cr>
@@ -1872,6 +1881,14 @@ if has("gui_running")
   endif
 endif
 
+let g:codi#interpreters = {
+       \ 'python': {
+           \ 'bin': 'python3',
+           \ 'prompt': '^\(>>>\|\.\.\.\) ',
+           \ },
+       \ }
+let g:codi#log = '/tmp/codi.log'
+au FileChangedShell * echo "Warning: File changed on disk"
 " }}}
 " ============================================================================
 " WORK

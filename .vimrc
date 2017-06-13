@@ -1881,3 +1881,6 @@ if IsWork()
 endif
 " }}}
 
+
+" Convert each NAME_LIKE_THIS to NameLikeThis in the current line.
+" :s#_*\(\u\)\(\u*\)#\1\L\2#g

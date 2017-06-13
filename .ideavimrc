@@ -30,7 +30,6 @@ map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>
 map ,e :action Run<CR>
 map ,n :action SelectIn<CR>
-map ,o :action Tool_External Tools_OpenBuild<CR>
 "map ,f :action FindInPath<CR>
 map ,u :action FileStructurePopup<CR>
 map ,l :action LintBlaze<CR>
@@ -42,6 +41,7 @@ nmap ,m :action GotoRelated<cr>
 nmap ,t :action GotoTest<cr>
 map ,x :action Rerun<CR>
 map ,c :action Vcs.QuickListPopupAction<CR>
+map ,ag :action FindInPath<CR>
 
 "map ,, :action EasyMotion<CR>
 "map ,, :action AceJumpAction<CR>
@@ -95,8 +95,7 @@ vnoremap <leader>tl y<cr>:action ActivateTerminalToolWindow<cr>
 nnoremap ]e :action GotoNextError<cr>
 nnoremap [e :action GotoPreviousError<cr>
 
-"
- Cursive
+" Cursive
 nnoremap <leader>W :action :cursive.actions.paredit/wrap-paren<cr>
 nnoremap <leader>w[ :action :cursive.actions.paredit/wrap-square<cr>
 nnoremap <leader>w{ :action :cursive.actions.paredit/wrap-curly<cr>
@@ -172,6 +171,46 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""Back                                               <A-C-Left> button=4 clickCount=1 modifiers=0
 ""BackgroundTasks
 ""BasicEditorPopupMenu
+"Blaze.AddDirectoryToProjectView
+"Blaze.BuildMenuGroup
+"Blaze.CitcDirectoryGroup
+"Blaze.CopyBlazeTargetPathAction
+"Blaze.CopyGoogle3RelativePath
+"Blaze.EditLocalProjectView
+"Blaze.EditProjectView
+"Blaze.ExpandSyncToWorkingSet
+"Blaze.ExportRunConfigurations
+"Blaze.FixDepsForFile
+"Blaze.FixDepsInWorkingSet
+"Blaze.FullSyncProject
+"Blaze.Google3.G3Plugins.Client
+"Blaze.Google3.G3Plugins.FileGoogleBug
+"Blaze.Google3.G3Plugins.Goto
+"Blaze.Google3ContextActionGroup
+"Blaze.Google3MenuGroup
+"Blaze.GotoMenuGroup
+"Blaze.ImportProject2
+"Blaze.IncrementalSyncProject
+"Blaze.LintFile
+"Blaze.MainMenuActionGroup
+"Blaze.MainToolBarActionGroup
+"Blaze.MenuFooter
+"Blaze.MenuGroupsBookmark
+"Blaze.NewActions
+"Blaze.NewPackageAction
+"Blaze.NewRuleAction
+"Blaze.OpenCorrespondingBuildFile
+"Blaze.OpenInCider
+"Blaze.OpenInCodeSearch
+"Blaze.OpenInG3Doc
+"Blaze.OpenWorkspaceFile
+"Blaze.PartialSync
+"Blaze.PerFileContextMenu
+"Blaze.Project
+"Blaze.ShowPerformanceWarnings
+"Blaze.SyncMenuGroup
+"Blaze.SyncWorkingSet
+"Blaze.ToolsMenuGroup
 ""BazelBuildFormatter.Format                         <A-S-K>
 ""Bookmarks
 ""BuildArtifact

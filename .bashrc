@@ -26,6 +26,8 @@ shopt -s checkwinsize
 ### Disable CTRL-S and CTRL-Q
 [[ $- =~ i ]] && stty -ixoff -ixon
 
+BASE16_SHELL=$HOME/projects/dotfiles/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 # Environment variables
 # --------------------------------------------------------------------
@@ -88,7 +90,7 @@ alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
 alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
 alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
 
-alias br='source $HOME/.bashrc'
+alias r='source $HOME/.bashrc'
 alias ve='vim ~/.vimrc'
 alias be='$EDITOR $HOME/.bashrc'
 alias bwe='$EDITOR $HOME/wdf/work.bashrc'
@@ -178,7 +180,7 @@ alias bluelight_off='night_mode 1:1:0.7   1.0'
 # PATH for the Google Cloud SDK and completion
 source_if_exists $HOME/opt/google-cloud-sdk/path.bash.inc
 source_if_exists $HOME/opt/google-cloud-sdk/completion.bash.inc 
-source_if_exists $HOME/wdf/work.bashrc
+source_if_exists $HOME/wdf/work.bash
 
 # search contents of current directory and open file in editor
 s() {
@@ -238,7 +240,7 @@ fi
 
 # Prompt
 # --------------------------------------------------------------------
-source $HOME/projects/liquidprompt/liquidprompt
+source $HOME/liquidprompt/liquidprompt
 
 
 # Tmux tile
@@ -534,12 +536,12 @@ fs() {
 }
 
 # Z integration
-source $BASE/z.sh
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-}
+#source $BASE/z.sh
+#unalias z 2> /dev/null
+#z() {
+#  [ $# -gt 0 ] && _z "$*" && return
+#  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+#}
 
 # v - open files in ~/.viminfo
 v() {
@@ -667,12 +669,12 @@ atwork() {
   xmodmap ~/.Xmodmap
 }
 
-bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
-bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+#bind '"\er": redraw-current-line'
+#bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+#bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+#bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+#bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+#bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
@@ -683,7 +685,7 @@ bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 # FZF_CTRL_R_OPTS='--height 40%'
 # FZF_ALT_C_OPTS='--height 40% --reverse'
 # FZF_COMPLETION_OPTS='--height 40% --reverse'
-source /usr/local/opt/git/etc/bash_completion.d/git-completion.bash
+#source /usr/local/opt/git/etc/bash_completion.d/git-completion.bash
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

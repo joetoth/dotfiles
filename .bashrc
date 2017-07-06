@@ -14,6 +14,9 @@ BASE=$(dirname $(readlink $BASH_SOURCE))
 ### Append to the history file
 shopt -s histappend
 
+# After each command, append to the history file and reread it
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
 ### Check the window size after each command ($LINES, $COLUMNS)
 shopt -s checkwinsize
 
@@ -240,7 +243,7 @@ fi
 
 # Prompt
 # --------------------------------------------------------------------
-source $HOME/liquidprompt/liquidprompt
+source $HOME/projects/liquidprompt/liquidprompt
 
 
 # Tmux tile
@@ -689,3 +692,19 @@ atwork() {
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# ip a
+# iwconfig
+# ip link set wlan0 up
+#Scan for available networks and get network details:
+#
+#
+#$ su
+## iwlist scan
+#Now edit /etc/network/interfaces. The required configuration is much dependent on your particular setup. See the following example to get an idea of how it works:
+#
+#
+## my wifi device
+#auto wlan0
+#iface wlan0 inet dhcp
+#        wireless-essid [ESSID]
+#        wireless-mode [MODE] 

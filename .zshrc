@@ -12,6 +12,7 @@ zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
 zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
 zplug "chriskempson/base16-shell"
+zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 
 bindkey "^Xz" zce
 
@@ -760,4 +761,5 @@ autoload compinit
 #==============
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
+sh $HOME/base16-shell/scripts/base16-tomorrow-night.sh
 

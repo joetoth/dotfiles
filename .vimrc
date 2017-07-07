@@ -36,6 +36,7 @@ Plug 'junegunn/vim-pseudocl' " needed for fnr
 Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register 
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim' " Git commit browser
+Plug 'junegunn/vim-plug' " Git commit browser
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'

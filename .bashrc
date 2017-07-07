@@ -8,6 +8,10 @@ export PLATFORM=$(uname -s)
 
 BASE=$(dirname $(readlink $BASH_SOURCE))
 
+if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
+  . /etc/bash_completion
+fi
+
 # Options
 # --------------------------------------------------------------------
 
@@ -83,10 +87,10 @@ alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gs='git status'
-alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+#alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias what_port_app='sudo netstat -nlp | grep'
-alias pomo='(sleep 1500 && notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK")&'
+#alias pomo='(sleep 1500 && notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK")&'
 alias learnd='python $HOME/bin/python/learn.py --daemon=true'
 alias learn-concept='python $HOME/bin/python/learn.py --concept '
 alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
@@ -96,7 +100,7 @@ alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
 alias r='source $HOME/.bashrc'
 alias ve='vim ~/.vimrc'
 alias be='$EDITOR $HOME/.bashrc'
-alias bwe='$EDITOR $HOME/wdf/work.bashrc'
+alias bwe='$EDITOR $HOME/wdf/work.bash'
 
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
@@ -119,7 +123,7 @@ alias gac='git commit -a -m'
 alias gco='git checkout'
 alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
 alias gn='git diff --name-only --relative | uniq'
-alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
+#alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
 alias grc='git add -A && git rebase --continue'
 alias gaa='git add -A'
 alias gs='git stash'
@@ -327,7 +331,7 @@ gitdiffb() {
   --abbrev-commit --date=relative $1..$2
 }
 
-alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+#alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 miniprompt() {
   unset PROMPT_COMMAND
@@ -410,8 +414,8 @@ fzf-down() {
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 [ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
 if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
   export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
 fi

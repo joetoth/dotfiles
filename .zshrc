@@ -219,6 +219,7 @@ alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
+alias vpn='sudo openvpn --config $HOME/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
 
 # FUNCTIONS
 source_if_exists() {

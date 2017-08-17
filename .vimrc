@@ -15,18 +15,17 @@ silent! if plug#begin('~/.vim/plugged')
 " ============================================================================
 " VIM-PLUG BLOCK {{{
 " ============================================================================
-"if empty(glob('~/.vim/autoload/plug.vim'))
-"  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"endif
-"if plug#begin('~/.vim/plugged')
-"
-"if s:darwin
-"  let g:plug_url_format = 'git@github.com:%s.git'
-"else
-"  let $GIT_SSL_NO_VERIFY = 'true'
-"endif
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+if s:darwin
+  let g:plug_url_format = 'git@github.com:%s.git'
+else
+  let $GIT_SSL_NO_VERIFY = 'true'
+endif
 
 " My plugins
 Plug 'junegunn/vim-emoji'

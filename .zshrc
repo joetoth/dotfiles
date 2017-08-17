@@ -762,5 +762,4 @@ autoload compinit
 #==============
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
-sh $HOME/base16-shell/scripts/base16-tomorrow-night.sh
 

@@ -182,6 +182,7 @@ alias debugoff='unsetopt XTRACE VERBOSE'
 alias gmailc='google-chrome --app="https://mail.google.com/mail/u/0/#inbox?compose=new"'
 alias gmail='google-chrome --app="https://mail.google.com/mail/u/0/#inbox"'
 alias what_port_app='sudo netstat -nlp | grep'
+alias smi='nvidia-smi'
 
 alias pomo='(sleep 1500 && notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK")&'
 alias learnd='python $HOME/bin/python/learn.py --daemon=true'
@@ -219,7 +220,7 @@ alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
-alias vpn='sudo openvpn --config $HOME/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
+alias vpn='sudo openvpn --config /home/joetoth/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
 
 # FUNCTIONS
 source_if_exists() {

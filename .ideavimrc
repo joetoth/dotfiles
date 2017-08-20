@@ -12,7 +12,7 @@ set surround
 
 map ; :
 map ,vim :vsp ~/.ideavimrc<cr>
-map ,isc :action IdeScriptingConsole<cr>
+"map ,isc :action IdeScriptingConsole<cr>
 map ,vip :vsp ~/present.html<cr>
 map <Space>r :source ~/.ideavimrc<cr>
 map <Space>n gt
@@ -30,18 +30,19 @@ map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>
 map ,e :action Run<CR>
 map ,n :action SelectIn<CR>
-"map ,f :action FindInPath<CR>
+map ,f :action FindInPath<CR>
 map ,u :action FileStructurePopup<CR>
 map ,l :action LintBlaze<CR>
 map Q :action FillParagraph<CR>
 map ,o :action Blaze.OpenCorrespondingBuildFile<CR>
-nmap ,d :action ShowErrorDescription<cr>
-nmap ,h :action FileStructurePopup<cr>
-nmap ,m :action GotoRelated<cr>
-nmap ,t :action GotoTest<cr>
+map ,d :action ShowErrorDescription<cr>
+map ,h :action FileStructurePopup<cr>
+map ,m :action GotoRelated<cr>
+map ,t :action GotoTest<cr>
 map ,x :action Rerun<CR>
 map ,c :action Vcs.QuickListPopupAction<CR>
 map ,ag :action FindInPath<CR>
+map ,z :action FindUsages<CR>
 
 "map ,, :action EasyMotion<CR>
 "map ,, :action AceJumpAction<CR>
@@ -900,7 +901,7 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""IdeScriptingConsole
 ""Images.EditExternally                              <A-C-4>
 ""Images.Editor.ActualSize                           <C-o> <C-/>
-""Images.Editor.ToggleGrid                           <C-Þ>
+""Images.Editor.ToggleGrid                           <C-?>
 ""Images.Editor.ZoomIn                               <C-k> <C-=>
 ""Images.Editor.ZoomOut                              <C-m> <C-->
 ""Images.EditorPopupMenu
@@ -1015,7 +1016,7 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""MarkRootGroup
 ""MarkSourceRootGroup
 ""MaximizeActiveDialog
-""MaximizeToolWindow                                 <C-S-Þ>
+""MaximizeToolWindow                                 <C-S-?>
 ""MemberPushDown
 ""MembersPullUp
 ""MemoryView.ClassesPopupActionGroup
@@ -1155,7 +1156,7 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""PyTypeHierarchyPopupMenu
 ""QuickActionPopup                                   <A-C-CR>
 ""QuickActions
-""QuickChangeScheme                                  <C-À>
+""QuickChangeScheme                                  <C-?>
 ""QuickDocCopy                                       <C-C> <C-Ins>
 ""QuickEvaluateExpression                            <A-C-8> button=1 clickCount=1 modifiers=704
 ""QuickFixes
@@ -1305,7 +1306,7 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""ShowPackageCycles
 ""ShowPackageDeps
 ""ShowPackageDepsGroup
-""ShowPopupMenu                                      <ȍ>
+""ShowPopupMenu                                      <?>
 ""ShowProcessWindow
 ""ShowProjectStructureSettings                       <A-C-S-S>
 ""ShowRecentFindUsagesGroup
@@ -1483,7 +1484,7 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""Vcs.Log.Toolbar.Internal
 ""Vcs.MessageActionGroup
 ""Vcs.Push                                           <C-S-K>
-""Vcs.QuickListPopupAction                           <A-À>
+""Vcs.QuickListPopupAction                           <A-?>
 ""Vcs.RefreshStatuses
 ""Vcs.RollbackChangedLines                           <A-C-Z>
 ""Vcs.Show.Local.Changes

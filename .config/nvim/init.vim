@@ -1,5 +1,5 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.config/nvim/plugged'))
+  silent !curl -fLo ~/.config/nvim/plugged/ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   augroup init
     autocmd VimEnter * PlugInstall
   augroup END
@@ -35,6 +35,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle'   }
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
 augroup nerd_loader
   autocmd!
@@ -47,8 +48,8 @@ augroup nerd_loader
 augroup END
 
   if !IsWork()
-    Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
-    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+"    Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
+"    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
     Plug 'Chiel92/vim-autoformat'
     Plug 'google/vim-maktaba'
     Plug 'bazelbuild/vim-bazel'
@@ -135,9 +136,9 @@ augroup vimrc
     autocmd!
 augroup END
 
-autocmd vimrc FileType c,cpp,go,py nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
-autocmd vimrc FileType c,cpp,py    nnoremap <buffer> K  :YcmCompleter GetType<CR>
-autocmd vimrc FileType c,cpp,py    nnoremap <buffer> m   :YcmCompleter GoToReferences<CR>
+"autocmd vimrc FileType c,cpp,go,py nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
+"autocmd vimrc FileType c,cpp,py    nnoremap <buffer> K  :YcmCompleter GetType<CR>
+"autocmd vimrc FileType c,cpp,py    nnoremap <buffer> m   :YcmCompleter GoToReferences<CR>
 " }}}
 "
 
@@ -162,3 +163,16 @@ nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 nnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 " nnoremap <silent> q/ :History/<CR>
+"
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+let g:LanguageClient_serverCommands = {
+        \ 'python': ['pyls'],
+        \ 'cpp': ['clangd'],
+        \ 'go': ['go-langserver'],
+        \ }

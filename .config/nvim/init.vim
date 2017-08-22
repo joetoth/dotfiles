@@ -69,7 +69,7 @@ highlight ColorColumn guibg=#282828
 highlight SpecialKey guifg=#282828
 if has('mouse') | set mouse=a | endif
 set cino=:0,(shiftwidth
-set clipboard=unnamedplus
+set clipboard=unnamed
 set cursorline
 set expandtab
 set hidden

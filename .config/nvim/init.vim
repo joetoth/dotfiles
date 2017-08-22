@@ -24,10 +24,12 @@ call plug#begin()
   "Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
   "Plug 'Shougo/denite.nvim',
 Plug 'airblade/vim-gitgutter'
+Plug 'bazelbuild/vim-bazel',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim',
 Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register 
 Plug 'morhetz/gruvbox'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -82,12 +84,19 @@ set shiftwidth=2
 set smartcase
 set tabstop=2
 set termguicolors
+setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
 
 " keys
 "" leader
 "let g:mapleader="\<SPACE>"
 let g:mapleader=","
 nnoremap ; :
+
+ " Movement
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
 
 " End of line / Beginning
 noremap H 0
@@ -124,6 +133,8 @@ if has('persistent_undo')
 endif
 
 let g:undotree_WindowLayout = 2
+let g:deoplete#enable_at_startup = 1
+
 nnoremap <leader>u :UndotreeToggle<CR>
 " redo
 nnoremap U :redo<CR>
@@ -164,12 +175,19 @@ nnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 " nnoremap <silent> q/ :History/<CR>
 "
+" Required for operations modifying multiple buffers like rename.
+set hidden
 " Automatically start language servers.
 let g:LanguageClient_autoStart = 1
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" Use CTRL-S for saving, also in Insert mode
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <C-O>:update<CR>
 
 let g:LanguageClient_serverCommands = {
         \ 'python': ['pyls'],

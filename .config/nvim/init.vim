@@ -6,30 +6,30 @@ if empty(glob('~/.config/nvim/plugged'))
 endif
 
 function! IsWork()
-    return filereadable(glob("~/wdf/work.vim"))
+  return filereadable(glob("~/wdf/work.vim"))
 endfunction
 
 " plugs
 call plug#begin()
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
 
-  function! BuildYCM(info)
-    if a:info.status == 'installed' || a:info.force
-      !./install.py --clang-completer --gocode-completer --tern-completer
-    endif
-  endfunction
+function! BuildYCM(info)
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer --gocode-completer --tern-completer
+  endif
+endfunction
 
-  "Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  "Plug 'Shougo/denite.nvim',
+"Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+"Plug 'Shougo/denite.nvim',
 Plug 'airblade/vim-gitgutter'
 Plug 'bazelbuild/vim-bazel',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim',
-Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register 
+Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register
 Plug 'morhetz/gruvbox'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -37,7 +37,14 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle'   }
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+" (Optional) Showing function signature and inline doc.
+Plug 'Shougo/echodoc.vim'
+
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 
 augroup nerd_loader
   autocmd!
@@ -49,14 +56,14 @@ augroup nerd_loader
         \| endif
 augroup END
 
-  if !IsWork()
-"    Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
-"    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-    Plug 'Chiel92/vim-autoformat'
-    Plug 'google/vim-maktaba'
-    Plug 'bazelbuild/vim-bazel'
-    Plug 'bazelbuild/vim-ft-bzl'
-  endif
+if !IsWork()
+  "    Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
+  "    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+  Plug 'Chiel92/vim-autoformat'
+  Plug 'google/vim-maktaba'
+  Plug 'bazelbuild/vim-bazel'
+  Plug 'bazelbuild/vim-ft-bzl'
+endif
 call plug#end()
 
 " basics
@@ -92,7 +99,7 @@ setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
 let g:mapleader=","
 nnoremap ; :
 
- " Movement
+" Movement
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -106,12 +113,12 @@ noremap L $
 autocmd BufWritePost * silent! !touch %
 
 if IsWork()
-    source ~/wdf/work.vim
+  source ~/wdf/work.vim
 endif
 
 augroup myvimrc
-    au!
-    au BufWritePost $MYVIMRC so $MYVIMRC
+  au!
+  au BufWritePost $MYVIMRC so $MYVIMRC
 augroup END
 
 " <F10> | NERD Tree
@@ -125,11 +132,11 @@ nnoremap <leader>vi :split $MYVIMRC<CR>
 " Create dirs
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-    let myUndoDir = expand('~/.config/nvim/undo')
-    " Create dirs
-    call system('mkdir ' . myUndoDir)
-    let &undodir = myUndoDir
-    set undofile
+  let myUndoDir = expand('~/.config/nvim/undo')
+  " Create dirs
+  call system('mkdir ' . myUndoDir)
+  let &undodir = myUndoDir
+  set undofile
 endif
 
 let g:undotree_WindowLayout = 2
@@ -144,7 +151,7 @@ nnoremap U :redo<CR>
 " YCM
 " ----------------------------------------------------------------------------
 augroup vimrc
-    autocmd!
+  autocmd!
 augroup END
 
 "autocmd vimrc FileType c,cpp,go,py nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
@@ -173,24 +180,57 @@ nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 nnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
-" nnoremap <silent> q/ :History/<CR>
+
+" qq to record, Q to replay
+nnoremap Q @q
+nnoremap <silent> q/ :History/<CR>
+nnoremap <silent> q, :History<CR>
+nnoremap <silent> q; :History:<CR>
+map <silent><c-e>  :History<cr>
 "
 " Required for operations modifying multiple buffers like rename.
 set hidden
 " Automatically start language servers.
-let g:LanguageClient_autoStart = 1
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
+let g:formatters_python = ['yapf']
+let g:formatter_yapf_style = 'google'
+autocmd FileType python set shiftwidth=2
+autocmd FileType python set tabstop=2
+autocmd FileType python set softtabstop=2
+map <C-F> :Autoformat<cr>
 " Use CTRL-S for saving, also in Insert mode
+"
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
 
-let g:LanguageClient_serverCommands = {
-        \ 'python': ['pyls'],
-        \ 'cpp': ['clangd'],
-        \ 'go': ['go-langserver'],
-        \ }
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['cpp'],
+        \ })
+endif
+
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+
+nnoremap <silent> <leader>g :LspDefinition<CR>
+
+" let g:LanguageClient_autoStart = 1
+
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> <leader>g :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"let g:LanguageClient_serverCommands = {
+"      \ 'python': ['pyls'],
+"      \ 'cpp': ['clangd'],
+"      \ 'cc': ['clangd'],
+"      \ 'go': ['go-langserver'],
+"      \ }

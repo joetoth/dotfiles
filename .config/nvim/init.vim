@@ -23,6 +23,7 @@ endfunction
 
 "Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 "Plug 'Shougo/denite.nvim',
+Plug 'hkupty/iron.nvim',
 Plug 'airblade/vim-gitgutter'
 Plug 'bazelbuild/vim-bazel',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
@@ -99,11 +100,29 @@ setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
 let g:mapleader=","
 nnoremap ; :
 
+" leader combination to stop search highlighting
+noremap / :nohlsearch <CR>/
+
 " Movement
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+inoremap <C-l> <C-w>l
+inoremap <C-h> <C-w>h
+inoremap <C-j> <C-w>j
+inoremap <C-k> <C-w>k
+
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 " End of line / Beginning
 noremap H 0
@@ -222,6 +241,14 @@ if executable('pyls')
 endif
 
 nnoremap <silent> <leader>g :LspDefinition<CR>
+
+" Iron
+augroup ironmapping
+    autocmd!
+    autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
+    autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
+    autocmd Filetype python nmap <buffer> <localleader>p <Plug>(iron-repeat-cmd)
+augroup END
 
 " let g:LanguageClient_autoStart = 1
 

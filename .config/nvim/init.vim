@@ -15,14 +15,6 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer --tern-completer
-  endif
-endfunction
-
-"Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-"Plug 'Shougo/denite.nvim',
 Plug 'hkupty/iron.nvim',
 Plug 'airblade/vim-gitgutter'
 Plug 'bazelbuild/vim-bazel',
@@ -32,7 +24,6 @@ Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register
 Plug 'morhetz/gruvbox'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -42,10 +33,26 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle'   }
 " (Optional) Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
+
+if has('python3')
+    Plug 'SirVer/ultisnips' " Snippet engine
+    Plug 'honza/vim-snippets' " Actual snippets
+    Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+endif
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
+
+" SCM support
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 
 augroup nerd_loader
   autocmd!
@@ -79,7 +86,7 @@ highlight ColorColumn guibg=#282828
 highlight SpecialKey guifg=#282828
 if has('mouse') | set mouse=a | endif
 set cino=:0,(shiftwidth
-set clipboard=unnamedplus
+set clipboard=unnamed
 set cursorline
 set expandtab
 set hidden
@@ -93,15 +100,40 @@ set smartcase
 set tabstop=2
 set termguicolors
 setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
+set spell spelllang=en
 
+" search options
+set hlsearch " highlight search matches. Turn of with :nohlsearch after a search
+set incsearch " highlight partial search pattern matches while typing
+set ignorecase " usually ignore case when searching
+set smartcase " unless a search term starts with a capital letter
+if exists('+inccommand')
+    set inccommand=nosplit
+endif
+" leader combination to stop search highlighting
+noremap / :nohlsearch <CR>/
+
+" Completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+set completeopt+=preview
 " keys
 "" leader
 "let g:mapleader="\<SPACE>"
 let g:mapleader=","
 nnoremap ; :
 
-" leader combination to stop search highlighting
-noremap / :nohlsearch <CR>/
+if has('python3')
+    let g:UltiSnipsExpandTrigger="<c-e>"
+    call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+        \ 'name': 'ultisnips',
+        \ 'whitelist': ['*'],
+        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+        \ }))
+endif
 
 " Movement
 nnoremap <C-l> <C-w>l
@@ -114,15 +146,23 @@ inoremap <C-h> <C-w>h
 inoremap <C-j> <C-w>j
 inoremap <C-k> <C-w>k
 
-tnoremap <C-h> <C-\><C-N><C-w>h
-tnoremap <C-j> <C-\><C-N><C-w>j
-tnoremap <C-k> <C-\><C-N><C-w>k
-tnoremap <C-l> <C-\><C-N><C-w>l
-
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
+" settings for neovim terminals
+if has('nvim')
+"    autocmd vimrc TermOpen * setlocal nospell
+"    autocmd vimrc TermOpen * set bufhidden=hide
+"    autocmd vimrc BufEnter * if &buftype == 'terminal' | :startinsert | endif
+    let g:terminal_scrollback_buffer_size=100000
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+endif
+
 
 " End of line / Beginning
 noremap H 0
@@ -216,6 +256,7 @@ let g:formatter_yapf_style = 'google'
 autocmd FileType python set shiftwidth=2
 autocmd FileType python set tabstop=2
 autocmd FileType python set softtabstop=2
+autocmd FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<cr>
 map <C-F> :Autoformat<cr>
 " Use CTRL-S for saving, also in Insert mode
 "
@@ -243,12 +284,19 @@ endif
 nnoremap <silent> <leader>g :LspDefinition<CR>
 
 " Iron
+"nmap <leader>s <Plug>(iron-send-motion)
+"vmap <leader>s <Plug>(iron-send-motion)
+"vmap <enter> <Plug>(iron-send-motion)
+"nmap <leader>p <Plug>(iron-repeat-cmd)
+
 augroup ironmapping
     autocmd!
-    autocmd Filetype python nmap <buffer> <localleader>t <Plug>(iron-send-motion)
-    autocmd Filetype python vmap <buffer> <localleader>t <Plug>(iron-send-motion)
-    autocmd Filetype python nmap <buffer> <localleader>p <Plug>(iron-repeat-cmd)
+    nmap <ENTER> V<Plug>(iron-send-motion)
+    vmap <ENTER> <Plug>(iron-send-motion)
+    nmap <leader>p <Plug>(iron-repeat-cmd)
 augroup END
+
+
 
 " let g:LanguageClient_autoStart = 1
 
@@ -260,4 +308,7 @@ augroup END
 "      \ 'cpp': ['clangd'],
 "      \ 'cc': ['clangd'],
 "      \ 'go': ['go-langserver'],
-"      \ }
+"\ }
+" UltiSnips settings
+let g:UltiSnipsEditSplit = "context"
+let g:UltiSnipsSnippetsDir = "~/.config/nvim/snippets/"      

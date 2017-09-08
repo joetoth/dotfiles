@@ -289,7 +289,7 @@ nnoremap <silent> <leader>g :LspDefinition<CR>
 
 augroup ironmapping
     autocmd!
-    nmap <ENTER> V<Plug>(iron-send-motion)
+    nmap <ENTER> V :call IronSend(substitute(getline('.')," ","","g"))<CR>
     vmap <ENTER> <Plug>(iron-send-motion)
     nmap <leader>p <Plug>(iron-repeat-cmd)
 augroup END

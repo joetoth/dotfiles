@@ -24,7 +24,7 @@ endfunction
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'Shougo/denite.nvim',
 Plug 'hkupty/iron.nvim',
-Plug 'airblade/vim-gitgutter'
+Plug '~/.config/nvim/plugged/jde',
 Plug 'bazelbuild/vim-bazel',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim',
@@ -229,7 +229,7 @@ let g:fzf_colors =
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+"let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " End of line / Beginning
 noremap H 0
@@ -253,7 +253,9 @@ nnoremap <leader>n :NERDTreeFind<cr>
 
 " Quickly open/reload vim
 nnoremap <leader>vi :split $MYVIMRC<CR>
-nnoremap <leader>vr :run "~/projects/dotfiles/neo.py"
+
+" TODO: open plugin devel
+"nnoremap <leader>vr :run "~/projects/dotfiles/neo.py"
 
 " UNDO ====================================================
 " Create dirs
@@ -354,7 +356,7 @@ nnoremap <silent> <leader>g :LspDefinition<CR>
 " Iron
 "nmap <leader>s <Plug>(iron-send-motion)
 "vmap <leader>s <Plug>(iron-send-motion)
-"vmap <enter> <Plug>(iron-send-motion)
+vmap <enter> <Plug>(iron-send-motion)
 "nmap <leader>p <Plug>(iron-repeat-cmd)
 
 augroup ironmapping
@@ -390,6 +392,7 @@ nnoremap <C-Right> :tabnext<CR>
 "  else
 "    let dirname = fnamemodify(a:path, ":h")
 "  endif
+"
 "  execute "tcd ". dirname
 "endfunction()
 "

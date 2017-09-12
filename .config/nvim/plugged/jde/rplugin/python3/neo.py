@@ -11,7 +11,7 @@ class Main(object):
     def sendToTerm(self, args):
       if not self.termid:
         print('moo3')
-        self.vim.command('echo "hello from DoItPython"')
+        self.vim.command('echo "hello from sennnd"')
         # TODO: if more than one term on current windows show selector to send to
         for b in self.vim.buffers:
           print(b.name)

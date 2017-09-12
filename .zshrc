@@ -182,7 +182,7 @@ faded_orange="#AF3A03"
 #fi
 
 export GOPATH=$HOME/projects/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.pub-cache/bin:/usr/lib/dart/bin/
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin
 
 export EDITOR='vi'
 export VISUAL='vi'

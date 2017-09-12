@@ -10,9 +10,9 @@ function! IsWork()
 endfunction
 
 function! Blog()
-  return filereadable(glob("~/wdf/work.vim"))
-
-  nnoremap <leader>vi :split $MYVIMRC<CR>
+  tabnew
+  e ~/projects/joe.ai
+  cd ~/projects/joe.ai
 endfunction
 
 " plugs
@@ -76,6 +76,7 @@ if !IsWork()
   Plug 'bazelbuild/vim-ft-bzl'
 endif
 call plug#end()
+
 
 " basics
 colorscheme gruvbox
@@ -362,7 +363,7 @@ vmap <enter> <Plug>(iron-send-motion)
 augroup ironmapping
   autocmd!
   nmap <ENTER> V :call IronSend(substitute(getline('.'),'\n\+$', '', ''))<CR>
-  vmap <ENTER> <Plug>(iron-send-motion)
+  vmap <ENTER> <Plug>(iron-send)
   nmap <leader>p <Plug>(iron-repeat-cmd)
 augroup END
 
@@ -398,3 +399,18 @@ nnoremap <C-Right> :tabnext<CR>
 "
 "autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 "
+function! s:get_lines() abort
+  let lang = v:lang
+  language message C
+  redir => signlist
+    silent! execute 'sign place buffer='. b:sy.buffer
+  redir END
+  silent! execute 'language message' lang
+
+  let lines = []
+  for line in split(signlist, '\n')[2:]
+    call insert(lines, matchlist(line, '\v^\s+line\=(\d+)')[1], 0)
+  endfor
+
+  return reverse(lines)
+endfunction

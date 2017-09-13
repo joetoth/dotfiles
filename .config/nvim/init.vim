@@ -9,10 +9,13 @@ function! IsWork()
   return filereadable(glob("~/wdf/work.vim"))
 endfunction
 
-function! Blog()
+function! NewTab(dir)
   tabnew
-  e ~/projects/joe.ai
-  cd ~/projects/joe.ai
+  e a:dir
+  if !filereadable(a:dir)
+    echo(a:dir)
+    cd(a:dir)
+  endif
 endfunction
 
 " plugs
@@ -25,15 +28,11 @@ endfunction
 "Plug 'Shougo/denite.nvim',
 Plug 'hkupty/iron.nvim',
 Plug '~/.config/nvim/plugged/jde',
-Plug 'bazelbuild/vim-bazel',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim',
 Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register
-Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+Plug 'morhetz/gruvbox' " theme
+Plug 'scrooloose/nerdcommenter',
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle'   }
 "Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
@@ -80,40 +79,39 @@ call plug#end()
 
 " basics
 colorscheme gruvbox
-filetype plugin indent on
 set background=dark
 
-hi Search guibg=#ff2a50 guifg=#ffffff
-"" gruvbox's dark0, so it just looks like cursorline stops at 80
-hi Normal ctermbg=NONE guibg=NONE
-let &colorcolumn=join(range(81,250), ',')
-highlight ColorColumn guibg=#282828
-"" so listchars are only visible on the current line
-highlight SpecialKey guifg=#282828
+let g:mapleader=","
+nnoremap ; :
 
-if has('mouse') | set mouse=a | endif
 set cino=:0,(shiftwidth
-set clipboard=unnamed
-set cursorline
-set expandtab
-set hidden
-set ignorecase
-set list
-set magic
-set nostartofline
-set number
-set shiftwidth=2
-set smartcase
-set tabstop=2
-set termguicolors
+set cursorline    " Line on cursor
+set expandtab     " spaces for tab
+set hidden        " Allow buffers to be dirty when 'hidden'
+set magic         " special chars in search patterns
+set nostartofline " Do not move cursor to start of line when paging and other commands
+set termguicolors "uses |highlight-guifg| and |highlight-guibg| attributes in the terminal, 24-bit color
 setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
+set clipboard=unnamed " Copy to system clipboard (same that chrome uses)
+set nowrap        " don't wrap lines
+set tabstop=2     " a tab is two spaces
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set autoindent    " always set autoindenting on
+set copyindent    " copy the previous indentation on autoindenting
+set number        " always show line numbers
+set shiftwidth=2  " number of spaces to use for autoindenting
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set showmatch     " set show matching parenthesis
+set ignorecase    " ignore case when searching
+set smartcase     " ignore case if search pattern is all lowercase, case-sensitive otherwise
+set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
+set hlsearch      " highlight search terms
+set incsearch     " show search matches as you type
+set list
 set spell spelllang=en
 
+
 " search options
-set hlsearch " highlight search matches. Turn of with :nohlsearch after a search
-set incsearch " highlight partial search pattern matches while typing
-set ignorecase " usually ignore case when searching
-set smartcase " unless a search term starts with a capital letter
 if exists('+inccommand')
   set inccommand=nosplit
 endif
@@ -127,11 +125,6 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 imap <c-space> <Plug>(asyncomplete_force_refresh)
 set completeopt+=preview
-" keys
-"" leader
-"let g:mapleader="\<SPACE>"
-let g:mapleader=","
-nnoremap ; :
 
 if has('python3')
   let g:UltiSnipsExpandTrigger="<c-e>"
@@ -162,7 +155,7 @@ nnoremap <A-l> <C-w>l
 if has('nvim')
   "    autocmd vimrc TermOpen * setlocal nospell
   "    autocmd vimrc TermOpen * set bufhidden=hide
-  "    autocmd vimrc BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  autocmd vimrc BufEnter * if &buftype == 'terminal' | :startinsert | endif
   let g:terminal_scrollback_buffer_size=100000
   tnoremap <C-h> <C-\><C-n><C-w>h
   tnoremap <C-j> <C-\><C-n><C-w>j
@@ -253,7 +246,12 @@ nnoremap <F10> :NERDTreeToggle<cr>
 nnoremap <leader>n :NERDTreeFind<cr>
 
 " Quickly open/reload vim
-nnoremap <leader>vi :split $MYVIMRC<CR>
+nnoremap <leader>cdv :vsp $MYVIMRC<cr>
+nnoremap <leader>cdw :vsp ~/wdf/work.vim<cr>
+
+"nnoremap <leader>cda :call NewTab("/google/code/joetoth/abe/google3")<cr>
+nnoremap <leader>cda :call NewTab("~/projects/abe/google3")<cr>
+nnoremap <leader>cdb :call NewTab("~/projects/joe.ai")<cr>
 
 " TODO: open plugin devel
 "nnoremap <leader>vr :run "~/projects/dotfiles/neo.py"
@@ -317,15 +315,13 @@ nnoremap <silent> q, :History<CR>
 nnoremap <silent> q; :History:<CR>
 map <silent><c-e>  :History<cr>
 "
-" Required for operations modifying multiple buffers like rename.
-set hidden
 
-if !IsWork()
-  let g:formatters_python = ['yapf']
-  let g:formatter_yapf_style = 'google'
-  autocmd FileType python set shiftwidth=2
-  autocmd FileType python set tabstop=2
-  autocmd FileType python set softtabstop=2
+"if !IsWork()
+  "let g:formatters_python = ['yapf']
+  "let g:formatter_yapf_style = 'google'
+  "autocmd FileType python set shiftwidth=2
+  "autocmd FileType python set tabstop=2
+  "autocmd FileType python set softtabstop=2
 
 
   if executable('clangd')
@@ -344,7 +340,7 @@ if !IsWork()
           \ 'whitelist': ['python'],
           \ })
   endif
-endif
+"endif
 
 map <C-F> :Autoformat<cr>
 " Use CTRL-S for saving, also in Insert mode
@@ -387,6 +383,18 @@ let g:UltiSnipsSnippetsDir = "~/.config/nvim/snippets/"
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 
+function! OnTabEnter(path)
+  if isdirectory(a:path)
+    let dirname = a:path
+  else
+    let dirname = fnamemodify(a:path, ":h")
+  endif
+
+  execute "tcd ". dirname
+endfunction()
+
+autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
+
 "function! OnTabEnter(path)
 "  if isdirectory(a:path)
 "    let dirname = a:path
@@ -399,6 +407,17 @@ nnoremap <C-Right> :tabnext<CR>
 "
 "autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 "
+augroup Terminal
+  au!
+  au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
+augroup END
+function! REPLSend(lines)
+  call jobsend(g:last_terminal_job_id, add(a:lines, ''))
+endfunction
+
+command! REPLSendLine call REPLSend([getline('.')])
+
+nnoremap <silent> <f6> :REPLSendLine<cr>
 function! s:get_lines() abort
   let lang = v:lang
   language message C
@@ -414,3 +433,11 @@ function! s:get_lines() abort
 
   return reverse(lines)
 endfunction
+
+"" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+"For some reason, vim registers <C-/> as <C-_>
+"https://stackoverflow.com/questions/9051837/how-to-map-c-to-toggle-comments-in-vim
+nnoremap <C-_> :call NERDComment(0,"toggle")<CR>
+vnoremap <C-_> :call NERDComment(0,"toggle")<CR>

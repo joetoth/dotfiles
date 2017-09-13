@@ -395,3 +395,14 @@ nnoremap <C-Right> :tabnext<CR>
 "
 "autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 "
+augroup Terminal
+  au!
+  au TermOpen * let g:last_terminal_job_id = b:terminal_job_id
+augroup END
+function! REPLSend(lines)
+  call jobsend(g:last_terminal_job_id, add(a:lines, ''))
+endfunction
+
+command! REPLSendLine call REPLSend([getline('.')])
+
+nnoremap <silent> <f6> :REPLSendLine<cr>

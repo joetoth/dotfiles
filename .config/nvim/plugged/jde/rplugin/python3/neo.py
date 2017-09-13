@@ -20,6 +20,10 @@ class Main(object):
     def doItPython(self, args):
       print(self.vim.current.range)
 
+    @neovim.function('DoItPython')
+    def doItPython(self, args):
+      print(self.vim.current.range)
+
     @neovim.command('GetFullPath')
     def getFullPath(self):
       return self.vim.funcs.expand('%:p') 

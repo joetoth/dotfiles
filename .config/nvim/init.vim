@@ -61,15 +61,15 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer --tern-completer
-  endif
-endfunction
+"function! BuildYCM(info)
+"  if a:info.status == 'installed' || a:info.force
+"    !./install.py --clang-completer --gocode-completer --tern-completer
+"  endif
+"endfunction
 
 if !IsWork()
-  Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
-  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+"  Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp',  'python', 'bazel'], 'do': function('BuildYCM') }
+"  Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
   Plug 'Chiel92/vim-autoformat'
   Plug 'google/vim-maktaba'
   Plug 'bazelbuild/vim-bazel'

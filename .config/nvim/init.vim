@@ -14,7 +14,9 @@ function! NewTab(dir)
   e a:dir
   if !filereadable(a:dir)
     echo(a:dir)
-    cd(a:dir)
+    execute 'cd' fnameescape(a:dir)
+    ":cd %:p:h<CR>:pwd<CR>
+    "tcd(a:dir)
   endif
 endfunction
 
@@ -30,21 +32,13 @@ Plug 'hkupty/iron.nvim',
 Plug '~/.config/nvim/plugged/jde',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim',
-Plug 'junegunn/vim-peekaboo' " quote or @ or ctrl+r to browse register
-Plug 'morhetz/gruvbox' " theme
+Plug 'junegunn/vim-peekaboo', " quote or @ or ctrl+r to browse register
+Plug 'morhetz/gruvbox', " theme
 Plug 'scrooloose/nerdcommenter',
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle'   }
-"Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-" (Optional) Showing function signature and inline doc.
-Plug 'Shougo/echodoc.vim'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"" If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
+Plug 'Shougo/echodoc.vim', "Displays function signatures from completions in the command lin
+Plug 'airblade/vim-rooter',
 
 if has('python3')
   Plug 'SirVer/ultisnips' " Snippet engine
@@ -53,6 +47,7 @@ if has('python3')
 endif
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 
@@ -92,7 +87,7 @@ set magic         " special chars in search patterns
 set nostartofline " Do not move cursor to start of line when paging and other commands
 set termguicolors "uses |highlight-guifg| and |highlight-guibg| attributes in the terminal, 24-bit color
 setlocal signcolumn=yes " Always show gutter so text doesn't realign everytime
-set clipboard=unnamed " Copy to system clipboard (same that chrome uses)
+set clipboard=unnamedplus " Copy to system clipboard (same that chrome uses)
 set nowrap        " don't wrap lines
 set tabstop=2     " a tab is two spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
@@ -109,12 +104,14 @@ set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set list
 set spell spelllang=en
+set noshowmode
 
 
 " search options
 if exists('+inccommand')
   set inccommand=nosplit
 endif
+
 " leader combination to stop search highlighting
 noremap / :nohlsearch <CR>/
 
@@ -155,7 +152,7 @@ nnoremap <A-l> <C-w>l
 if has('nvim')
   "    autocmd vimrc TermOpen * setlocal nospell
   "    autocmd vimrc TermOpen * set bufhidden=hide
-  autocmd vimrc BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  "autocmd vimrc BufEnter * if &buftype == 'terminal' | :startinsert | endif
   let g:terminal_scrollback_buffer_size=100000
   tnoremap <C-h> <C-\><C-n><C-w>h
   tnoremap <C-j> <C-\><C-n><C-w>j

@@ -808,3 +808,4 @@ autoload compinit
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
 
+fortune

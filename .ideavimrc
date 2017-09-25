@@ -88,6 +88,9 @@ map <C-e> :action RecentFiles<CR>
 map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
+map <C-g> :action FindUsages<CR>
+map <C-S-g> :action Generate<CR>
+
 " Simulate Peekaboo VIM plugin
 map " :action PasteMultiple<CR>
 map @ :action PasteMultiple<CR>

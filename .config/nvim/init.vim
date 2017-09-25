@@ -28,6 +28,7 @@ endfunction
 
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'Shougo/denite.nvim',
+Plug 'christoomey/vim-tmux-navigator',
 Plug 'hkupty/iron.nvim',
 Plug '~/.config/nvim/plugged/jde',
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}

@@ -52,15 +52,18 @@ map <Space>r :source ~/.ideavimrc<cr>
 " Alt
 "
 
-map <A-z> <C-w>h
-map <A-1> :action ActivateProjectToolWindow<CR>
-map <A-4> :action ActivateRunToolWindow<CR>
-map <A-6> :action ActivateTODOToolWindow<CR>
-map <A-7> :action ActivateStructureToolWindow<CR>
-map <A-9> :action ActivateVersionToolWindow<CR>
+"map <A-z> <C-w>h
+"map <A-1> :action ActivateProjectToolWindow<CR>
+"map <A-4> :action ActivateRunToolWindow<CR>
+"map <A-6> :action ActivateTODOToolWindow<CR>
+"map <A-7> :action ActivateStructureToolWindow<CR>
+"map <A-9> :action ActivateVersionToolWindow<CR>
+"
+map <C-x> :action Rerun<CR>
+map <C-S-x> :action ChooseRunConfiguration<CR>
 
 " Need to map as IDE as visual mode doesn't work this way
-" map <C-x> :action ExecuteInPyConsoleAction<CR>
+" map <A-x> :action ExecuteInPyConsoleAction<CR>
 
 " Buffer Navigation
 map <C-h> <C-w>h
@@ -74,9 +77,12 @@ map <C-s> :action SaveAll<CR>
 
 map <C-r> :action Replace<CR>
 map <C-S-r> :action ReplaceInPath<CR>
+map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
-map <C-f> :action Find<CR>
-map <C-S-f> :action FindInPath<CR>
+"map <C-f> :action Find<CR>
+"map <C-S-f> :action FindInPath<CR>
+"vmap <C-f> :action Find<CR>
+"vmap <C-S-f> :action FindInPath<CR>
 
 map <C-e> :action RecentFiles<CR>
 map <C-S-e> :action RecentChangedFiles<CR>

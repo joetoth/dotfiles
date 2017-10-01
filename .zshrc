@@ -265,6 +265,7 @@ alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|per
 alias cdp='cd ~/projects'
 alias cda='cd ~/projects/ideas'
 alias vpn='sudo openvpn --config /home/joetoth/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
+alias blog='vi ~/projects/joe.ai/content/'
 
 # FUNCTIONS
 source_if_exists() {

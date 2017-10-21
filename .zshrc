@@ -193,6 +193,8 @@ export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$HOME/bin:$HOME/opt/activator-1.2.10
 export PATH=$PATH:$HOME/projects/bazel/output
 export PATH=$PATH:$HOME/opt/visualvm/bin
+# OSX coreutils
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 #export DART_SDK=~/opt/dart-sdk
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
@@ -264,7 +266,7 @@ alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
 alias cda='cd ~/projects/ideas'
-alias vpn='sudo openvpn --config /home/joetoth/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
+alias vpn='sudo openvpn --config $HOME/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
 alias blog='vi ~/projects/joe.ai/content/'
 
 # FUNCTIONS

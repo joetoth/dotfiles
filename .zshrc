@@ -192,7 +192,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$HOME/bin:$HOME/opt/activator-1.2.10
 export PATH=$PATH:$HOME/projects/bazel/output
-export PATH=$PATH:$HOME/opt/visualvm/bin
+export PATH=$PATH:$HOME/miniconda3/bin
+
 #export DART_SDK=~/opt/dart-sdk
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"

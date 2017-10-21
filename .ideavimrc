@@ -43,7 +43,6 @@ set surround
 
 " Shift+ESC Closes 'other' Windows
 
-map <Space>r :source ~/.ideavimrc<cr>
 
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
@@ -79,6 +78,8 @@ map <C-r> :action Replace<CR>
 map <C-S-r> :action ReplaceInPath<CR>
 map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
+map <A-S-h> :action TypeHierarchy<CR>
+
 "map <C-f> :action Find<CR>
 "map <C-S-f> :action FindInPath<CR>
 "vmap <C-f> :action Find<CR>
@@ -107,8 +108,10 @@ imap <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
 
+map <A-Space>:action ActivateTerminalToolWindow<cr>
 
 map ; :
+map ,R :source ~/.ideavimrc<cr>
 map ,vim :vsp ~/.ideavimrc<cr>
 map ,cdb :vsp ~/projects/joe.ai/content/current.md
 map ,cds :action IdeScriptingConsole<cr>

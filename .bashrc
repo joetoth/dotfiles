@@ -712,3 +712,6 @@ atwork() {
 #iface wlan0 inet dhcp
 #        wireless-essid [ESSID]
 #        wireless-mode [MODE] 
+
+# added by Miniconda3 installer
+export PATH="/home/joetoth/miniconda3/bin:$PATH"

@@ -1,0 +1,34 @@
+#
+# ~/.pythonrc
+
+# Default modules.
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import numpy as np
+import os
+import six
+import tensorflow as tf
+
+# Add auto-completion and store history file of Python interpreter commands.
+
+import atexit
+import readline
+import rlcompleter
+
+history_path = os.path.expanduser("~/.pyhistory")
+
+def save_history(history_path=history_path):
+  import readline
+  readline.write_history_file(history_path)
+
+if os.path.exists(history_path):
+  readline.read_history_file(history_path)
+
+atexit.register(save_history)
+del atexit, readline, rlcompleter, save_history, history_path
+
+# python -c 'import time; start=time.time(); import edward as ed; print(time.time() - start)'
+
+# vim: filetype=python

@@ -203,6 +203,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PYTHONIOENCODING="utf-8"
+export PYTHONSTARTUP="$HOME/.pythonrc"
  
 # ALIASES
 # ------------------------------------------------------------------------------

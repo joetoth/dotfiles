@@ -282,6 +282,7 @@ source_if_exists $HOME/wdf/work.zsh
 
 # OPAM configuration
 source_if_exists $HOME/.opam/opam-init/init.zsh
+source_if_exists /usr/local/lib/bazel/bin/bazel-complete.bash
 
 # GIT
 #

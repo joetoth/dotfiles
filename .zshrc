@@ -86,11 +86,11 @@ setopt noflowcontrol
 
 # Z Style
 # ------------------------------------------------------------------------------
-zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle ':completion:*' completer _expand _complete _correct _approximate
+#zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*:*:*:*:*' menu select
+#zstyle ':completion:*' use-cache on
+#zstyle ':completion:*' cache-path ~/.zsh/cache
+#zstyle ':completion:*' completer _expand _complete _correct _approximate
 #cache-path must exist
 #
 #zstyle ':completion:*' use-cache on

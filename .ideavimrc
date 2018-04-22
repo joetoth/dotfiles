@@ -113,9 +113,10 @@ map <A-Space>:action ActivateTerminalToolWindow<cr>
 map ; :
 map ,R :source ~/.ideavimrc<cr>
 map ,vim :vsp ~/.ideavimrc<cr>
-map ,cdb :vsp ~/projects/joe.ai/content/current.md
-map ,cds :action IdeScriptingConsole<cr>
-map ,cdp :vsp ~/present.html<cr>
+map ,ct :vsp ~/projects/coin/psy/TODO<cr>
+map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
+map ,cs :action IdeScriptingConsole<cr>
+map ,cp :vsp ~/present.html<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>

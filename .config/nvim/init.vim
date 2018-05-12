@@ -1,4 +1,4 @@
-if empty(glob('~/.config/nvim/plugged'))
+if filereadable(glob('~/.config/nvim/plugged/init.vim'))
   silent !curl -fLo ~/.config/nvim/plugged/ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   augroup init
     autocmd VimEnter * PlugInstall

@@ -86,11 +86,11 @@ setopt noflowcontrol
 
 # Z Style
 # ------------------------------------------------------------------------------
-zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle ':completion:*' completer _expand _complete _correct _approximate
+#zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*:*:*:*:*' menu select
+#zstyle ':completion:*' use-cache on
+#zstyle ':completion:*' cache-path ~/.zsh/cache
+#zstyle ':completion:*' completer _expand _complete _correct _approximate
 #cache-path must exist
 #
 #zstyle ':completion:*' use-cache on
@@ -204,6 +204,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PYTHONIOENCODING="utf-8"
+export PYTHONSTARTUP="$HOME/.pythonrc"
  
 # ALIASES
 # ------------------------------------------------------------------------------
@@ -281,7 +282,8 @@ source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc
 source_if_exists $HOME/wdf/work.zsh
 
 # OPAM configuration
-#source_if_exists $HOME/.opam/opam-init/init.zsh
+source_if_exists $HOME/.opam/opam-init/init.zsh
+source_if_exists /usr/local/lib/bazel/bin/bazel-complete.bash
 
 # GIT
 #

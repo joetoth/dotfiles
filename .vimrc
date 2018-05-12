@@ -47,7 +47,6 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 
 " Search & Replace
 Plug 'haya14busa/incsearch.vim'
-
 " Syntax {{{
 Plug 'tpope/vim-commentary'
   map  gc  <Plug>Commentary

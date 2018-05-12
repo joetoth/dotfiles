@@ -10,3 +10,5 @@
 	default = simple
 [http]
 	cookiefile = /usr/local/google/home/joetoth/.gitcookies
+[core]
+	autocrlf = input

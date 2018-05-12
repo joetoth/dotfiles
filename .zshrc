@@ -114,6 +114,7 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 #zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 #zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+#
 # Debian / Ubuntu sets these to vi-up-line-or-history etc,
 # which places the cursor at the start of line, not end of line.
 # See: http://www.zsh.org/mla/users/2009/msg00878.html
@@ -197,7 +198,6 @@ alias xo='xdg-open'
 alias psa="ps aux"
 alias psg="ps aux | grep "
 alias alsg="alias | grep "
-alias cdb='cd -'
 alias ll='ls -alh --color=auto'
 alias lt='ls -alhrt --color=auto'
 alias ls='ls -h --color=auto'
@@ -251,6 +251,7 @@ alias cdp='cd ~/projects'
 alias cda='cd ~/projects/ideas'
 alias vpn='sudo openvpn --config $HOME/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
 alias blog='vi ~/projects/joe.ai/content/'
+alias h='hg'
 
 # FUNCTIONS
 source_if_exists() {
@@ -700,10 +701,33 @@ bindkey '^S' 'termjt-screen-widget'
 #bindkey -s '^S' 'tmux-copy\n'
 
 
-for script in $HOME/bin/python/*; do
-  x="python $script"
-  alias "${script:t:r}=$x"
-done
+#for script in $HOME/bin/python; do
+#  x="python $script"
+#  alias "${script:t:r}=$x"
+#done
+
+
+# Mercurial
+alias hgc='hg commit'
+alias hgb='hg branch'
+alias hgba='hg branches'
+alias hgbk='hg bookmarks'
+alias hgco='hg checkout'
+alias hgd='hg diff'
+alias hged='hg diffmerge'
+# pull and update
+alias hgi='hg incoming'
+alias hgl='hg pull -u'
+alias hglr='hg pull --rebase'
+alias hgo='hg outgoing'
+alias hgp='hg push'
+alias hgs='hg status'
+alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n" '
+# this is the 'git commit --amend' equivalent
+alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
+# list unresolved files (since hg does not list unmerged files in the status command)
+alias hgun='hg resolve --list'
+
 
 # Base16 Shell
 #BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
@@ -753,10 +777,6 @@ done
 #ulimit -Sv 500000     # Set ~500 mb limit
 #
 
-#RPROMPT=""
-#PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
-
-autoload compinit
 
 ###-tns-completion-start-###
 #if [ -f /home/joetoth/.tnsrc ]; then 
@@ -798,5 +818,10 @@ autoload compinit
 #==============
 #config.operation_timeout_in_ms=5000  # for debugging queue hangs
 #==============
+#
+#
+#
 
-fortune
+
+autoload compinit
+/usr/games/fortune

@@ -166,7 +166,6 @@ map ,z :action FindUsages<CR>
 "vmap 8 :action OpenSelectedWithCodeSearch<CR>
 "map ,sw :action SurroundWith<CR>
 
-
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
 

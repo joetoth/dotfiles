@@ -82,10 +82,11 @@ map <A-S-h> :action TypeHierarchy<CR>
 
 "map <C-f> :action Find<CR>
 "map <C-S-f> :action FindInPath<CR>
-"vmap <C-f> :action Find<CR>
+"vmap jC-f> :action Find<CR>
 "vmap <C-S-f> :action FindInPath<CR>
 
-map <C-e> :action RecentFiles<CR>
+
+kap <C-e> :action RecentFiles<CR>
 map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 

@@ -86,7 +86,7 @@ map <A-S-h> :action TypeHierarchy<CR>
 "vmap <C-S-f> :action FindInPath<CR>
 
 
-kap <C-e> :action RecentFiles<CR>
+map <C-e> :action RecentFiles<CR>
 map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
@@ -135,6 +135,7 @@ map ,l :action LintBlaze<CR>
 map Q :action FillParagraph<CR>
 map ,o :action Blaze.OpenCorrespondingBuildFile<CR>
 map ,d :action ShowErrorDescription<cr>
+
 map ,h :action FileStructurePopup<cr>
 map ,m :action GotoRelated<cr>
 map ,t :action GotoTest<cr>

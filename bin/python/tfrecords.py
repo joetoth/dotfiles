@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import sys
 import tensorflow as tf
 from tensorflow.python.lib.io.tf_record import tf_record_iterator

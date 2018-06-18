@@ -3,7 +3,7 @@ source $HOME/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-zplug "mrichar1/clipster", as:command, use:"clipster"
+zplug "cdown/clipmenu", as:command
 zplug "djui/alias-tips"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
@@ -35,6 +35,7 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
+fpath[1,0]=~/.zsh/completion/
 
 # Load
 #
@@ -86,11 +87,11 @@ setopt noflowcontrol
 
 # Z Style
 # ------------------------------------------------------------------------------
-#zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
-#zstyle ':completion:*:*:*:*:*' menu select
-#zstyle ':completion:*' use-cache on
-#zstyle ':completion:*' cache-path ~/.zsh/cache
-#zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*'         list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' completer _expand _complete _correct _approximate
 #cache-path must exist
 #
 #zstyle ':completion:*' use-cache on
@@ -169,21 +170,8 @@ faded_purple="#8F3F71"
 faded_aqua="#427B58"
 faded_orange="#AF3A03"
 
-#BASE16_SHELL=$HOME/.zplug/repos/chriskempson/base16-shell/
-#[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
-#
-#
-# Exports
-# ------------------------------------------------------------------------------
-#export GOROOT=/usr/lib/google-golang
-
-#if [ ! -d $GOROOT ]; then
-#  export GOROOT=$HOME/opt/go
-#fi
-
 export GOPATH=$HOME/projects/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/.cabal/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin
 
 export EDITOR='vi'
 export VISUAL='vi'
@@ -191,11 +179,6 @@ export BROWSER=google-chrome
 export ANDROID_HOME=$HOME/opt/android-sdk-linux
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
-export PATH=$PATH:$HOME/bin:$HOME/opt/activator-1.2.10
-export PATH=$PATH:$HOME/projects/bazel/output
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH=$PATH:$HOME/miniconda3/bin
-#export DART_SDK=~/opt/dart-sdk
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
@@ -203,6 +186,7 @@ export FZF_DEFAULT_COMMAND='ag -l -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
+export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
 export PYTHONSTARTUP="$HOME/.pythonrc"
  
@@ -259,14 +243,15 @@ alias touchpadon='synclient Touchpadoff=0'
 # create __init__.py files in every directory, allowing Intellj to treat each directory as a python module and now all imports will work.
 alias python_add_init="find . -type d -exec touch '{}/__init__.py' \;"
 alias tfc='rm -rf /tmp/tf'
-alias tb='tensorboard --logdir=/tmp/tf'
+#alias tb='tensorboard --logdir=/tmp/tf'
 
 alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
 alias cda='cd ~/projects/ideas'
-alias vpn='sudo openvpn --config $HOME/vpn/ipvanish-US-New-York-nyc-a29.ovpn'
+alias vpn='sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
+
 alias blog='vi ~/projects/joe.ai/content/'
 alias h='hg'
 
@@ -283,7 +268,7 @@ source_if_exists $HOME/wdf/work.zsh
 
 # OPAM configuration
 source_if_exists $HOME/.opam/opam-init/init.zsh
-source_if_exists /usr/local/lib/bazel/bin/bazel-complete.bash
+source_if_exists $HOME/bazel.zsh
 
 # GIT
 #
@@ -318,6 +303,10 @@ glb() {
 
 git-mini-log() {
   git log --pretty=format:"%C(3)%h%C(5) %<(8,trunc)%an %C(10)%ad %Creset%<(50,trunc)%s" --date=format:%d/%m/%y "$@"
+}
+
+tb() {
+  tensorboard --logdir "$@"
 }
 
 gc() {

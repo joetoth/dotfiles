@@ -1,3 +1,8 @@
+" Fact Checking Docs
+" TF Eager for Fact Checking
+" Tugela Outline
+
+
 ""'clipboard'      'cb'    clipboard options
 ""'digraph'        'dg'    enable the entering of digraphs in Insert mode
 ""'gdefault'       'gd'    the ":substitute" flag 'g' is default on

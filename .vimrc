@@ -45,7 +45,6 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
           \| endif
   augroup END
 
-<<<<<<< HEAD
 " Search & Replace
 Plug 'haya14busa/incsearch.vim'
 " Syntax {{{
@@ -55,206 +54,12 @@ Plug 'tpope/vim-commentary'
 Plug 'sheerun/vim-polyglot'  
 Plug 'vim-syntastic/syntastic'
 Plug 'alxyzc/lc.vim'
-=======
-  set nu
-  set autoindent
-  set smartindent
-  set lazyredraw
-  set laststatus=2
-  set showcmd
-  set visualbell
-  set backspace=indent,eol,start
-  set timeoutlen=500
-  set whichwrap=b,s
-  set shortmess=aIT
-  set hlsearch " CTRL-L / CTRL-R W
-  set incsearch
-  set hidden
-  set ignorecase smartcase
-  set wildmenu
-  set wildmode=full
-  set tabstop=2
-  set shiftwidth=2
-  set expandtab smarttab
-  set scrolloff=5
-  set encoding=utf-8
-  set list
-  set listchars=tab:\|\ ,
-  set virtualedit=block
-  set nojoinspaces
-  set diffopt=filler,vertical
-  set autoread
-  set clipboard=unnamedplus
-  set foldlevelstart=99
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
-  set nocursorline
-  set completeopt=menuone,preview
-  set nrformats=hex
-  silent! set cryptmethod=blowfish2
-  set formatoptions+=1
-  if has('termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-  endif
-
-  " %< Where to truncate
-  " %n buffer number
-  " %F Full path
-  " %m Modified flag: [+], [-]
-  " %r Readonly flag: [RO]
-  " %y Type:          [vim]
-  " fugitive#statusline()
-  " %= Separator
-  " %-14.(...)
-  " %l Line
-  " %c Column
-  " %V Virtual column
-  " %P Percentage
-  " %#HighlightGroup#
-  set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
-  silent! if emoji#available()
-    let s:ft_emoji = map({
-      \ 'c':          'baby_chick',
-      \ 'clojure':    'lollipop',
-      \ 'coffee':     'coffee',
-      \ 'cpp':        'chicken',
-      \ 'css':        'art',
-      \ 'eruby':      'ring',
-      \ 'gitcommit':  'soon',
-      \ 'haml':       'hammer',
-      \ 'help':       'angel',
-      \ 'html':       'herb',
-      \ 'java':       'older_man',
-      \ 'javascript': 'monkey',
-      \ 'make':       'seedling',
-      \ 'markdown':   'book',
-      \ 'perl':       'camel',
-      \ 'python':     'snake',
-      \ 'ruby':       'gem',
-      \ 'scala':      'barber',
-      \ 'sh':         'shell',
-      \ 'slim':       'dancer',
-      \ 'text':       'books',
-      \ 'vim':        'poop',
-      \ 'vim-plug':   'electric_plug',
-      \ 'yaml':       'yum',
-      \ 'yaml.jinja': 'yum'
-    \ }, 'emoji#for(v:val)')
-
-    function! S_filetype()
-      if empty(&filetype)
-        return emoji#for('grey_question')
-      else
-        return get(s:ft_emoji, &filetype, '['.&filetype.']')
-      endif
-    endfunction
-
-    function! S_modified()
-      if &modified
-        return emoji#for('kiss').' '
-      elseif !&modifiable
-        return emoji#for('construction').' '
-      else
-        return ''
-      endif
-    endfunction
-
-    function! S_fugitive()
-      if !exists('g:loaded_fugitive')
-        return ''
-      endif
-      let head = fugitive#head()
-      if empty(head)
-        return ''
-      else
-        return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
-      endif
-    endfunction
-
-    let s:braille = split('"⠉⠒⠤⣀', '\zs')
-    function! Braille()
-      let len = len(s:braille)
-      let [cur, max] = [line('.'), line('$')]
-      let pos  = min([len * (cur - 1) / max([1, max - 1]), len - 1])
-      return s:braille[pos]
-    endfunction
-
-    hi def link User1 TablineFill
-    let s:cherry = emoji#for('cherry_blossom')
-    function! MyStatusLine()
-      let mod = '%{S_modified()}'
-      let ro  = "%{&readonly ? emoji#for('lock') . ' ' : ''}"
-      let ft  = '%{S_filetype()}'
-      let fug = ' %{S_fugitive()}'
-      let sep = ' %= '
-      let pos = ' %l,%c%V '
-      let pct = ' %P '
-
-      return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
-    endfunction
-
-    " Note that the "%!" expression is evaluated in the context of the
-    " current window and buffer, while %{} items are evaluated in the
-    " context of the window that the statusline belongs to.
-    set statusline=%!MyStatusLine()
-  endif
-
-  set pastetoggle=<F9>
-  set modelines=2
-  set synmaxcol=1000
->>>>>>> 512a642c4a4049007385fd953789ad831cabf6c6
 
 " Interface {{{
 
 Plug 'mhinz/vim-startify' " {{{
   nnoremap <leader>st :Startify<cr>
 " }}}
-
-Plug 'vim-airline/vim-airline' " {{{
-  " airline sections {{{
-  let g:airline#extensions#branch#symbol = ''
-  let g:airline#extensions#hunks#enabled = 0
-  " git branch
-  let g:airline_section_b = '%{airline#extensions#branch#get_head()}'
-  " abbreviated file path
-  let g:airline_section_c = '%{pathshorten(expand("%"))}'
-  " filetype
-  let g:airline_section_x = '%{&ft}'
-  " c.<colnum>
-  let g:airline_section_y = 'c.%-3.c'
-  " <linenum> of <numlines>
-  let g:airline_section_z = '%4.l of %-4.L'
-  " <linenum/numlines>% of <numlines>
-  " let g:airline_section_y = '%P of %-4.L'
-  " <linenum>:<colnum>
-  " let g:airline_section_z = '%4.l:%-3.c'
-  " }}}
-
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_powerline_fonts = 0
-  set encoding=utf-8
-  set laststatus=2
-" }}}
-
-Plug 'vim-airline/vim-airline-themes' " {{{
-"  let g:default_airline_theme = 'quantum'
-  " let g:alt_airline_theme = 'raven'
-  " function! ToggleAirlineTheme() " {{{
-  "   if g:airline_theme == g:alt_airline_theme
-  "     exec 'AirlineTheme '.g:default_airline_theme
-  "   else
-  "     exec 'AirlineTheme '.g:alt_airline_theme
-  "   endif
-  " endfunction " }}}
-  " nnoremap <leader>at :call ToggleAirlineTheme()<cr>
-
-  " let g:airline_theme = g:default_airline_theme
-" }}}
-
-" Miscellaneous " {{{
-Plug 'metakirby5/codi.vim' " {{{
 
 " Motion {{{
 Plug 'easymotion/vim-easymotion' " {{{
@@ -298,6 +103,7 @@ augroup vimrc
     au VimLeave * call system('tmux set-window automatic-rename on')
   endif
 augroup END
+
 
 
 " +-------------+
@@ -475,5 +281,6 @@ nnoremap <leader>W !sudo tee > /dev/null %
 " edit vimrc
 nnoremap <leader>vim :vsp ~/.vimrc<cr>
 
+autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
 " }}}
 

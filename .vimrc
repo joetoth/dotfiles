@@ -1,3 +1,10 @@
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+        endif
+
+
 function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
@@ -67,6 +74,28 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 
 " Themes {{{
 Plug 'chriskempson/vim-tomorrow-theme'
+
+" Language Server
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+  if executable('pyls')
+      " pip install python-language-server
+      au User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': {server_info->['pyls']},
+          \ 'whitelist': ['python'],
+          \ })
+  endif
+  if executable('clangd')
+      au User lsp_setup call lsp#register_server({
+          \ 'name': 'clangd',
+          \ 'cmd': {server_info->['clangd']},
+          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+          \ })
+  endif
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+noremap <c-g> :LspDefinition<cr>
 
 call plug#end()
 

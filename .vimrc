@@ -29,9 +29,10 @@ Plug 'mbbill/undotree'
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim' " {{{
   nnoremap <c-F> <esc>:Files<cr>
-  nnoremap <leader>zf <esc>:Files<cr>
+  nnoremap <leader>, <esc>:Files<cr>
   nnoremap <leader>zh <esc>:History<cr>
   nnoremap <leader>zg <esc>:GFiles<cr>
+  nnoremap <leader>s <esc>:Ag<cr>
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
   nmap <leader>n :NERDTreeFind<CR>
   nnoremap <leader>N :NERDTreeToggle<CR>

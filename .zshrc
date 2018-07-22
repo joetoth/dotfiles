@@ -5,7 +5,8 @@ zplugs=() # Reset zplugs
 
 zplug "cdown/clipmenu", as:command
 zplug "djui/alias-tips"
-zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
+#zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
+zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*darwin*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
 zplug "junegunn/fzf", as:command, use:"bin/*"
 zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
@@ -171,7 +172,7 @@ faded_aqua="#427B58"
 faded_orange="#AF3A03"
 
 export GOPATH=$HOME/projects/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin
 
 export EDITOR='vi'
 export VISUAL='vi'
@@ -188,7 +189,6 @@ export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
-#export PYTHONSTARTUP="$HOME/.pythonrc"
  
 # ALIASES
 # ------------------------------------------------------------------------------
@@ -199,10 +199,11 @@ alias xo='xdg-open'
 alias psa="ps aux"
 alias psg="ps aux | grep "
 alias alsg="alias | grep "
-alias ll='ls -alh --color=auto'
-alias lt='ls -alhrt --color=auto'
-alias ls='ls -h --color=auto'
-alias lss='ls -SlaGh --color=auto'
+alias cdb='cd -'
+alias ll='ls -alh'
+alias lt='ls -alhrt'
+alias ls='ls -h'
+alias lss='ls -SlaGh'
 alias topdirs='du -m . | sort -nr | head -n 100'
 alias lsg='ll | grep'
 #alias tmux='tmux -2'

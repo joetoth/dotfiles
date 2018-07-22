@@ -1,3 +1,10 @@
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+        endif
+
+
 function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
@@ -62,57 +69,34 @@ Plug 'mhinz/vim-startify' " {{{
   nnoremap <leader>st :Startify<cr>
 " }}}
 
-Plug 'vim-airline/vim-airline' " {{{
-  " airline sections {{{
-  let g:airline#extensions#branch#symbol = ''
-  let g:airline#extensions#hunks#enabled = 0
-  " git branch
-  let g:airline_section_b = '%{airline#extensions#branch#get_head()}'
-  " abbreviated file path
-  let g:airline_section_c = '%{pathshorten(expand("%"))}'
-  " filetype
-  let g:airline_section_x = '%{&ft}'
-  " c.<colnum>
-  let g:airline_section_y = 'c.%-3.c'
-  " <linenum> of <numlines>
-  let g:airline_section_z = '%4.l of %-4.L'
-  " <linenum/numlines>% of <numlines>
-  " let g:airline_section_y = '%P of %-4.L'
-  " <linenum>:<colnum>
-  " let g:airline_section_z = '%4.l:%-3.c'
-  " }}}
-
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#fnamemod = ':t'
-  let g:airline_powerline_fonts = 0
-  set encoding=utf-8
-  set laststatus=2
-" }}}
-
-Plug 'vim-airline/vim-airline-themes' " {{{
-"  let g:default_airline_theme = 'quantum'
-  " let g:alt_airline_theme = 'raven'
-  " function! ToggleAirlineTheme() " {{{
-  "   if g:airline_theme == g:alt_airline_theme
-  "     exec 'AirlineTheme '.g:default_airline_theme
-  "   else
-  "     exec 'AirlineTheme '.g:alt_airline_theme
-  "   endif
-  " endfunction " }}}
-  " nnoremap <leader>at :call ToggleAirlineTheme()<cr>
-
-  " let g:airline_theme = g:default_airline_theme
-" }}}
-
-" Miscellaneous " {{{
-Plug 'metakirby5/codi.vim' " {{{
-
 " Motion {{{
 Plug 'easymotion/vim-easymotion' " {{{
 Plug 'christoomey/vim-tmux-navigator' " {{{
 
 " Themes {{{
 Plug 'chriskempson/vim-tomorrow-theme'
+
+" Language Server
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+  if executable('pyls')
+      " pip install python-language-server
+      au User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': {server_info->['pyls']},
+          \ 'whitelist': ['python'],
+          \ })
+  endif
+  if executable('clangd')
+      au User lsp_setup call lsp#register_server({
+          \ 'name': 'clangd',
+          \ 'cmd': {server_info->['clangd']},
+          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+          \ })
+  endif
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+noremap <c-g> :LspDefinition<cr>
 
 call plug#end()
 
@@ -149,6 +133,7 @@ augroup vimrc
     au VimLeave * call system('tmux set-window automatic-rename on')
   endif
 augroup END
+
 
 
 " +-------------+
@@ -326,5 +311,6 @@ nnoremap <leader>W !sudo tee > /dev/null %
 " edit vimrc
 nnoremap <leader>vim :vsp ~/.vimrc<cr>
 
+autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
 " }}}
 

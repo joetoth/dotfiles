@@ -30,6 +30,8 @@ def main():
 
   if d['context'] == 'intelllij':
     ipython(d['text'])
+  else:
+    log('No handler found')
 
 
 if __name__ == '__main__':

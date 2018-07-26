@@ -673,7 +673,7 @@ bindkey '^E' fzf-tmuxcomplete-widget
 # CTRL-P - Copy word on screen to clipboard
 __tmuxcopy() {
   local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+  eval "$cmd" | $(__fzfcmd) -m | while read item; do
     print "$item" | xclip -sel clip -i 
   done
   echo

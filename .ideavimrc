@@ -32,7 +32,7 @@
 
 set visualbellaction
 set noerrorbells
-set clipboard=unnamed
+set clipboard=unnamedplus
 set shiftwidth=2
 set textwidth=80
 set number
@@ -90,16 +90,16 @@ map <A-S-h> :action TypeHierarchy<CR>
 "vmap jC-f> :action Find<CR>
 "vmap <C-S-f> :action FindInPath<CR>
 
-
-map <C-e> :action RecentFiles<CR>
-map <C-S-e> :action RecentChangedFiles<CR>
+" intellij wants to owns these or it gives a weird problem
+" where the dialog boxes don't get focus
+"map <C-e> :action RecentFiles<CR>
+"map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
 map <C-g> :action FindUsages<CR>
 map <C-S-g> :action Generate<CR>
 
 " Simulate Peekaboo VIM plugin
-map " :action PasteMultiple<CR>
 map @ :action PasteMultiple<CR>
 map <C-S-v> :action PasteMultiple<CR>
 
@@ -123,6 +123,7 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
+map t :edit ~/projects/coin/README.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 map t :edit /usr/local/google/home/joetoth/projects/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 

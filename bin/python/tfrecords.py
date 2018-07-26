@@ -16,8 +16,8 @@ if len(sys.argv) > 2:
 
 #if not options:
 
-options = TFRecordOptions(TFRecordCompressionType.GZIP)
-record_iterator = tf_record_iterator(f, options=options)
+#options = TFRecordOptions(TFRecordCompressionType.GZIP)
+record_iterator = tf_record_iterator(f)
 size = 0
 for string_record in record_iterator:
     example = tf.train.Example()

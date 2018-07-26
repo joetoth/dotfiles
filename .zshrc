@@ -189,8 +189,6 @@ export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
-export PYTHONSTARTUP="$HOME/.pythonrc"
-export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin"
  
 # ALIASES
 # ------------------------------------------------------------------------------
@@ -252,7 +250,7 @@ alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
-alias cda='cd ~/projects/ideas'
+alias cda='cd ~/projects/coin'
 alias vpn='sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
 
 alias blog='vi ~/projects/joe.ai/content/'
@@ -657,7 +655,7 @@ bindkey '^B' fzf-clipster-widget
 # CTRL-E - Complete word on screen
 __tmuxcomplete() {
   local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+  eval "$cmd" | $(__fzfcmd) | while read item; do
     printf '%q ' "$item"
   done
   echo
@@ -673,8 +671,7 @@ bindkey '^E' fzf-tmuxcomplete-widget
 # CTRL-P - Copy word on screen to clipboard
 __tmuxcopy() {
   local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) -m | while read item; do
-    print "$item" | xclip -sel clip -i 
+  eval "$cmd" | $(__fzfcmd) -m | while read item; do print "$item" | xclip -sel clip -i 
   done
   echo
 }
@@ -687,24 +684,26 @@ zle     -N   fzf-tmuxcopy-widget
 bindkey '^P' fzf-tmuxcopy-widget
 
 __termjt() {
-  f="/tmp/termjt"
-  echo "" >! $f
-  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
-  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
-  ##termjt -outputFilename $f
-  value=$(cat $f) 
-  echo "$value"
+  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
+#  f="/tmp/termjt"
+#  echo "" >! $f
+#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
+#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
+#  ##termjt -outputFilename $f
+#  value=$(cat $f) 
+#  echo "$value"
 }
 
 termjt-screen-widget() {
-  LBUFFER="${LBUFFER}$(__termjt)"
+  #LBUFFER="${LBUFFER}$(__termjt)"
+  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
   zle redisplay
 }
 
 zle     -N   termjt-screen-widget
 bindkey '^S' 'termjt-screen-widget'
+#bindkey '^S' 'termjt-screen-widget'
 #bindkey -s '^S' 'tmux-copy\n'
-
 
 #for script in $HOME/bin/python; do
 #  x="python $script"

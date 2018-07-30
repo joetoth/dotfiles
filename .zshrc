@@ -3,13 +3,13 @@ source $HOME/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-zplug "cdown/clipmenu", as:command
-zplug "djui/alias-tips"
-#zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
-zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*darwin*amd64*"
+#zplug "cdown/clipmenu", as:command
+#zplug "djui/alias-tips"
+zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*"
+#zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*darwin*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
-zplug "junegunn/fzf", as:command, use:"bin/*"
-zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*"
+#zplug "junegunn/fzf", as:command, use:"bin/*"
+zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*" # ctrl-r
 zplug "Morantron/tmux-fingers"
 zplug "hchbaw/zce.zsh"
 zplug "chriskempson/base16-shell"
@@ -19,7 +19,7 @@ bindkey "^Xz" zce
 
 #zplug "plugins/git",   from:oh-my-zsh
 zplug "TBSliver/zsh-plugin-tmux-simple"
-zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
+#zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 zplug "zsh-users/zsh-completions"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
 zplug "sindresorhus/pure", use:pure.zsh
@@ -170,6 +170,16 @@ faded_blue="#076678"
 faded_purple="#8F3F71"
 faded_aqua="#427B58"
 faded_orange="#AF3A03"
+
+# Predictable SSH authentication socket location.
+SOCK="/tmp/ssh-agent.sock"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
+then
+    rm -f /tmp/ssh-agent.sock
+    ln -sf $SSH_AUTH_SOCK $SOCK
+    export SSH_AUTH_SOCK=$SOCK
+fi
+
 
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin

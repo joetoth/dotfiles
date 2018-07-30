@@ -1,4 +1,6 @@
 #!/usr/bin/python
+
+from os.path import expanduser
 import subprocess
 import sys
 import json
@@ -6,6 +8,7 @@ from subprocess import CalledProcessError
 
 
 def ipython(text):
+  text += '\n\n'
   cmd = ['tmux', 'send-keys', '-t', 'ipython:ipython', text]
   error = "command: " + str(cmd) + "\n"
   try:
@@ -16,7 +19,7 @@ def ipython(text):
 
 
 def log(text):
-  with open('/home/joetoth/blackhole.log', 'a') as f:
+  with open(expanduser('~/blackhole.log'), 'a') as f:
     f.write(text)
 
 
@@ -28,7 +31,7 @@ def main():
   log("json: " + sys.argv[1])
   d = json.loads(sys.argv[1])
 
-  if d['context'] == 'intelllij':
+  if d['context'] == 'intellij':
     ipython(d['text'])
   else:
     log('No handler found')

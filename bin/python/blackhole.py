@@ -10,17 +10,15 @@ from subprocess import CalledProcessError
 def ipython(text):
   text += '\n\n'
   cmd = ['tmux', 'send-keys', '-t', 'ipython:ipython', text]
-  error = "command: " + str(cmd) + "\n"
   try:
     subprocess.check_output(cmd)
   except CalledProcessError as e:
-    error += "error: " + e.output
-    log(error)
+    log({'command': str(cmd), 'message': e.output})
 
 
-def log(text):
+def log(dct):
   with open(expanduser('~/blackhole.log'), 'a') as f:
-    f.write(text)
+    f.write(json.dumps(dct))
 
 
 def main():
@@ -28,13 +26,13 @@ def main():
     print('usage: blackhole.py json')
     sys.exit(1)
 
-  log("json: " + sys.argv[1])
+  log(sys.argv[1])
   d = json.loads(sys.argv[1])
 
   if d['context'] == 'intellij':
     ipython(d['text'])
   else:
-    log('No handler found')
+    log({'message': 'No handler found', 'json': d})
 
 
 if __name__ == '__main__':

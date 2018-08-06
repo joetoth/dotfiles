@@ -1,0 +1,52 @@
+#
+# ~/.pythonrc
+
+# Default modules.
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import os
+from os.path import expanduser
+import six
+import numpy as np
+import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
+import tensorflow as tf
+import tensorflow.contrib.eager as tfe
+
+# Auto reload modules
+
+from IPython import get_ipython
+ipython = get_ipython()
+#ipython.magic("pylab")
+ipython.magic("load_ext autoreload")
+ipython.magic("autoreload 2")
+
+# Add auto-completion and store history file of Python interpreter commands.
+
+import atexit
+import readline
+import rlcompleter
+
+history_path = os.path.expanduser("~/.pyhistory")
+
+def save_history(history_path=history_path):
+  import readline
+  readline.write_history_file(history_path)
+
+if os.path.exists(history_path):
+  readline.read_history_file(history_path)
+
+atexit.register(save_history)
+del atexit, readline, rlcompleter, save_history, history_path
+
+pd.set_option('display.height', 1000)
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
+# python -c 'import time; start=time.time(); import edward as ed; print(time.time() - start)'
+
+# vim: filetype=python

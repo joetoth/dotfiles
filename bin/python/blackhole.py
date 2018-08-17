@@ -4,12 +4,17 @@ from os.path import expanduser
 import subprocess
 import sys
 import json
-from subprocess import CalledProcessError
+from subprocess import CalledProcessError, Popen, PIPE
 
+#-p works with the PRIMARY selection. That's the middle click one.
+#-s works with the SECONDARY selection. I don't know if this is used anymore.
+#-b works with the CLIPBOARD selection. That's your Ctrl + V one.
 
 def ipython(text):
-  text += '\n\n'
-  cmd = ['tmux', 'send-keys', '-t', 'ipython:ipython', text]
+  p = Popen(['xsel', '-bi'], stdin=PIPE)
+  p.communicate(input=text)
+
+  cmd = ['tmux', 'send-keys', '-t', 'ipython:ipython', '%paste\n']
   try:
     subprocess.check_output(cmd)
   except CalledProcessError as e:

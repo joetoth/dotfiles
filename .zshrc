@@ -26,6 +26,8 @@ zplug "sindresorhus/pure", use:pure.zsh
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zaw"
 zplug "so-fancy/diff-so-fancy", as:command
+zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -172,13 +174,15 @@ faded_aqua="#427B58"
 faded_orange="#AF3A03"
 
 # Predictable SSH authentication socket location.
-SOCK="/tmp/ssh-agent.sock"
-if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
-then
-    rm -f /tmp/ssh-agent.sock
-    ln -sf $SSH_AUTH_SOCK $SOCK
-    export SSH_AUTH_SOCK=$SOCK
-fi
+#alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+#eval $(tmux showenv -s SSH_AUTH_SOCK)
+#SOCK="/tmp/ssh-agent.sock"
+#if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
+#then
+#    rm -f /tmp/ssh-agent.sock
+#    ln -sf $SSH_AUTH_SOCK $SOCK
+#    export SSH_AUTH_SOCK=$SOCK
+#fi
 
 
 export GOPATH=$HOME/projects/go

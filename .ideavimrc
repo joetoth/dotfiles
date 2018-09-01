@@ -109,7 +109,7 @@ map <C-S-v> :action PasteMultiple<CR>
 "vmap <C-_> :action CommentByLineComment<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
 
-map <C-p> :action ParameterInfo<CR>
+jjp <C-p> :action ParameterInfo<CR>
 imap <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
@@ -125,10 +125,10 @@ map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
 map t :edit ~/projects/coin/README.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
-map t :edit /usr/local/google/home/joetoth/projects/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 
 map U :action $Redo<CR>
-map ,, :action GotoFile<CR>
+#map ,, :action GotoFile<CR>
+map ,, :action Macro.gotofile<CR>
 map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>

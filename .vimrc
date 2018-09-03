@@ -301,7 +301,7 @@ nnoremap <c-l> :nohl<cr><c-l>
 "noremap <leader>yy "+yy
 "nnoremap <leader>p "+p
 "nnoremap <leader>P "+P
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 nnoremap U :redo<CR>
 

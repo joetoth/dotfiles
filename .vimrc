@@ -4,7 +4,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
         endif
 
-
 function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
@@ -52,9 +51,11 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
           \|   execute 'autocmd! nerd_loader'
           \| endif
   augroup END
+Plug 'junegunn/vim-peekaboo' " Registers / Copy / Paste
 
 " Search & Replace
 Plug 'haya14busa/incsearch.vim'
+
 " Syntax {{{
 Plug 'tpope/vim-commentary'
   map  gc  <Plug>Commentary
@@ -64,7 +65,6 @@ Plug 'vim-syntastic/syntastic'
 Plug 'alxyzc/lc.vim'
 
 " Interface {{{
-
 Plug 'mhinz/vim-startify' " {{{
   nnoremap <leader>st :Startify<cr>
 " }}}
@@ -286,7 +286,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Fix pasting
-nnoremap p ]p
+" nnoremap p ]p
 
 " efficiency ftw
 inoremap jj <esc>
@@ -297,11 +297,11 @@ noremap ; :
 nnoremap <c-l> :nohl<cr><c-l>
 
 " copy/paste from system clipboard
-noremap <leader>y "+y
-noremap <leader>yy "+yy
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-set clipboard=unnamedplus
+" vnoremap y "+y
+"noremap <leader>yy "+yy
+"nnoremap <leader>p "+p
+"nnoremap <leader>P "+P
+set clipboard=unnamed
 
 nnoremap U :redo<CR>
 
@@ -313,4 +313,4 @@ nnoremap <leader>vim :vsp ~/.vimrc<cr>
 
 autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
 " }}}
-
+"

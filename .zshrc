@@ -199,7 +199,16 @@ export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
- 
+
+export PYTHONSTARTUP="$HOME/.pythonrc"
+
+# Homebrew stuff
+export PATH=$HOME/homebrew/bin:$PATH
+export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
+export LD_LIBRARY_PATH=$HOME/homebrew/lib:$LD_LIBRARY_PATH
+export CXXFLAGS="-I$HOME/homebrew/include"
+# END HOMEBREW
+
 # ALIASES
 # ------------------------------------------------------------------------------
 alias note='vi ~/drive/note.txt'

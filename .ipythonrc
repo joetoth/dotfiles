@@ -8,14 +8,11 @@ from __future__ import print_function
 
 import os
 from os.path import expanduser
-import six
+import tensorflow as tf
 import numpy as np
 import pandas as pd
 import pyarrow as pa
-import pyarrow.parquet as pq
-import tensorflow as tf
-import tensorflow.contrib.eager as tfe
-
+import multiprocessing as mp
 # Auto reload modules
 
 from IPython import get_ipython
@@ -42,10 +39,11 @@ if os.path.exists(history_path):
 atexit.register(save_history)
 del atexit, readline, rlcompleter, save_history, history_path
 
-pd.set_option('display.height', 1000)
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
+import pandas
+#pandas.set_option('display.height', 1000)
+pandas.set_option('display.max_rows', 10)
+pandas.set_option('display.max_columns', 500)
+pandas.set_option('display.width', 1000)
 
 # python -c 'import time; start=time.time(); import edward as ed; print(time.time() - start)'
 

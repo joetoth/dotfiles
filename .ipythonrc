@@ -5,14 +5,15 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+#
 import os
 from os.path import expanduser
-import tensorflow as tf
 import numpy as np
 import pandas as pd
-import pyarrow as pa
+#import pyarrow as pa
 import multiprocessing as mp
+#import tensorflow as tf
+import tensorflow.google as tf
 # Auto reload modules
 
 from IPython import get_ipython
@@ -43,6 +44,7 @@ import pandas
 #pandas.set_option('display.height', 1000)
 pandas.set_option('display.max_rows', 10)
 pandas.set_option('display.max_columns', 500)
+pandas.set_option('display.max_colwidth', 200)
 pandas.set_option('display.width', 1000)
 
 # python -c 'import time; start=time.time(); import edward as ed; print(time.time() - start)'

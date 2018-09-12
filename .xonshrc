@@ -9,7 +9,7 @@ $PATH.append($HOME + '/opt/google-cloud-sdk/bin')
 aliases['zr'] = 'source ' + $HOME + '/.xonshrc'
 aliases['ze'] = 'vi ' + $HOME + '/.xonshrc'
 aliases['zwe'] = 'vi ' + $HOME + '/wdf/work.zsh'
-aliases['g'] = 'git status'
+aliases['g'] = 'git'
 aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
 aliases['ll'] = 'ls -alh'

@@ -1,8 +1,36 @@
 $VI_MODE=True
 $XONSH_COLOR_STYLE='rrt'
-$XONSH_HISTORY_SIZE='5 GB'
+$XONSH_HISTORY_SIZE=(100000000, 'commands')
+$XONSH_HISTORY_BACKEND = 'sqlite'
 $HISTCONTROL='ignoredups'
+$_JAVA_AWT_WM_NONREPARENTING=1
+$PATH.append($HOME + '/opt/google-cloud-sdk/bin')
+
 aliases['zr'] = 'source ' + $HOME + '/.xonshrc'
+aliases['ze'] = 'vi ' + $HOME + '/.xonshrc'
+aliases['zwe'] = 'vi ' + $HOME + '/wdf/work.zsh'
+aliases['g'] = 'git status'
+aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
+aliases['cdp'] = 'cd ' + $HOME + '/projects/'
+aliases['ll'] = 'ls -alh'
+aliases['lt'] = 'ls -alhrt'
+aliases['ls'] = 'ls -h'
+aliases['lss'] = 'ls -SlaGh'
+aliases['topdirs'] = 'du -x -m . | sort -nr | head -n 100'
+aliases['lsg'] = 'll | grep'
+
+
+aliases['what_port_app'] = 'sudo netstat -nlp | grep'
+aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK"&'
+#alias learnd='python $HOME/bin/python/learn.py --daemon=true'
+#alias learn-concept='python $HOME/bin/python/learn.py --concept '
+#alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
+#alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
+#alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
+
+
+/usr/games/fortune
+
 
 import os
 import re
@@ -32,10 +60,12 @@ def get_command_path(cmd):
     return os.path.exists(result) if result else None
 
 
-def get_fzf_selector():
+def get_fzf_selector():  
+    PATH = $HOME + '/projects/fzf/bin/'
+    #print(PATH)
     if $(echo $TMUX):
-        return 'fzf-tmux'
-    return 'fzf'
+        return PATH + 'fzf-tmux'
+    return PATH + 'fzf'
 
 
 def fzf_insert(items, current_buffer, prefix='', suffix=''):
@@ -62,7 +92,7 @@ def custom_keybindings(bindings, **kw):
      handler = bindings.add
 
      @handler(Keys.ControlR)
-     @RequiredCommand('fzf')
+#     @RequiredCommand('fzf')
      def fzf_history(event):
          items = $(history show all)
          fzf_insert(items, event.current_buffer)

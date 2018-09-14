@@ -2,9 +2,12 @@ $VI_MODE=True
 $XONSH_COLOR_STYLE='rrt'
 $XONSH_HISTORY_SIZE=(100000000, 'commands')
 $XONSH_HISTORY_BACKEND = 'sqlite'
+$COMPLETIONS_CONFIRM=True
 $HISTCONTROL='ignoredups'
 $_JAVA_AWT_WM_NONREPARENTING=1
 $PATH.append($HOME + '/opt/google-cloud-sdk/bin')
+$PATH.append($HOME + '/projects/go/bin')
+$GOPATH = $HOME + '/projects/go/'
 
 aliases['zr'] = 'source ' + $HOME + '/.xonshrc'
 aliases['ze'] = 'vi ' + $HOME + '/.xonshrc'
@@ -12,6 +15,7 @@ aliases['zwe'] = 'vi ' + $HOME + '/wdf/work.zsh'
 aliases['g'] = 'git'
 aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
+aliases['cde'] = 'cd ' + $HOME + '/projects/coin/psy/eth'
 aliases['ll'] = 'ls -alh'
 aliases['lt'] = 'ls -alhrt'
 aliases['ls'] = 'ls -h'

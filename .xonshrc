@@ -1,15 +1,18 @@
 $VI_MODE=True
 $XONSH_COLOR_STYLE='rrt'
-$XONSH_HISTORY_SIZE=(100000000, 'commands')
+$XONSH_HISTORY_SIZE=(1000000, 'commands')
 $XONSH_HISTORY_BACKEND = 'sqlite'
 $HISTCONTROL='ignoredups'
 $_JAVA_AWT_WM_NONREPARENTING=1
 $PATH.append($HOME + '/opt/google-cloud-sdk/bin')
 
+$WORK_XSH = $HOME + '/wdf/work.xsh'
+
 aliases['zr'] = 'source ' + $HOME + '/.xonshrc'
 aliases['ze'] = 'vi ' + $HOME + '/.xonshrc'
-aliases['zwe'] = 'vi ' + $HOME + '/wdf/work.zsh'
+aliases['zwe'] = 'vi ' + $WORK_XSH
 aliases['g'] = 'git'
+#aliases['h'] = 'hg'
 aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
 aliases['ll'] = 'ls -alh'
@@ -27,15 +30,22 @@ aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK
 #alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
 #alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
 #alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
+aliases['h'] = _h
 
 
-/usr/games/fortune
 
 
 import os
 import re
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
+
+def _h(cmd):
+    if not cmd:
+        $[hg status]
+    else:
+        $[hg @(cmd)]
+
 
 class RequiredCommand:
     def __init__(self, cmd):
@@ -62,7 +72,6 @@ def get_command_path(cmd):
 
 def get_fzf_selector():  
     PATH = $HOME + '/projects/fzf/bin/'
-    #print(PATH)
     if $(echo $TMUX):
         return PATH + 'fzf-tmux'
     return PATH + 'fzf'
@@ -96,4 +105,8 @@ def custom_keybindings(bindings, **kw):
      def fzf_history(event):
          items = $(history show all)
          fzf_insert(items, event.current_buffer)
- 
+
+if os.path.isfile($WORK_XSH):
+  source $WORK_XSH
+
+/usr/games/fortune

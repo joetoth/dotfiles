@@ -119,6 +119,7 @@ augroup vimrc
   au FileType slim IndentLinesEnable
 
   " File types
+  au BufNewFile,BufRead .xonshrc               set filetype=python
   au BufNewFile,BufRead *.cc               set filetype=cpp
   au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
 

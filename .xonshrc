@@ -2,9 +2,12 @@ $VI_MODE=True
 $XONSH_COLOR_STYLE='rrt'
 $XONSH_HISTORY_SIZE=(1000000, 'commands')
 $XONSH_HISTORY_BACKEND = 'sqlite'
+$COMPLETIONS_CONFIRM=True
 $HISTCONTROL='ignoredups'
 $_JAVA_AWT_WM_NONREPARENTING=1
 $PATH.append($HOME + '/opt/google-cloud-sdk/bin')
+$PATH.append($HOME + '/projects/go/bin')
+$GOPATH = $HOME + '/projects/go/'
 
 $WORK_XSH = $HOME + '/wdf/work.xsh'
 
@@ -15,10 +18,12 @@ aliases['g'] = 'git'
 #aliases['h'] = 'hg'
 aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
+aliases['cde'] = 'cd ' + $HOME + '/projects/coin/psy/eth'
+aliases['cdd'] = 'cd ' + $HOME + '/projects/datasets'
 aliases['ll'] = 'ls -alh'
 aliases['lt'] = 'ls -alhrt'
 aliases['ls'] = 'ls -h'
-aliases['lss'] = 'ls -SlaGh'
+aliases['lss'] = 'ls -SlaGhr'
 aliases['topdirs'] = 'du -x -m . | sort -nr | head -n 100'
 aliases['lsg'] = 'll | grep'
 

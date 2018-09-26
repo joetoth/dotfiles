@@ -5,7 +5,6 @@ import subprocess
 import sys
 import json
 from subprocess import CalledProcessError, Popen, PIPE
-
 #-p works with the PRIMARY selection. That's the middle click one.
 #-s works with the SECONDARY selection. I don't know if this is used anymore.
 #-b works with the CLIPBOARD selection. That's your Ctrl + V one.
@@ -14,6 +13,8 @@ def ipython(text):
   p = Popen(['xsel', '-bi'], stdin=PIPE)
   p.communicate(input=text)
 
+  # Create pane with the following
+  # tmux new -s ipython -n ipython
   cmd = ['tmux', 'send-keys', '-t', 'ipython:ipython', '%paste\n']
   try:
     subprocess.check_output(cmd)

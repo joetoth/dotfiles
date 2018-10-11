@@ -300,7 +300,7 @@ noremap ; :
 nnoremap <c-l> :nohl<cr><c-l>
 
 " copy/paste from system clipboard
-" vnoremap y "+y
+vnoremap y "+y
 "noremap <leader>yy "+yy
 "nnoremap <leader>p "+p
 "nnoremap <leader>P "+P
@@ -309,7 +309,7 @@ set clipboard=unnamedplus
 nnoremap U :redo<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-nnoremap <leader>W !sudo tee > /dev/null %
+nnoremap <leader>W !sudo tee > /dev/null %<CR>
 
 " edit vimrc
 nnoremap <leader>vim :vsp ~/.vimrc<cr>

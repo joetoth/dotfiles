@@ -7,6 +7,7 @@ $HISTCONTROL='ignoredups'
 $_JAVA_AWT_WM_NONREPARENTING=1
 $PATH.append($HOME + '/opt/google-cloud-sdk/bin')
 $PATH.append($HOME + '/projects/go/bin')
+$PATH.append($HOME + '/bin')
 $GOPATH = $HOME + '/projects/go/'
 
 $WORK_XSH = $HOME + '/wdf/work.xsh'
@@ -24,8 +25,10 @@ aliases['ll'] = 'ls -alh'
 aliases['lt'] = 'ls -alhrt'
 aliases['ls'] = 'ls -h'
 aliases['lss'] = 'ls -SlaGhr'
-aliases['topdirs'] = 'du -x -m . | sort -nr | head -n 100'
 aliases['lsg'] = 'll | grep'
+
+def topdirs():
+  $[/usr/bin/du -sh * | /usr/bin/sort -h]
 
 
 aliases['what_port_app'] = 'sudo netstat -nlp | grep'
@@ -35,7 +38,6 @@ aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK
 #alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
 #alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
 #alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
-aliases['h'] = _h
 
 
 
@@ -51,6 +53,7 @@ def _h(cmd):
     else:
         $[hg @(cmd)]
 
+aliases['h'] = _h
 
 class RequiredCommand:
     def __init__(self, cmd):
@@ -82,9 +85,9 @@ def get_fzf_selector():
     return PATH + 'fzf'
 
 
-def fzf_insert(items, current_buffer, prefix='', suffix=''):
+def fzf_insert(current_buffer, prefix='', suffix=''):
     selector = get_fzf_selector()
-    choice = $(echo @(items) | @(selector) --tac  --tiebreak=index +m).replace('\n', '')
+    choice = $(history show all | @(selector) --tac  --tiebreak=index +m).strip()
 
     if choice:
         command = prefix + choice + suffix
@@ -108,8 +111,7 @@ def custom_keybindings(bindings, **kw):
      @handler(Keys.ControlR)
 #     @RequiredCommand('fzf')
      def fzf_history(event):
-         items = $(history show all)
-         fzf_insert(items, event.current_buffer)
+         fzf_insert(event.current_buffer)
 
 if os.path.isfile($WORK_XSH):
   source $WORK_XSH

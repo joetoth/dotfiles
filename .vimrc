@@ -19,17 +19,19 @@ let mapleader = ","
 call plug#begin('~/.vim/plugged')
 
 " Workflow {{{
-Plug 'tpope/vim-fugitive' 
-  nmap <leader>gb :Gblame<cr>
-  nmap <leader>gc :Gcommit<cr>
-  nmap <leader>gp :Gpush<cr>
-Plug 'airblade/vim-gitgutter'
-  let g:gitgutter_map_keys = 0
-  nmap <leader>ga <Plug>GitGutterStageHunk
-  nmap <leader>gu <Plug>GitGutterUndoHunk
-  " nmap <leader>gp <Plug>GitGutterPreviewHunk
-  nmap <leader>g] <Plug>GitGutterNextHunk
-  nmap <leader>g[ <Plug>GitGutterPrevHunk
+"Plug 'tpope/vim-fugitive' 
+"  nmap <leader>gb :Gblame<cr>
+"  nmap <leader>gc :Gcommit<cr>
+"  nmap <leader>gp :Gpush<cr>
+"Plug 'airblade/vim-gitgutter'
+"  let g:gitgutter_map_keys = 0
+"  nmap <leader>ga <Plug>GitGutterStageHunk
+"  nmap <leader>gu <Plug>GitGutterUndoHunk
+"  " nmap <leader>gp <Plug>GitGutterPreviewHunk
+"  nmap <leader>g] <Plug>GitGutterNextHunk
+"  nmap <leader>g[ <Plug>GitGutterPrevHunk
+Plug 'joetoth/simpleterm.vim'
+
 Plug 'mbbill/undotree' 
   nnoremap <leader>u :UndotreeToggle<cr>
 
@@ -56,15 +58,16 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'junegunn/vim-peekaboo' " Registers / Copy / Paste
 
 " Search & Replace
-Plug 'haya14busa/incsearch.vim'
+"Plug 'haya14busa/incsearch.vim'
 
 " Syntax {{{
 Plug 'tpope/vim-commentary'
   map  gc  <Plug>Commentary
   nmap gcc <Plug>CommentaryLine
-Plug 'sheerun/vim-polyglot'  
-Plug 'vim-syntastic/syntastic'
-Plug 'alxyzc/lc.vim'
+"Plug 'sheerun/vim-polyglot'  
+"Plug 'vim-syntastic/syntastic'
+"Vim syntax for Elsa, the lambda calculus evaluator.
+" Plug 'alxyzc/lc.vim'
 
 " Interface {{{
 Plug 'mhinz/vim-startify' " {{{
@@ -73,32 +76,43 @@ Plug 'mhinz/vim-startify' " {{{
 
 " Motion {{{
 Plug 'easymotion/vim-easymotion' " {{{
-Plug 'christoomey/vim-tmux-navigator' " {{{
+"Plug 'christoomey/vim-tmux-navigator' " {{{
+
 
 " Themes {{{
 Plug 'chriskempson/vim-tomorrow-theme'
 
 " Language Server
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-  if executable('pyls')
-      " pip install python-language-server
-      au User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd': {server_info->['pyls']},
-          \ 'whitelist': ['python'],
-          \ })
-  endif
-  if executable('clangd')
-      au User lsp_setup call lsp#register_server({
-          \ 'name': 'clangd',
-          \ 'cmd': {server_info->['clangd']},
-          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-          \ })
-  endif
-let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/vim-lsp.log')
-noremap <c-g> :LspDefinition<cr>
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+"   if executable('pyls')
+"       " pip install python-language-server
+"       au User lsp_setup call lsp#register_server({
+"           \ 'name': 'pyls',
+"           \ 'cmd': {server_info->['pyls']},
+"           \ 'whitelist': ['python'],
+"           \ })
+"   endif
+"   if executable('clangd')
+"       au User lsp_setup call lsp#register_server({
+"           \ 'name': 'clangd',
+"           \ 'cmd': {server_info->['clangd']},
+"           \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"           \ })
+"   endif
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+" noremap <c-g> :LspDefinition<cr>
+Plug 'natebosch/vim-lsc'
+let g:lsc_server_commands = {
+      \ 'c': '/google/bin/releases/editor-devtools/ciderlsp',
+      \ 'cpp': '/google/bin/releases/editor-devtools/ciderlsp',
+      \ 'go': '/google/bin/releases/editor-devtools/ciderlsp',
+      \ 'objc': '/google/bin/releases/editor-devtools/ciderlsp',
+      \ 'objcpp': '/google/bin/releases/editor-devtools/ciderlsp',
+      \ }
+" Enable default mappings (support is language/LSP dependent)
+let g:lsc_auto_map = v:true
 
 call plug#end()
 
@@ -226,7 +240,7 @@ set hlsearch
 " {{{
 
 " set ctags file
-set tags=~/tags
+"set tags=~/tags
 
 " enable mouse
 set mouse=a
@@ -271,6 +285,8 @@ endif
 " | key mappings |
 " +--------------+
 " {{{
+"
+" noremap <c-i>: call term_sendkeys(buf, a:cmd."\<CR>")
 
 " save and close a buffer using ctrl+x
 inoremap <c-x> <esc>:x<cr>
@@ -288,6 +304,48 @@ inoremap <s-tab> <c-d>
 vnoremap > >gv
 vnoremap < <gv
 
+
+tnoremap <C-h> <C-w>h
+tnoremap <C-j> <C-w>j
+tnoremap <C-k> <C-w>k
+tnoremap <C-l> <C-w>l
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+inoremap <C-h> <C-\><C-N><C-w>h
+inoremap <C-j> <C-\><C-N><C-w>j
+inoremap <C-k> <C-\><C-N><C-w>k
+inoremap <C-l> <C-\><C-N><C-w>l
+
+" inoremap <C-h> <Esc><C-w>h<cr>
+" inoremap <C-j> <Esc><C-w>j<cr>
+" inoremap <C-k> <Esc><C-w>k<cr>
+" inoremap <C-l> <Esc><C-w>l<cr>
+
+
+" Quickly create a new terminal in a new tab
+tnoremap <c-a>c <esc>:tab term<CR>
+
+tnoremap <c-a>c <esc>:tab term<CR>
+noremap <c-a>c <esc>:tab term<CR>
+inoremap <c-a>c <esc>:tab term<CR>
+
+tnoremap <c-a>v <esc>:vert term<CR>
+noremap <c-a>v <esc>:vert term<CR>
+inoremap <c-a>v <esc>:vert term<CR>
+
+tnoremap <c-a>s <esc>:term<CR>
+noremap <c-a>s <esc>:term<CR>
+inoremap <c-a>s <esc>:term<CR>
+
+nnor <cr> :Sline<CR>j
+vnor <cr>"+y :Sexe %paste<cr>
+
+"noremap <leader>yy "+yy
+
 " Fix pasting
 " nnoremap p ]p
 
@@ -297,7 +355,7 @@ noremap ; :
 "noremap : ;
 
 " clear highlights on redraw
-nnoremap <c-l> :nohl<cr><c-l>
+"nnoremap <c-l> :nohl<cr><c-l>
 
 " copy/paste from system clipboard
 " vnoremap y "+y

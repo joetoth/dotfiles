@@ -35,7 +35,6 @@ aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK
 #alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
 #alias rekall='python $HOME/bin/python/learn.py --rekall=true --concept'
 #alias learn-remove='python $HOME/bin/python/learn.py --remove=true --concept'
-aliases['h'] = _h
 
 
 
@@ -51,6 +50,7 @@ def _h(cmd):
     else:
         $[hg @(cmd)]
 
+aliases['h'] = _h
 
 class RequiredCommand:
     def __init__(self, cmd):

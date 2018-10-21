@@ -1,4 +1,6 @@
 # Set up the prompt
+xonsh
+exit
 source $HOME/.zplug/init.zsh
 
 zplugs=() # Reset zplugs

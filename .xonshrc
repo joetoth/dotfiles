@@ -26,6 +26,9 @@ aliases['lt'] = 'ls -alhrt'
 aliases['ls'] = 'ls -h'
 aliases['lss'] = 'ls -SlaGhr'
 aliases['lsg'] = 'll | grep'
+aliases['vpn'] = 'sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
+aliases['vpn1'] = 'sudo openvpn --config /etc/openvpn/USA-New_Jersey.ovpn'
+aliases['vpn2'] = 'sudo openvpn --config /etc/openvpn/USA-Washington.ovpn'
 
 def topdirs():
   $[/usr/bin/du -sh * | /usr/bin/sort -h]

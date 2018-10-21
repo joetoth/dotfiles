@@ -125,8 +125,15 @@ command! PU PlugUpdate | PlugUpgrade
 " ============================================================================
 " AUTOCMD {{{
 " ============================================================================
+"
+augroup NAME_OF_GROUP
+  autocmd!
+  autocmd bufwritepost .vimrc source $MYVIMRC
+augroup end
 
 augroup vimrc
+  " Remove all commands otherwise when saving it keeps adding commands
+  autocmd! 
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
@@ -315,29 +322,21 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-inoremap <C-h> <C-\><C-N><C-w>h
-inoremap <C-j> <C-\><C-N><C-w>j
-inoremap <C-k> <C-\><C-N><C-w>k
-inoremap <C-l> <C-\><C-N><C-w>l
-
-" inoremap <C-h> <Esc><C-w>h<cr>
-" inoremap <C-j> <Esc><C-w>j<cr>
-" inoremap <C-k> <Esc><C-w>k<cr>
-" inoremap <C-l> <Esc><C-w>l<cr>
-
+inoremap <C-h> <esc><C-w>h
+inoremap <C-j> <esc><C-w>j
+inoremap <C-k> <esc><C-w>k
+inoremap <C-l> <esc><C-w>l
 
 " Quickly create a new terminal in a new tab
-tnoremap <c-a>c <esc>:tab term<CR>
-
-tnoremap <c-a>c <esc>:tab term<CR>
+tnoremap <c-a>c <c-w>:tab term<CR>
 noremap <c-a>c <esc>:tab term<CR>
 inoremap <c-a>c <esc>:tab term<CR>
 
-tnoremap <c-a>v <esc>:vert term<CR>
+tnoremap <c-a>v <c-w>:vert term<CR>
 noremap <c-a>v <esc>:vert term<CR>
 inoremap <c-a>v <esc>:vert term<CR>
 
-tnoremap <c-a>s <esc>:term<CR>
+tnoremap <c-a>s <c-w>:term<CR>
 noremap <c-a>s <esc>:term<CR>
 inoremap <c-a>s <esc>:term<CR>
 
@@ -375,3 +374,11 @@ nnoremap <leader>vim :vsp ~/.vimrc<cr>
 autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
 " }}}
 "
+"
+if !exists('g:lasttab')
+  let g:lasttab = 1
+endif
+nnoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
+inoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
+tnoremap <c-a><c-a> <c-w>:exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()

@@ -1,4 +1,4 @@
-set shell=/bin/zsh
+"set shell=/bin/zsh
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -58,7 +58,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'junegunn/vim-peekaboo' " Registers / Copy / Paste
 
 " Search & Replace
-"Plug 'haya14busa/incsearch.vim'
+" Plug 'haya14busa/incsearch.vim'
 
 " Syntax {{{
 Plug 'tpope/vim-commentary'
@@ -340,6 +340,11 @@ tnoremap <c-a>s <c-w>:term<CR>
 noremap <c-a>s <esc>:term<CR>
 inoremap <c-a>s <esc>:term<CR>
 
+tnoremap <c-u> <c-\><c-n><c-u>
+"tnoremap <c-a><c-d> <c-\><c-n><c-d>
+
+tnoremap call term_sendkeys(bufnr("%"), "<C-Z>")
+
 nnor <cr> :Sline<CR>j
 vnor <cr>"+y :Sexe %paste<cr>
 
@@ -382,3 +387,9 @@ nnoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
 inoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
 tnoremap <c-a><c-a> <c-w>:exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
+
+" Search and replace
+" / for searching
+" :%s//replace/c
+" % - 1,$ aka whole document, s// will replace the last search and c will
+" confirm each 

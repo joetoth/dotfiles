@@ -40,7 +40,7 @@ Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim' " {{{
   nnoremap <c-F> <esc>:Files<cr>
   nnoremap <leader>, <esc>:Files<cr>
-  nnoremap <leader>zh <esc>:History<cr>
+  nnoremap <c-e> <esc>:History<cr>
   nnoremap <leader>zg <esc>:GFiles<cr>
   nnoremap <leader>s <esc>:Ag<cr>
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }

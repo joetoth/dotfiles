@@ -21,11 +21,11 @@ aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
 aliases['cde'] = 'cd ' + $HOME + '/projects/coin/psy/eth'
 aliases['cdd'] = 'cd ' + $HOME + '/projects/datasets'
-aliases['ll'] = 'ls -alh'
-aliases['lt'] = 'ls -alhrt'
-aliases['ls'] = 'ls -h'
-aliases['lss'] = 'ls -SlaGhr'
-aliases['lsg'] = 'll | grep'
+aliases['ll'] = 'ls -alh --color'
+aliases['lt'] = 'ls -alhrt --color'
+aliases['ls'] = 'ls -h --color'
+aliases['lss'] = 'ls -SlaGhr --color'
+aliases['lsg'] = 'll | grep --color'
 aliases['vpn'] = 'sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
 aliases['vpn1'] = 'sudo openvpn --config /etc/openvpn/USA-New_Jersey.ovpn'
 aliases['vpn2'] = 'sudo openvpn --config /etc/openvpn/USA-Washington.ovpn'
@@ -47,8 +47,8 @@ aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK
 
 import os
 import re
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
+#from prompt_toolkit.keys import Keys
+#from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
 
 def _h(cmd):
     if not cmd:
@@ -82,10 +82,9 @@ def get_command_path(cmd):
 
 
 def get_fzf_selector():  
-    PATH = $HOME + '/projects/fzf/bin/'
     if $(echo $TMUX):
-        return PATH + 'fzf-tmux'
-    return PATH + 'fzf'
+        return 'fzf-tmux'
+    return 'fzf'
 
 
 def fzf_insert(current_buffer, prefix='', suffix=''):
@@ -95,17 +94,6 @@ def fzf_insert(current_buffer, prefix='', suffix=''):
     if choice:
         command = prefix + choice + suffix
         current_buffer.insert_text(command)
-
-@events.on_ptk_create
-def custom_keybindings(bindings, **kw):
-    # prompt_toolkit 1.x
-    # handler = bindings.registry.add_binding
-    # prompt_toolkit 2.x
-    handler = bindings.add
-
-    @handler(Keys.ControlW)
-    def say_hi(event):
-        event.current_buffer.insert_text('hi')
 
 @events.on_ptk_create
 def custom_keybindings(bindings, **kw):

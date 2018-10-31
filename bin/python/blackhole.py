@@ -5,6 +5,8 @@ import subprocess
 import sys
 import json
 from subprocess import CalledProcessError, Popen, PIPE
+
+# 
 #-p works with the PRIMARY selection. That's the middle click one.
 #-s works with the SECONDARY selection. I don't know if this is used anymore.
 #-b works with the CLIPBOARD selection. That's your Ctrl + V one.

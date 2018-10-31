@@ -76,7 +76,7 @@ Plug 'mhinz/vim-startify' " {{{
 
 " Motion {{{
 Plug 'easymotion/vim-easymotion' " {{{
-"Plug 'christoomey/vim-tmux-navigator' " {{{
+Plug 'christoomey/vim-tmux-navigator' " {{{
 
 
 " Themes {{{
@@ -103,16 +103,11 @@ Plug 'chriskempson/vim-tomorrow-theme'
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " noremap <c-g> :LspDefinition<cr>
-Plug 'natebosch/vim-lsc'
-let g:lsc_server_commands = {
-      \ 'c': '/google/bin/releases/editor-devtools/ciderlsp',
-      \ 'cpp': '/google/bin/releases/editor-devtools/ciderlsp',
-      \ 'go': '/google/bin/releases/editor-devtools/ciderlsp',
-      \ 'objc': '/google/bin/releases/editor-devtools/ciderlsp',
-      \ 'objcpp': '/google/bin/releases/editor-devtools/ciderlsp',
-      \ }
-" Enable default mappings (support is language/LSP dependent)
-let g:lsc_auto_map = v:true
+"Plug 'natebosch/vim-lsc'
+"let g:lsc_server_commands = {
+"      \ }
+"" Enable default mappings (support is language/LSP dependent)
+"let g:lsc_auto_map = v:true
 
 call plug#end()
 

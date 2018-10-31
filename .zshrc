@@ -1,6 +1,6 @@
 # Set up the prompt
-xonsh
-exit
+#xonsh
+#exit
 source $HOME/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
@@ -20,14 +20,14 @@ zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 bindkey "^Xz" zce
 
 #zplug "plugins/git",   from:oh-my-zsh
-zplug "TBSliver/zsh-plugin-tmux-simple"
+#zplug "TBSliver/zsh-plugin-tmux-simple"
 #zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 zplug "zsh-users/zsh-completions"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
 zplug "sindresorhus/pure", use:pure.zsh
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zaw"
-zplug "so-fancy/diff-so-fancy", as:command
+#zplug "zsh-users/zsh-syntax-highlighting"
+#zplug "zsh-users/zaw"
+#zplug "so-fancy/diff-so-fancy", as:command
 zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 
@@ -187,6 +187,7 @@ faded_orange="#AF3A03"
 #fi
 
 
+
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin
 
@@ -198,13 +199,14 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_DEFAULT_COMMAND='rg ""'
 ## To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export CLOUDSDK_COMPUTE_ZONE="us-central1-a"
+export CLOUDSDK_COMPUTE_ZONE="us-east1-a"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 #export PYTHONSTARTUP="$HOME/.pythonrc"
 
@@ -275,7 +277,7 @@ alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
-alias cda='cd ~/projects/coin'
+alias cda='cd ~/projects/psycho'
 alias vpn='sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
 
 alias blog='vi ~/projects/joe.ai/content/'
@@ -854,3 +856,9 @@ alias hgun='hg resolve --list'
 
 autoload compinit
 /usr/games/fortune
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc'; fi

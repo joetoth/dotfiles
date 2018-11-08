@@ -122,8 +122,8 @@ map t :edit ~/projects/coin/README.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>
-#map ,, :action GotoFile<CR>
-map ,, :action Macro.gotofile<CR>
+map ,, :action GotoFile<CR>
+#map ,, :action Macro.gotofile<CR>
 map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>

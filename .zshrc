@@ -278,7 +278,7 @@ alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
 alias cda='cd ~/projects/psycho'
-alias vpn='sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
+alias vpn='sudo openvpn --config $HOME/vpn/USA-New_Jersey.ovpn'
 
 alias blog='vi ~/projects/joe.ai/content/'
 alias h='hg'

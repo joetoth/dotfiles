@@ -118,7 +118,7 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :edit ~/projects/coin/README.md<cr>
+map t :edit ~/projects/psycho/README.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>

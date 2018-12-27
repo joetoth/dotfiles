@@ -6,30 +6,20 @@ source $HOME/.zplug/init.zsh
 zplugs=() # Reset zplugs
 
 #zplug "cdown/clipmenu", as:command
-#zplug "djui/alias-tips"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*darwin*amd64*", if:"[[ $OSTYPE == *darwin* ]]"
 zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*", if:"[[ $OSTYPE == *linux* ]]"
-
 zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
-#zplug "junegunn/fzf", as:command, use:"bin/*"
-zplug "wellle/tmux-complete.vim", as:command,  use:"sh/*" # ctrl-r
+zplug "IngoHeimbach/zsh-easy-motion"
 zplug "Morantron/tmux-fingers"
-zplug "hchbaw/zce.zsh"
-#zplug "chriskempson/base16-shell"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 
-bindkey "^Xz" zce
-
-#zplug "plugins/git",   from:oh-my-zsh
-#zplug "TBSliver/zsh-plugin-tmux-simple"
-#zplug "stedolan/jq", from:gh-r, as:command, rename-to:jq
 #zplug "zsh-users/zsh-syntax-highlighting"
 #zplug "zsh-users/zaw"
-
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
-zplug "mafredri/zsh-async", on:sindresorhus/pure
-zplug "sindresorhus/pure", use:pure.zsh
 zplug "so-fancy/diff-so-fancy", as:command
+# ga, glo, gi, gd, gcf, gss, gclean, 
 zplug 'wfxr/forgit', defer:1
 zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
@@ -44,6 +34,9 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 fpath[1,0]=~/.zsh/completion/
+
+source ~/.zplug/repos/hchbaw/zce.zsh/zce.zsh
+bindkey "^Xz" zce
 
 # Load
 #
@@ -189,10 +182,12 @@ faded_orange="#AF3A03"
 #    export SSH_AUTH_SOCK=$SOCK
 #fi
 
+bindkey "^Xz" zce
+
 
 
 export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
 
 export EDITOR='vi'
 export VISUAL='vi'
@@ -242,7 +237,7 @@ alias alsg="alias | grep "
 alias cdb='cd -'
 alias ll='ls -alh'
 alias lt='ls -alhrt'
-alias ls='ls -h'
+alias ls='ls -h --color'
 alias lss='ls -SlaGh'
 alias topdirs='du -x -m . | sort -nr | head -n 100'
 alias lsg='ll | grep'
@@ -875,5 +870,3 @@ if [ -f '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/joeto
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc'; fi
-
-#. /Users/joetoth/.nix-profile/etc/profile.d/nix.sh

@@ -8,12 +8,12 @@ from __future__ import print_function
 #
 import os
 from os.path import expanduser
-import numpy as np
-import pandas as pd
+#import numpy as np
+#import pandas as pd
 #import pyarrow as pa
-import multiprocessing as mp
+#import multiprocessing as mp
 #import tensorflow as tf
-import tensorflow.google as tf
+#import tensorflow.google as tf
 # Auto reload modules
 
 from IPython import get_ipython

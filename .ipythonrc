@@ -16,6 +16,11 @@ from os.path import expanduser
 #import tensorflow.google as tf
 # Auto reload modules
 
+# currently necessary for autoreload to work
+from google3.research.colab.lib import googlefiles
+googlefiles.EnableGoogleFilesStat()
+googlefiles.EnableOpenGoogleFiles()
+
 from IPython import get_ipython
 ipython = get_ipython()
 #ipython.magic("pylab")
@@ -47,6 +52,11 @@ pandas.set_option('display.max_columns', 500)
 pandas.set_option('display.max_colwidth', 200)
 pandas.set_option('display.width', 1000)
 
+# usual adhoc_import from CitC
+#from google3.research.colab.public import adhoc_import
+#adhoc_import.Initialize(
+#    "/google/src/cloud/{}/{}/google3".format("joetoth", 'abe'),
+#    verbose=True, behavior='preferred')
 # python -c 'import time; start=time.time(); import edward as ed; print(time.time() - start)'
 
 # vim: filetype=python

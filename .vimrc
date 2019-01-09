@@ -80,7 +80,8 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 
 
 " Themes {{{
-Plug 'chriskempson/vim-tomorrow-theme'
+"Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
 
 " Language Server
 " Plug 'prabirshrestha/async.vim'
@@ -201,7 +202,8 @@ set t_Co=256
 set t_ut=
 
 " Set the color scheme
-colors Tomorrow-Night
+"colors Tomorrow-Night
+colors gruvbox
 set bg=dark
 
 " colorcolumn

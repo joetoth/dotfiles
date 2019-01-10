@@ -12,10 +12,7 @@ zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
 zplug "IngoHeimbach/zsh-easy-motion"
 zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
-
-#zplug "zsh-users/zsh-syntax-highlighting"
-#zplug "zsh-users/zaw"
-zplug "mafredri/zsh-async", from:github
+zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
@@ -35,8 +32,8 @@ fi
 zplug load --verbose
 fpath[1,0]=~/.zsh/completion/
 
-source ~/.zplug/repos/hchbaw/zce.zsh/zce.zsh
-bindkey "^Xz" zce
+#source ~/.zplug/repos/hchbaw/zce.zsh/zce.zsh
+#bindkey "^Xz" zce
 
 # Load
 #
@@ -197,7 +194,7 @@ export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='rg ""'
 ## To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export CLOUDSDK_COMPUTE_ZONE="us-east1-a"
+export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"

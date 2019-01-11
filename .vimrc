@@ -30,7 +30,6 @@ call plug#begin('~/.vim/plugged')
 "  " nmap <leader>gp <Plug>GitGutterPreviewHunk
 "  nmap <leader>g] <Plug>GitGutterNextHunk
 "  nmap <leader>g[ <Plug>GitGutterPrevHunk
-Plug 'joetoth/simpleterm.vim'
 
 Plug 'mbbill/undotree' 
   nnoremap <leader>u :UndotreeToggle<cr>
@@ -118,6 +117,7 @@ let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 "" Enable default mappings (support is language/LSP dependent)
 "let g:lsc_auto_map = v:true
 
+Plug 'kassio/neoterm'
 call plug#end()
 
 command! PI PlugInstall
@@ -350,7 +350,9 @@ tnoremap <c-u> <c-\><c-n><c-u>
 
 tnoremap call term_sendkeys(bufnr("%"), "<C-Z>")
 
-nnor <cr> :Sline<CR>j
+vnoremap <silent> <cr> :TREPLSendSelection<cr>
+"vnor <cr> :TREPLSendSelection<cr>
+nnor <cr> :TREPLSendLine<cr>
 vnor <cr>"+y :Sexe %paste<cr>
 
 "noremap <leader>yy "+yy

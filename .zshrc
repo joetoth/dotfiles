@@ -1,7 +1,13 @@
 # Set up the prompt
 #xonsh
 #exit
-source $HOME/.zplug/init.zsh
+#
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
+
+source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
@@ -31,6 +37,52 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 fpath[1,0]=~/.zsh/completion/
+
+
+case `uname` in
+  Darwin)
+    # Paths for Homebrew
+    export PATH=$HOME/homebrew/bin:$PATH
+    export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
+    # coreutils must be installed for gnu ls
+    export PATH="$HOME/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+    export CXXFLAGS="-I$HOME/homebrew/include"
+    export CFLAGS="-I$HOME/homebrew/include"
+    fortune
+  ;;
+  Linux)
+    /usr/games/fortune
+  ;;
+  FreeBSD)
+  ;;
+esac
+
+export GOPATH=$HOME/projects/go
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+
+export EDITOR='vi'
+export VISUAL='vi'
+export BROWSER=google-chrome
+export ANDROID_HOME=$HOME/opt/android-sdk-linux
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
+export R_LIBS=$HOME/rlibs
+export FZF_DEFAULT_OPTS="--extended-exact"
+export FZF_DEFAULT_COMMAND='rg ""'
+## To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
+export MY_PYTHON_BIN="$HOME/bin/python"
+export PATH=$PATH:$MY_PYTHON_BIN
+export PYTHONIOENCODING="utf-8"
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+#export PYTHONSTARTUP="$HOME/.pythonrc"
+#
+#
+#
+
 
 #source ~/.zplug/repos/hchbaw/zce.zsh/zce.zsh
 #bindkey "^Xz" zce
@@ -179,45 +231,6 @@ faded_orange="#AF3A03"
 bindkey "^Xz" zce
 
 
-
-export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
-
-export EDITOR='vi'
-export VISUAL='vi'
-export BROWSER=google-chrome
-export ANDROID_HOME=$HOME/opt/android-sdk-linux
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
-export R_LIBS=$HOME/rlibs
-export FZF_DEFAULT_OPTS="--extended-exact"
-export FZF_DEFAULT_COMMAND='rg ""'
-## To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
-export MY_PYTHON_BIN="$HOME/bin/python"
-export PATH=$PATH:$MY_PYTHON_BIN
-export PYTHONIOENCODING="utf-8"
-export _JAVA_AWT_WM_NONREPARENTING=1
-
-export _JAVA_AWT_WM_NONREPARENTING=1
-#export PYTHONSTARTUP="$HOME/.pythonrc"
-#
-#
-#
-case `uname` in
-  Darwin)
-    # Paths for Homebrew
-    export PATH=$HOME/homebrew/bin:$PATH
-    export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
-    export CXXFLAGS="-I$HOME/homebrew/include"
-    export CFLAGS="-I$HOME/homebrew/include"
-  ;;
-  Linux)
-  ;;
-  FreeBSD)
-  ;;
-esac
 
 
 # ALIASES
@@ -862,7 +875,6 @@ alias hgun='hg resolve --list'
 
 
 autoload compinit
-/usr/games/fortune
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc'; fi

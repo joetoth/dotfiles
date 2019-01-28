@@ -83,31 +83,33 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 Plug 'morhetz/gruvbox'
 
 " Language Server
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-  if executable('pyls')
-      " pip install python-language-server
-      au User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd': {server_info->['pyls']},
-          \ 'whitelist': ['python'],
-          \ })
-  endif
-let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
-  if executable('clangd')
-      au User lsp_setup call lsp#register_server({
-          \ 'name': 'clangd',
-          \ 'cmd': {server_info->['clangd']},
-          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-          \ })
-  endif
-  if executable('hie-wrapper')
-      au User lsp_setup call lsp#register_server({
-          \ 'name': 'haskell',
-          \ 'cmd': {server_info->['hie-wrapper']},
-          \ 'whitelist': ['haskell', 'hs'],
-          \ })
-  endif
+Plug 'w0rp/ale'
+
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
+"  if executable('pyls')
+"      " pip install python-language-server
+"      au User lsp_setup call lsp#register_server({
+"          \ 'name': 'pyls',
+"          \ 'cmd': {server_info->['pyls']},
+"          \ 'whitelist': ['python'],
+"          \ })
+"  endif
+"let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+"  if executable('clangd')
+"      au User lsp_setup call lsp#register_server({
+"          \ 'name': 'clangd',
+"          \ 'cmd': {server_info->['clangd']},
+"          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"          \ })
+"  endif
+"  if executable('hie-wrapper')
+"      au User lsp_setup call lsp#register_server({
+"          \ 'name': 'haskell',
+"          \ 'cmd': {server_info->['hie-wrapper']},
+"          \ 'whitelist': ['haskell', 'hs'],
+"          \ })
+"  endif
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " noremap <c-g> :LspDefinition<cr>

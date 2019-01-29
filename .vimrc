@@ -10,6 +10,8 @@ function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
 
+let g:python3_host_prog='/usr/bin/python3'
+
 let mapleader = ","
 
 " +---------+
@@ -17,6 +19,37 @@ let mapleader = ","
 " +---------+
 
 call plug#begin('~/.vim/plugged')
+
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '➤'
+let g:ale_sign_info = '➟'
+
+  let g:ale_echo_cursor = 0
+  let g:ale_virtualtext_cursor = 1
+  let g:ale_virtualtext_prefix = '▬▶  '
+  let g:ale_set_balloons = 1
+
+  highlight link ALEVirtualTextError ErrorMsg
+  highlight link ALEVirtualTextStyleError ALEVirtualTextError
+  highlight link ALEVirtualTextWarning WarningMsg
+  highlight link ALEVirtualTextInfo ALEVirtualTextWarning
+  highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
+
+let g:ale_linters = {
+\   'go': ['go build', 'gofmt', 'gometalinter'],
+\   'typescript': ['tsserver', 'typecheck'],
+\   'javascript': ['eslint'],
+\   'ruby': ['rubocop', 'ruby'],
+\}
+
+let g:ale_completion_enabled = 1
+Plug 'w0rp/ale'
+" Check Python files with flake8 and pylint.
+let b:ale_linters = ['pylint' ]
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['yapf']
+
+
 
 " Workflow {{{
 "Plug 'tpope/vim-fugitive' 
@@ -30,9 +63,17 @@ call plug#begin('~/.vim/plugged')
 "  " nmap <leader>gp <Plug>GitGutterPreviewHunk
 "  nmap <leader>g] <Plug>GitGutterNextHunk
 "  nmap <leader>g[ <Plug>GitGutterPrevHunk
+"
+" TODO: maybe
+" Plug "hecal3/vim-leader-guide"
+"
+"Plugin to move lines and selections up and down. <a-k>/<a-j>.
+Plug 'matze/vim-move'
 
+" hit + to expand your selection or _ to reduce
+Plug 'terryma/vim-expand-region'
 Plug 'mbbill/undotree' 
-  nnoremap <leader>u :UndotreeToggle<cr>
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " File Management {{{
 Plug 'junegunn/fzf', { 'do': './install --bin' }
@@ -82,6 +123,7 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 "Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 
+Plug 'ajh17/vimcompletesme'
 " Language Server
 Plug 'w0rp/ale'
 

@@ -20,34 +20,34 @@ let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
 
-let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '➤'
+let g:ale_sign_error = '✘'
 let g:ale_sign_info = '➟'
 
-  let g:ale_echo_cursor = 0
-  let g:ale_virtualtext_cursor = 1
-  let g:ale_virtualtext_prefix = '▬▶  '
-  let g:ale_set_balloons = 1
+let g:ale_echo_cursor = 0
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '▬▶  '
+let g:ale_set_balloons = 1
 
-  highlight link ALEVirtualTextError ErrorMsg
-  highlight link ALEVirtualTextStyleError ALEVirtualTextError
-  highlight link ALEVirtualTextWarning WarningMsg
-  highlight link ALEVirtualTextInfo ALEVirtualTextWarning
-  highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
+highlight link ALEVirtualTextError ErrorMsg
+highlight link ALEVirtualTextStyleError ALEVirtualTextError
+highlight link ALEVirtualTextWarning WarningMsg
+highlight link ALEVirtualTextInfo ALEVirtualTextWarning
+highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
 
 let g:ale_linters = {
 \   'go': ['go build', 'gofmt', 'gometalinter'],
 \   'typescript': ['tsserver', 'typecheck'],
 \   'javascript': ['eslint'],
 \   'ruby': ['rubocop', 'ruby'],
+\   'python': ['pylint', 'pyls'],
 \}
 
-let g:ale_completion_enabled = 1
-Plug 'w0rp/ale'
-" Check Python files with flake8 and pylint.
-let b:ale_linters = ['pylint' ]
-" Fix Python files with autopep8 and yapf.
 let b:ale_fixers = ['yapf']
+let g:ale_completion_enabled = 1
+
+Plug 'w0rp/ale'
+noremap <c-g> :ALEGoToDefinition<cr>
 
 
 
@@ -124,8 +124,6 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 Plug 'morhetz/gruvbox'
 
 Plug 'ajh17/vimcompletesme'
-" Language Server
-Plug 'w0rp/ale'
 
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'

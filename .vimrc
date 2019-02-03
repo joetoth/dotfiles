@@ -124,6 +124,17 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 Plug 'morhetz/gruvbox'
 
 Plug 'ajh17/vimcompletesme'
+" Language Server
+let g:ale_completion_enabled = 1
+let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
+let g:ale_linters = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['pyls'],
+\   'go': ['golangserver'],
+\   'c-c++': ['clangd'],
+\   'javascript': ['eslint'],
+\}
+Plug 'w0rp/ale'
 
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'
@@ -152,7 +163,8 @@ Plug 'ajh17/vimcompletesme'
 "  endif
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
-" noremap <c-g> :LspDefinition<cr>
+noremap <c-g> :ALEGoToDefinition<cr>
+
 "Plug 'natebosch/vim-lsc'
 "let g:lsc_server_commands = {
 "      \ }
@@ -436,6 +448,10 @@ nnoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
 inoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
 tnoremap <c-a><c-a> <c-w>:exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
+
+
+
+nmap <leader>gp :Gpush<cr>
 
 " Search and replace
 " / for searching

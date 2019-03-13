@@ -30,11 +30,11 @@ def log(dct):
 
 
 def main():
+  log(sys.argv)
   if len(sys.argv) < 2:
     print('usage: blackhole.py json')
     sys.exit(1)
 
-  log(sys.argv[1])
   d = json.loads(sys.argv[1])
 
   if d['context'] == 'intellij':

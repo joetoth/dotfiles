@@ -51,6 +51,10 @@ case `uname` in
     fortune
   ;;
   Linux)
+    export CPATH="$HOME/opt/cuda-10.0/include:$HOME/opt/cuda-10.0/nvvm/include"
+    export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
+    export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
+    export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin"
     /usr/games/fortune
   ;;
   FreeBSD)

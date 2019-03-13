@@ -34,7 +34,7 @@ set number
 set incsearch
 set hlsearch
 set smartcase
-set scrolloff=50
+set scrolloff=20
 set showmode
 set surround
 "set relativenumber
@@ -91,8 +91,9 @@ map <A-S-h> :action TypeHierarchy<CR>
 "map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
-map <C-g> :action FindUsages<CR>
-map <C-S-g> :action Generate<CR>
+map <C-S-g> :action FindUsages<CR>
+"map <C-S-g> :action Generate<CR>
+map <C-g> :action GotoDeclaration<CR>
 
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>

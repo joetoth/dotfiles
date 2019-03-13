@@ -35,9 +35,13 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load --verbose
+zplug load #--verbose
 fpath[1,0]=~/.zsh/completion/
+#fpath=(~/homebrew/share/zsh-completions $fpath)
 
+
+export GOPATH=$HOME/projects/go
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
 
 case `uname` in
   Darwin)
@@ -61,8 +65,6 @@ case `uname` in
   ;;
 esac
 
-export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
 
 export EDITOR='vi'
 export VISUAL='vi'
@@ -80,16 +82,7 @@ export MY_PYTHON_BIN="$HOME/bin/python"
 export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-export _JAVA_AWT_WM_NONREPARENTING=1
 #export PYTHONSTARTUP="$HOME/.pythonrc"
-#
-#
-#
-
-
-#source ~/.zplug/repos/hchbaw/zce.zsh/zce.zsh
-#bindkey "^Xz" zce
 
 # Load
 #
@@ -137,18 +130,8 @@ stty -ixon
 setopt noflowcontrol
 
 
-# zmv is a module that allow people to do massive rename. 
-# zmv '(*) - (*) - (*) - (*).ogg' '$1/$1 - $2/$1 - $2 - $3 - $3.ogg'
-# autoload -Uz zmv
-
 # Z Style
 # ------------------------------------------------------------------------------
-######### Initialize completion
-autoload -Uz compinit
-compinit -d "$ZSH_CACHE/zcompdump"
-
-
-
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE
 
@@ -240,8 +223,8 @@ bindkey -M viins "\eOB" down-line-or-history
 bindkey '^N' up-line-or-search
 bindkey '^P' down-line-or-search
 #bindkey -M viins 'jj' vi-cmd-mode
-#
 
+# gruvbox theme
 dark0_hard="#1D2021"
 dark0="#282828"
 dark0_soft="#32302F"
@@ -393,6 +376,7 @@ __git_files () {
 # No arguments: `git status -s`
 # With arguments: acts like `git`
 compdef g=git
+
 g() {
   if [[ $# > 0 ]]; then
     git $@
@@ -817,7 +801,6 @@ termjt-screen-widget() {
 
 zle     -N   termjt-screen-widget
 bindkey '^S' 'termjt-screen-widget'
-#bindkey '^S' 'termjt-screen-widget'
 #bindkey -s '^S' 'tmux-copy\n'
 
 #for script in $HOME/bin/python; do
@@ -855,21 +838,8 @@ alias hgun='hg resolve --list'
 # Kill app on port
 # fuser -k 2222/tcp
 
-
-#ag -l Scoped.Singleton java | xargs sed -i '/Scoped.Singleton/s/Scoped.Singleton/Singleton/g'
-
-# search and replace lines
-# ag -l java/com/google/apps/framework/backends/harpoon | while read line; do
-# cat $line | pyp
-# "p.replace('\"//java/com/google/apps/framework/backends/harpoon\",',
-# '\"//java/com/google/apps/framework/backends/harpoon\",')" >! $line
-# done
-#
 # Battery
 # upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"
-
-
-
 # Wireless commands
 # iw dev
 # ip link set wlan0 up  
@@ -890,63 +860,8 @@ alias hgun='hg resolve --list'
 # You can also get a list of available access points with:
 #
 # nmcli dev wifi list
-# 
-#
-#
-#ulimit -Sv 500000     # Set ~500 mb limit
-#
 
 
-###-tns-completion-start-###
-#if [ -f /home/joetoth/.tnsrc ]; then 
-#    source /home/joetoth/.tnsrc 
-#fi
-###-tns-completion-end-###
-#
-#
-# TensorFlow
-#==========================================
-#Skipping cancelled enqueue attempt with queue not closed
-#=========================================
-#
-#string_input_producer is a FIFOQueue + QueueRunner. You get more control if you use a FIFOQueue and enqueue things manually. Something like this
-#
-#filename_queue = tf.FIFOQueue(100, tf.string)
-#enqueue_placeholder = tf.placeholder(dtype=tf.string)
-#enqueue_op = filename_queue.enqueue(enqueue_placeholder)
-#
-#config = tf.ConfigProto()
-#config.operation_timeout_in_ms=2000  # for debugging queue hangs
-#sess = tf.InteractiveSession(config=config)
-#coord = tf.train.Coordinator()
-#threads = tf.train.start_queue_runners(coord=coord)
-#
-#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir1/0"})
-#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir1/1"})
-#
-## do stats for /temp/dir1
-#
-#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir2/0"})
-#sess.run([enqueue_op], feed_dict={enqueue_placeholder:"/temp/dir2/1"})
-#
-## do stats for /temp/dir2
-#
-#coord.request_stop()
-#coord.join(threads)
-#
-#==============
-#config.operation_timeout_in_ms=5000  # for debugging queue hangs
-#==============
-#
-#
-#
+######### Initialize completion
+autoload -Uz compinit
 
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/joetoth/opt/google-cloud-sdk/completion.zsh.inc'; fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

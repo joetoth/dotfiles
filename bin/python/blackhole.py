@@ -39,6 +39,8 @@ def main():
 
   if d['context'] == 'intellij':
     ipython(d['text'])
+  elif d['context'] == 'tmux':
+    log({'message': 'tmuxxx', 'json': d})
   else:
     log({'message': 'No handler found', 'json': d})
 

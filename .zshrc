@@ -42,6 +42,7 @@ fpath[1,0]=~/.zsh/completion/
 
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+export VULKAN_SDK=$HOME/opt/vulkan
 
 case `uname` in
   Darwin)
@@ -58,7 +59,7 @@ case `uname` in
     export CPATH="$HOME/opt/cuda-10.0/include:$HOME/opt/cuda-10.0/nvvm/include"
     export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
     export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
-    export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin"
+    export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
     /usr/games/fortune
   ;;
   FreeBSD)

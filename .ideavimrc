@@ -34,7 +34,7 @@ set number
 set incsearch
 set hlsearch
 set smartcase
-set scrolloff=50
+"set scrolloff=30
 set showmode
 set surround
 "set relativenumber
@@ -118,7 +118,7 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :edit ~/projects/README.md<cr>
+map t :edit ~/projects/joetoth.com/README.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>

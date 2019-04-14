@@ -25,6 +25,12 @@ zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug 'wfxr/forgit', defer:1
 #zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#git@github.com:spwhitt/nix-zsh-completions.git
+zplug "spwhitt/nix-zsh-completions"
+
+source $HOME/.zplug/repos/spwhitt/nix-zsh-completions/nix-zsh-completions.plugin.zsh
+fpath=($HOME/.zplug/repos/spwhitt/nix-zsh-completions $fpath)
+autoload -U compinit && compinit
 
 
 if ! zplug check --verbose; then
@@ -42,16 +48,29 @@ fpath[1,0]=~/.zsh/completion/
 
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+export VULKAN_SDK=$HOME/opt/vulkansdk
 
 case `uname` in
   Darwin)
+    
     # Paths for Homebrew
-    export PATH=$HOME/homebrew/bin:$PATH
-    export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
-    # coreutils must be installed for gnu ls
-    export PATH="$HOME/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-    export CXXFLAGS="-I$HOME/homebrew/include"
-    export CFLAGS="-I$HOME/homebrew/include"
+    export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
+    export PATH=$HOME/opt/nvim/bin:$PATH
+    #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
+    ## coreutils must be installed for gnu ls
+    #export PATH="$HOME/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+    #export CXXFLAGS="-I$HOME/homebrew/include, -I$HOME/homebrew/opt/llvm/include, -I$HOME/homebrew/opt/llvm/include/c++/v1"
+    #export CFLAGS="$CXXFLAGS"
+    #export LDFLAGS="-L$HOME/homebrew/opt/llvm/lib -Wl,-rpath,$HOME/homebrew/opt/llvm/lib"
+    #
+    export PATH=$PATH:$VULKAN_SDK/macOS/bin
+    export DYLD_LIBRARY_PATH=$VULKAN_SDK/macOS/lib
+    export VK_LAYER_PATH=$VULKAN_SDK/macOS/etc/vulkan/explicit_layers.d
+    export VK_ICD_FILENAMES=$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json
+    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS/
+
+
+    . $HOME/.nix-profile/etc/profile.d/nix.sh
     fortune
   ;;
   Linux)
@@ -292,7 +311,6 @@ alias alsg="alias | grep "
 alias cdb='cd -'
 alias ll='ls -alh'
 alias lt='ls -alhrt'
-alias ls='ls -h --color'
 alias lss='ls -SlaGh'
 alias topdirs='du -x -m . | sort -nr | head -n 100'
 alias lsg='ll | grep'
@@ -861,3 +879,4 @@ alias hgun='hg resolve --list'
 ######### Initialize completion
 autoload -Uz compinit
 
+export PATH="/Users/joetoth/homebrew/opt/llvm/bin:$PATH"

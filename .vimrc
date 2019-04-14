@@ -423,7 +423,7 @@ noremap ; :
 "nnoremap <c-l> :nohl<cr><c-l>
 
 " copy/paste from system clipboard
-"vnoremap y "+y
+vnoremap y "+y
 "noremap <leader>yy "+yy
 "nnoremap <leader>p "+p
 "nnoremap <leader>P "+P

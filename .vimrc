@@ -20,14 +20,8 @@ let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
 
-let g:ale_sign_warning = '➤'
-let g:ale_sign_error = '✘'
-let g:ale_sign_info = '➟'
-
-let g:ale_echo_cursor = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '▬▶  '
-let g:ale_set_balloons = 1
+" Language Server
+Plug 'w0rp/ale'
 
 highlight link ALEVirtualTextError ErrorMsg
 highlight link ALEVirtualTextStyleError ALEVirtualTextError
@@ -35,19 +29,26 @@ highlight link ALEVirtualTextWarning WarningMsg
 highlight link ALEVirtualTextInfo ALEVirtualTextWarning
 highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
 
-let g:ale_linters = {
-\   'go': ['go build', 'gofmt', 'gometalinter'],
-\   'typescript': ['tsserver', 'typecheck'],
-\   'javascript': ['eslint'],
-\   'ruby': ['rubocop', 'ruby'],
-\   'python': ['pylint', 'pyls'],
-\}
+noremap <c-g> :ALEGoToDefinition<cr>
 
+let g:ale_sign_warning = '➤'
+let g:ale_sign_error = '✘'
+let g:ale_sign_info = '➟'
+let g:ale_echo_cursor = 0
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '▬▶  '
+let g:ale_set_balloons = 1
+let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
+let g:ale_linters = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['pyls'],
+\   'go': ['golangserver'],
+\   'c-c++': ['clangd'],
+\   'javascript': ['eslint'],
+\   'typescript': ['tsserver', 'typecheck'],
+\}
 let b:ale_fixers = ['yapf']
 let g:ale_completion_enabled = 1
-
-Plug 'w0rp/ale'
-noremap <c-g> :ALEGoToDefinition<cr>
 
 
 
@@ -64,12 +65,7 @@ noremap <c-g> :ALEGoToDefinition<cr>
 "  nmap <leader>g] <Plug>GitGutterNextHunk
 "  nmap <leader>g[ <Plug>GitGutterPrevHunk
 "
-" TODO: maybe
-" Plug "hecal3/vim-leader-guide"
 "
-"Plugin to move lines and selections up and down. <a-k>/<a-j>.
-Plug 'matze/vim-move'
-
 " hit + to expand your selection or _ to reduce
 Plug 'terryma/vim-expand-region'
 Plug 'mbbill/undotree' 
@@ -123,18 +119,7 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 "Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 
-Plug 'ajh17/vimcompletesme'
-" Language Server
-let g:ale_completion_enabled = 1
-let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
-let g:ale_linters = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'python': ['pyls'],
-\   'go': ['golangserver'],
-\   'c-c++': ['clangd'],
-\   'javascript': ['eslint'],
-\}
-Plug 'w0rp/ale'
+"Plug 'ajh17/vimcompletesme'
 
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'

@@ -6,7 +6,6 @@ import sys
 import json
 from subprocess import CalledProcessError, Popen, PIPE
 
-# 
 #-p works with the PRIMARY selection. That's the middle click one.
 #-s works with the SECONDARY selection. I don't know if this is used anymore.
 #-b works with the CLIPBOARD selection. That's your Ctrl + V one.
@@ -27,18 +26,21 @@ def ipython(text):
 def log(dct):
   with open(expanduser('~/blackhole.log'), 'a') as f:
     f.write(json.dumps(dct))
+    f.write('\n')
 
 
 def main():
+  log(sys.argv)
   if len(sys.argv) < 2:
     print('usage: blackhole.py json')
     sys.exit(1)
 
-  log(sys.argv[1])
   d = json.loads(sys.argv[1])
 
   if d['context'] == 'intellij':
     ipython(d['text'])
+  elif d['context'] == 'tmux':
+    log({'message': 'tmuxxx', 'json': d})
   else:
     log({'message': 'No handler found', 'json': d})
 

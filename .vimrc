@@ -20,38 +20,6 @@ let mapleader = ","
 
 call plug#begin('~/.vim/plugged')
 
-" Language Server
-Plug 'w0rp/ale'
-
-highlight link ALEVirtualTextError ErrorMsg
-highlight link ALEVirtualTextStyleError ALEVirtualTextError
-highlight link ALEVirtualTextWarning WarningMsg
-highlight link ALEVirtualTextInfo ALEVirtualTextWarning
-highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
-
-noremap <c-g> :ALEGoToDefinition<cr>
-
-let g:ale_sign_warning = '➤'
-let g:ale_sign_error = '✘'
-let g:ale_sign_info = '➟'
-let g:ale_echo_cursor = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '▬▶  '
-let g:ale_set_balloons = 1
-let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
-let g:ale_linters = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'python': ['pyls'],
-\   'go': ['golangserver'],
-\   'c-c++': ['clangd'],
-\   'javascript': ['eslint'],
-\   'typescript': ['tsserver', 'typecheck'],
-\}
-let b:ale_fixers = ['yapf']
-let g:ale_completion_enabled = 1
-
-
-
 " Workflow {{{
 "Plug 'tpope/vim-fugitive' 
 "  nmap <leader>gb :Gblame<cr>
@@ -100,6 +68,7 @@ Plug 'junegunn/vim-peekaboo' " Registers / Copy / Paste
 Plug 'tpope/vim-commentary'
   map  gc  <Plug>Commentary
   nmap gcc <Plug>CommentaryLine
+  nmap <c-\> <Plug>CommentaryLine
 "Plug 'sheerun/vim-polyglot'  
 "Plug 'vim-syntastic/syntastic'
 "Vim syntax for Elsa, the lambda calculus evaluator.
@@ -119,7 +88,40 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 "Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 
-"Plug 'ajh17/vimcompletesme'
+
+Plug 'w0rp/ale'
+
+" Language Server
+let g:ale_completion_enabled = 1
+let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
+let g:ale_sign_warning = '➤'
+let g:ale_sign_error = '✘'
+let g:ale_sign_info = '➟'
+
+let g:ale_echo_cursor = 0
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '▬▶  '
+let g:ale_set_balloons = 1
+
+"highlight link ALEVirtualTextError ErrorMsg
+"highlight link ALEVirtualTextStyleError ALEVirtualTextError
+"highlight link ALEVirtualTextWarning WarningMsg
+"highlight link ALEVirtualTextInfo ALEVirtualTextWarning
+"highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
+
+let g:ale_linters = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'go': ['go build', 'gofmt', 'gometalinter'],
+\   'typescript': ['tsserver', 'typecheck'],
+\   'javascript': ['eslint'],
+\   'ruby': ['rubocop', 'ruby'],
+\   'python': ['pyls'],
+\   'c-c++': ['clangd'],
+\}
+
+"let b:ale_fixers = ['yapf']
+
+noremap <c-g> :ALEGoToDefinition<cr>
 
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'
@@ -225,8 +227,6 @@ autocmd FileType cpp set sw=2
 autocmd FileType cpp set softtabstop=2
 autocmd FileType java set sw=2
 autocmd FileType java set sw=2
-autocmd FileType py set softtabstop=2
-autocmd FileType py set softtabstop=2
 
 " }}}
 
@@ -389,10 +389,21 @@ tnoremap <c-u> <c-\><c-n><c-u>
 
 tnoremap call term_sendkeys(bufnr("%"), "<C-Z>")
 
-vnoremap <silent> <cr> :TREPLSendSelection<cr>
+"vnoremap <silent> <cr> :TREPLSendSelection<cr>
 "vnor <cr> :TREPLSendSelection<cr>
-nnor <cr> :TREPLSendLine<cr>
-vnor <cr>"+y :Sexe %paste<cr>
+"vnor <cr>"+y :Sexe %paste<cr>
+
+augroup python_settings " {
+	autocmd!
+	au FileType python :set tw=2
+	au FileType python nnor <cr> :TREPLSendLine<cr>
+	au FileType python vnoremap <silent> <cr> :TREPLSendSelection<cr>
+augroup END " }
+
+" Run when saving py files
+"autocmd BufWritePost *.py call Flake8()
+" Ignore Errors
+let g:flake8_ignore="E501,W293"
 
 "noremap <leader>yy "+yy
 
@@ -402,7 +413,6 @@ vnor <cr>"+y :Sexe %paste<cr>
 " efficiency ftw
 inoremap jj <esc>
 noremap ; :
-"noremap : ;
 
 " clear highlights on redraw
 "nnoremap <c-l> :nohl<cr><c-l>
@@ -443,3 +453,55 @@ nmap <leader>gp :Gpush<cr>
 " :%s//replace/c
 " % - 1,$ aka whole document, s// will replace the last search and c will
 " confirm each 
+"
+if exists('veonim')
+
+" built-in plugin manager
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-surround'
+
+" extensions for web dev
+let g:vscode_extensions = [
+  \'vscode.typescript-language-features',
+  \'vscode.css-language-features',
+  \'vscode.html-language-features',
+\]
+
+" multiple nvim instances
+nno <silent> <c-t>c :Veonim vim-create<cr>
+"nno <silent> <c-g> :Veonim vim-switch<cr>
+nno <silent> <c-t>, :Veonim vim-rename<cr>
+
+" workspace functions
+nno <silent> ,f :Veonim files<cr>
+nno <silent> ,e :Veonim explorer<cr>
+nno <silent> ,b :Veonim buffers<cr>
+nno <silent> ,d :Veonim change-dir<cr>
+"or with a starting dir: nno <silent> ,d :Veonim change-dir ~/proj<cr>
+
+" searching text
+nno <silent> <space>fw :Veonim grep-word<cr>
+vno <silent> <space>fw :Veonim grep-selection<cr>
+nno <silent> <space>fa :Veonim grep<cr>
+nno <silent> <space>ff :Veonim grep-resume<cr>
+nno <silent> <space>fb :Veonim buffer-search<cr>
+
+" language features
+nno <silent> sr :Veonim rename<cr>
+nno <silent> sd :Veonim definition<cr>
+nno <silent> si :Veonim implementation<cr>
+nno <silent> st :Veonim type-definition<cr>
+nno <silent> sf :Veonim references<cr>
+nno <silent> sh :Veonim hover<cr>
+nno <silent> sl :Veonim symbols<cr>
+nno <silent> so :Veonim workspace-symbols<cr>
+nno <silent> sq :Veonim code-action<cr>
+nno <silent> sk :Veonim highlight<cr>
+nno <silent> sK :Veonim highlight-clear<cr>
+nno <silent> ,n :Veonim next-usage<cr>
+nno <silent> ,p :Veonim prev-usage<cr>
+nno <silent> sp :Veonim show-problem<cr>
+nno <silent> <c-n> :Veonim next-problem<cr>
+nno <silent> <c-p> :Veonim prev-problem<cr>
+
+endif

@@ -25,11 +25,7 @@ zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug 'wfxr/forgit', defer:1
 #zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
-#git@github.com:spwhitt/nix-zsh-completions.git
-zplug "spwhitt/nix-zsh-completions"
 
-source $HOME/.zplug/repos/spwhitt/nix-zsh-completions/nix-zsh-completions.plugin.zsh
-fpath=($HOME/.zplug/repos/spwhitt/nix-zsh-completions $fpath)
 autoload -U compinit && compinit
 
 
@@ -70,7 +66,6 @@ case `uname` in
     export VULKAN_SDK=$HOME/opt/vulkansdk/macOS/
 
 
-    . $HOME/.nix-profile/etc/profile.d/nix.sh
     fortune
   ;;
   Linux)

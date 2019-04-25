@@ -86,7 +86,7 @@ map <A-S-h> :action TypeHierarchy<CR>
 
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
-"map <C-e> :action RecentFiles<CR>
+map <C-e> :action RecentFiles<CR>
 "map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
@@ -104,7 +104,7 @@ map <C-S-v> :action PasteMultiple<CR>
 "vmap <C-_> :action CommentByLineComment<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
 
-jjp <C-p> :action ParameterInfo<CR>
+map <C-p> :action ParameterInfo<CR>
 imap <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>

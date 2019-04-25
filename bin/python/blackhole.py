@@ -9,7 +9,6 @@ from subprocess import CalledProcessError, Popen, PIPE
 #-p works with the PRIMARY selection. That's the middle click one.
 #-s works with the SECONDARY selection. I don't know if this is used anymore.
 #-b works with the CLIPBOARD selection. That's your Ctrl + V one.
-
 def ipython(text):
   p = Popen(['xsel', '-bi'], stdin=PIPE)
   p.communicate(input=text)
@@ -40,7 +39,7 @@ def main():
   if d['context'] == 'intellij':
     ipython(d['text'])
   elif d['context'] == 'tmux':
-    log({'message': 'tmuxxx', 'json': d})
+    log({'message': 'tmux', 'json': d})
   else:
     log({'message': 'No handler found', 'json': d})
 

@@ -1,5 +1,4 @@
 "set shell=/bin/zsh
-
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -10,7 +9,8 @@ function! IsWork()
     return filereadable(glob("~/wdf/work.vim"))
 endfunction
 
-let g:python3_host_prog='/usr/bin/python3'
+"let g:python3_host_prog='/usr/bin/python3'
+"let g:python3_host_prog='/Users/joetoth/.nix-profile/bin/python3'
 
 let mapleader = ","
 
@@ -19,6 +19,57 @@ let mapleader = ","
 " +---------+
 
 call plug#begin('~/.vim/plugged')
+
+ " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
+"Plug 'ncm2/ncm2'
+"Plug 'roxma/nvim-yarp'
+"
+"" enable ncm2 for all buffers
+"autocmd BufEnter * call ncm2#enable_for_buffer()
+"
+"" IMPORTANT: :help Ncm2PopupOpen for more information
+"set completeopt=noinsert,menuone,noselect
+"
+"" NOTE: you need to install completion sources to get completions. Check
+"" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+"Plug 'ncm2/ncm2-bufword'
+"Plug 'ncm2/ncm2-path'
+
+"Plug 'lifepillar/vim-mucomplete'
+"let g:mucomplete#no_mappings=1
+
+" let g:ale_completion_enabled = 1 " Before ale is loaded
+
+Plug 'w0rp/ale'
+
+highlight link ALEVirtualTextError ErrorMsg
+highlight link ALEVirtualTextStyleError ALEVirtualTextError
+highlight link ALEVirtualTextWarning WarningMsg
+highlight link ALEVirtualTextInfo ALEVirtualTextWarning
+highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
+
+noremap <c-g> :ALEGoToDefinitionInVSplit<cr>
+noremap <c-m> :ALEFindReferences<cr>
+noremap <c-s-g> :ALEFindReferences<cr>
+
+let g:ale_sign_warning = '➤'
+let g:ale_sign_error = '✘'
+let g:ale_sign_info = '➟'
+let g:ale_echo_cursor = 0
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '▬▶  '
+let g:ale_set_balloons = 1
+let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
+let g:ale_linters = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['pyls'],
+\   'go': ['golangserver'],
+\   'c-c++': ['clangd'],
+\   'javascript': ['eslint'],
+\   'typescript': ['tsserver', 'typecheck'],
+\}
+let b:ale_fixers = ['yapf']
+
 
 " Workflow {{{
 "Plug 'tpope/vim-fugitive' 
@@ -87,77 +138,6 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 " Themes {{{
 "Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
-
-
-Plug 'w0rp/ale'
-
-" Language Server
-let g:ale_completion_enabled = 1
-let g:ale_go_langserver_executable='/Users/joetoth/projects/go/bin/go-langserver'
-let g:ale_sign_warning = '➤'
-let g:ale_sign_error = '✘'
-let g:ale_sign_info = '➟'
-
-let g:ale_echo_cursor = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '▬▶  '
-let g:ale_set_balloons = 1
-
-"highlight link ALEVirtualTextError ErrorMsg
-"highlight link ALEVirtualTextStyleError ALEVirtualTextError
-"highlight link ALEVirtualTextWarning WarningMsg
-"highlight link ALEVirtualTextInfo ALEVirtualTextWarning
-"highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
-
-let g:ale_linters = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'go': ['go build', 'gofmt', 'gometalinter'],
-\   'typescript': ['tsserver', 'typecheck'],
-\   'javascript': ['eslint'],
-\   'ruby': ['rubocop', 'ruby'],
-\   'python': ['pyls'],
-\   'c-c++': ['clangd'],
-\}
-
-"let b:ale_fixers = ['yapf']
-
-noremap <c-g> :ALEGoToDefinition<cr>
-
-"Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/vim-lsp'
-"  if executable('pyls')
-"      " pip install python-language-server
-"      au User lsp_setup call lsp#register_server({
-"          \ 'name': 'pyls',
-"          \ 'cmd': {server_info->['pyls']},
-"          \ 'whitelist': ['python'],
-"          \ })
-"  endif
-"let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
-"  if executable('clangd')
-"      au User lsp_setup call lsp#register_server({
-"          \ 'name': 'clangd',
-"          \ 'cmd': {server_info->['clangd']},
-"          \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"          \ })
-"  endif
-"  if executable('hie-wrapper')
-"      au User lsp_setup call lsp#register_server({
-"          \ 'name': 'haskell',
-"          \ 'cmd': {server_info->['hie-wrapper']},
-"          \ 'whitelist': ['haskell', 'hs'],
-"          \ })
-"  endif
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/vim-lsp.log')
-noremap <c-g> :ALEGoToDefinition<cr>
-
-"Plug 'natebosch/vim-lsc'
-"let g:lsc_server_commands = {
-"      \ }
-"" Enable default mappings (support is language/LSP dependent)
-"let g:lsc_auto_map = v:true
-
 Plug 'kassio/neoterm'
 call plug#end()
 
@@ -267,9 +247,13 @@ silent! set colorcolumn=80
 "
 set backspace=indent,eol,start
 
+"set completeopt=menu,menuone,preview,noselect,noinsert
+"set completeopt=longest,menuone
 " auto-complete comments
-set fo+=r
-
+" set fo+=r
+"set completeopt+=menuone
+"set completeopt+=noselect
+"let g:mucomplete#enable_auto_at_startup = 1
 " }}}
 
 " +--------+
@@ -311,9 +295,6 @@ set modeline
 " enable wildmenu for smart tab complete
 set wildmenu
 
-" source any local configs
-silent! source ~/.vimrc_local
-
 " Backup
 let bkdir = expand('~/.vim/backup')
 call system('mkdir ' . bkdir)
@@ -340,8 +321,8 @@ endif
 " noremap <c-i>: call term_sendkeys(buf, a:cmd."\<CR>")
 
 " save and close a buffer using ctrl+x
-inoremap <c-x> <esc>:x<cr>
-noremap <c-x> :x<cr>
+"inoremap <c-x> <esc>:x<cr>
+"noremap <c-x> :x<cr>
 
 " force-close a buffer
 inoremap <c-q> <esc>:q!<cr>
@@ -423,7 +404,6 @@ vnoremap y "+y
 "nnoremap <leader>p "+p
 "nnoremap <leader>P "+P
 set clipboard=unnamedplus
-
 nnoremap U :redo<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -448,60 +428,10 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 nmap <leader>gp :Gpush<cr>
 
+noremap <c-m> :ALEFindReferences<cr>
 " Search and replace
 " / for searching
 " :%s//replace/c
 " % - 1,$ aka whole document, s// will replace the last search and c will
 " confirm each 
 "
-if exists('veonim')
-
-" built-in plugin manager
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-surround'
-
-" extensions for web dev
-let g:vscode_extensions = [
-  \'vscode.typescript-language-features',
-  \'vscode.css-language-features',
-  \'vscode.html-language-features',
-\]
-
-" multiple nvim instances
-nno <silent> <c-t>c :Veonim vim-create<cr>
-"nno <silent> <c-g> :Veonim vim-switch<cr>
-nno <silent> <c-t>, :Veonim vim-rename<cr>
-
-" workspace functions
-nno <silent> ,f :Veonim files<cr>
-nno <silent> ,e :Veonim explorer<cr>
-nno <silent> ,b :Veonim buffers<cr>
-nno <silent> ,d :Veonim change-dir<cr>
-"or with a starting dir: nno <silent> ,d :Veonim change-dir ~/proj<cr>
-
-" searching text
-nno <silent> <space>fw :Veonim grep-word<cr>
-vno <silent> <space>fw :Veonim grep-selection<cr>
-nno <silent> <space>fa :Veonim grep<cr>
-nno <silent> <space>ff :Veonim grep-resume<cr>
-nno <silent> <space>fb :Veonim buffer-search<cr>
-
-" language features
-nno <silent> sr :Veonim rename<cr>
-nno <silent> sd :Veonim definition<cr>
-nno <silent> si :Veonim implementation<cr>
-nno <silent> st :Veonim type-definition<cr>
-nno <silent> sf :Veonim references<cr>
-nno <silent> sh :Veonim hover<cr>
-nno <silent> sl :Veonim symbols<cr>
-nno <silent> so :Veonim workspace-symbols<cr>
-nno <silent> sq :Veonim code-action<cr>
-nno <silent> sk :Veonim highlight<cr>
-nno <silent> sK :Veonim highlight-clear<cr>
-nno <silent> ,n :Veonim next-usage<cr>
-nno <silent> ,p :Veonim prev-usage<cr>
-nno <silent> sp :Veonim show-problem<cr>
-nno <silent> <c-n> :Veonim next-problem<cr>
-nno <silent> <c-p> :Veonim prev-problem<cr>
-
-endif

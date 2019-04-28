@@ -1,3 +1,9 @@
+"" multi-word-line  (word1).*(word2)|\2.*\1
+"" Tips for creating "sections"
+"" While in insert mode: ctrl-o 80i-<esc>
+"" R - Replace mode
+
+
 ""'clipboard'      'cb'    clipboard options
 ""'digraph'        'dg'    enable the entering of digraphs in Insert mode
 ""'gdefault'       'gd'    the ":substitute" flag 'g' is default on
@@ -78,6 +84,7 @@ map <C-S-r> :action ReplaceInPath<CR>
 map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
+map <C-b> :action ToggleLineBreakpoint<cr>
 
 "map <C-f> :action Find<CR>
 "map <C-S-f> :action FindInPath<CR>
@@ -105,7 +112,7 @@ map <C-S-v> :action PasteMultiple<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
 
 map <C-p> :action ParameterInfo<CR>
-imap <C-p> <ESC> :action ParameterInfo<CR>
+map <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
 
@@ -177,7 +184,7 @@ nnoremap gcc :action CommentByLineComment<cr>
 nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>su :action ShowUsages<cr>
 "nnoremap <leader>cv :action ChangeView<cr>
-nnoremap <leader>bb :action ToggleLineBreakpoint<cr>
+"nnoremap <leader>bb :action ToggleLineBreakpoint<cr>
 nnoremap <leader>br :action ViewBreakpoints<cr>
 nnoremap <leader>ic :action InspectCode<cr>
 nnoremap <leader>oi :action OptimizeImports<cr>

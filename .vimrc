@@ -181,6 +181,9 @@ augroup vimrc
     au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
     au VimLeave * call system('tmux set-window automatic-rename on')
   endif
+  if IsWork()
+    so ~/wdf/work.vim
+  endif
 augroup END
 
 

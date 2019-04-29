@@ -63,8 +63,8 @@ set surround
 "map <A-7> :action ActivateStructureToolWindow<CR>
 "map <A-9> :action ActivateVersionToolWindow<CR>
 "
-map <C-x> :action Rerun<CR>
 map <C-S-x> :action ChooseRunConfiguration<CR>
+map <C-x> :action Rerun<CR>
 
 " Need to map as IDE as visual mode doesn't work this way
 " map <A-x> :action ExecuteInPyConsoleAction<CR>
@@ -100,6 +100,7 @@ map <A-s> :action RecentChanges<CR>
 map <C-S-g> :action FindUsages<CR>
 "map <C-S-g> :action Generate<CR>
 map <C-g> :action GotoDeclaration<CR>
+map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>

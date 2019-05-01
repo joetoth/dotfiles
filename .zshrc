@@ -2,6 +2,9 @@
 #xonsh
 #exit
 #
+#
+export PATH=/usr/git:$PATH
+
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
   source ~/.zplug/init.zsh && zplug update --self
@@ -11,10 +14,9 @@ source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-#zplug "cdown/clipmenu", as:command
-zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*darwin*amd64*", if:"[[ $OSTYPE == *darwin* ]]"
-zplug "junegunn/fzf-bin", as:command, rename-to:fzf, from:gh-r, use:"*linux*amd64*", if:"[[ $OSTYPE == *linux* ]]"
-zplug "junegunn/fzf", use:"shell/*.zsh", use:"*.zsh", use:"bin/*"
+zplug "cdown/clipmenu", as:command
+zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
 zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
@@ -23,11 +25,8 @@ zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
-zplug 'wfxr/forgit', defer:1
+zplug "wfxr/forgit", defer:1
 #zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
-
-autoload -U compinit && compinit
-
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -45,6 +44,10 @@ fpath[1,0]=~/.zsh/completion/
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
 export VULKAN_SDK=$HOME/opt/vulkansdk
+
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
+export PATH=$PATH:$MY_PYTHON_BIN
 
 case `uname` in
   Darwin)
@@ -84,8 +87,6 @@ export EDITOR='vi'
 export VISUAL='vi'
 export BROWSER=google-chrome
 export ANDROID_HOME=$HOME/opt/android-sdk-linux
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='rg ""'
@@ -93,7 +94,6 @@ export FZF_DEFAULT_COMMAND='rg ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
 export MY_PYTHON_BIN="$HOME/bin/python"
-export PATH=$PATH:$MY_PYTHON_BIN
 export PYTHONIOENCODING="utf-8"
 export _JAVA_AWT_WM_NONREPARENTING=1
 #export PYTHONSTARTUP="$HOME/.pythonrc"
@@ -128,8 +128,10 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
+# Auto-suggest
 export COMPLETION_WAITING_DOTS="true"
 export ZSH_AUTOSUGGEST_USE_ASYNC="true"
+bindkey '^ ' autosuggest-accept
 
 # VIM
 bindkey -v
@@ -363,6 +365,7 @@ alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.t
 alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias blog='vi ~/projects/joe.ai/content/'
 alias h='hg'
+alias u='hg uploadchain'
 
 # FUNCTIONS
 source_if_exists() {

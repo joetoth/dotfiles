@@ -336,6 +336,18 @@ inoremap <s-tab> <c-d>
 vnoremap > >gv
 vnoremap < <gv
 
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 tnoremap <C-h> <C-w>h
 tnoremap <C-j> <C-w>j
@@ -376,7 +388,7 @@ tnoremap call term_sendkeys(bufnr("%"), "<C-Z>")
 
 augroup python_settings " {
 	autocmd!
-	au FileType python :set tw=2
+"	au FileType python :set tw=100
 	au FileType python nnor <cr> :TREPLSendLine<cr>
 	au FileType python vnoremap <silent> <cr> :TREPLSendSelection<cr>
 augroup END " }

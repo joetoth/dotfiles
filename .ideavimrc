@@ -64,7 +64,11 @@ set surround
 "map <A-9> :action ActivateVersionToolWindow<CR>
 "
 map <C-S-x> :action ChooseRunConfiguration<CR>
-map <C-x> :action Rerun<CR>
+imap <C-x> <esc>:action ChooseRunConfiguration<CR>
+
+"Rerun doesn't work for some reason
+"map <C-x> :action Rerun<CR>
+"map <C-x> <esc>:action Rerun<CR>
 
 " Need to map as IDE as visual mode doesn't work this way
 " map <A-x> :action ExecuteInPyConsoleAction<CR>

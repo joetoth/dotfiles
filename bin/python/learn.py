@@ -7,7 +7,58 @@ import tempfile
 from subprocess import call
 from time import sleep
 
-from peewee import MySQLDatabase, Model, CharField, DateTimeField, TextField, IntegerField
+# from peewee import MySQLDatabase, Model, CharField, DateTimeField, TextField, IntegerField
+from absl import app
+from absl import flags
+
+import os
+import sys
+from sqlalchemy import Column, ForeignKey, Integer, String, TIMESTAMP
+from sqlalchemy.exc import DatabaseError
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
+from sqlalchemy import create_engine
+
+auto_session = []
+
+class MyBase(object):
+
+    def save(self):
+        auto_session[0].add(self)
+        self._flush()
+        return self
+
+    def update(self, **kwargs):
+        for attr, value in kwargs.items():
+            setattr(self, attr, value)
+        return self.save()
+
+    def delete(self):
+        auto_session[0].delete(self)
+        self._flush()
+
+    def _flush(self):
+        try:
+            auto_session[0].flush()
+        except DatabaseError:
+            auto_session[0].rollback()
+            raise
+
+Base = declarative_base(cls=MyBase)
+# Base.query = auto_session[0].query_property()
+
+class Concept(Base):
+  __tablename__ = 'concept'
+  name = Column(String(250), nullable=False, primary_key=True)
+  text = Column(String(250), nullable=False,
+                server_default="# Explanation / Analogy / Like I'm Five")
+  last_rekall = Column(TIMESTAMP(), nullable=False, server_default="NOW()")
+  rekalls = Column(Integer(), nullable=False)
+
+  def next_rekall(self):
+    return self.last_rekall + datetime.timedelta(
+      seconds=(INTERVAL_SECONDS ^ self.rekalls))
+
 
 EDITOR = os.environ.get('EDITOR', 'vim')
 INTERVAL_SECONDS = 60 * 15
@@ -28,88 +79,120 @@ config = ConfigParser.ConfigParser()
 config.read(os.path.expanduser('~/.rekall'))
 
 args = parser.parse_args()
-db = MySQLDatabase("rekall", host=config.get("mysql", "host"), user=config.get("mysql", "user"), passwd=config.get("mysql", "password"), charset="utf8", use_unicode=True)
-db.connect()
 
-class BaseModel(Model):
-  class Meta:
-    database = db
 
-class Concept(BaseModel):
-  name = CharField()
-  text = TextField(default="# Explanation / Analogy / Like I'm Five" )
-  last_rekall = DateTimeField(default=datetime.datetime.now)
-  rekalls = IntegerField(default=0)
+def main(args):
+  # Create an engine that stores data in the local directory's
+  # sqlalchemy_example.db file.
+  #
+  # Valid SQLite URL forms are:
+  # sqlite:///:memory: (or, sqlite://)
+  # sqlite:///relative/path/to/file.db
+  # sqlite:////absolute/path/to/file.db
+  engine = create_engine('sqlite:////tmp/tmp.db', echo=True)
+  con = engine.connect()
+  dir(con)
+  auto_session.append(scoped_session(sessionmaker(autocommit=True, bind=engine)))
 
-  def next_rekall(self):
-    return self.last_rekall + datetime.timedelta(seconds=(INTERVAL_SECONDS ^ self.rekalls))
 
-Concept.create_table(fail_silently=True)
+  # Create all tables in the engine. This is equivalent to "Create Table"
+  # statements in raw SQL.
+  Base.metadata.create_all(engine)
+  c = Concept()
+  c.name = "abc"
+  c.text = "poo"
+  c.rekalls = 0
+  c.save()
 
-## START
-if args.daemon:
-  db.close()
-  print("Starting Rekall Daemon...")
+  # Concept.create_table(fail_silently=True)
 
-  while (True):
-    db.connect()
-    concept = None
-    for c in Concept.select():
-      if concept is None:
-        if c.next_rekall() < datetime.datetime.now():
-          concept = c
-        continue
-      concept = c if concept.next_rekall() > c.next_rekall() else concept
-    if concept is not None:
-      os.system('notify-send -t 10000 -u critical "REKALL\n' + concept.name + '"')
-    db.close()
-    sleep(INTERVAL_SECONDS)
+  ## START
+  if args.daemon:
+    engine.close()
+    print("Starting Rekall Daemon...")
 
-if args.printall:
-  for v in Concept.select():
-    print("Name: " + v.name)
-    print("Last Rekall: " + str(v.last_rekall))
-    print("Rekalls: " + str(v.rekalls))
-    print("Text: " + v.text)
-    print("===========================")
-  quit()
+    while (True):
+      engine.connect()
+      concept = None
+      for c in Concept.select():
+        if concept is None:
+          if c.next_rekall() < datetime.datetime.now():
+            concept = c
+          continue
+        concept = c if concept.next_rekall() > c.next_rekall() else concept
+      if concept is not None:
+        os.system(
+          'notify-send -t 10000 -u critical "REKALL\n' + concept.name + '"')
+      engine.close()
+      sleep(INTERVAL_SECONDS)
 
-if args.concept is None:
+  if args.printall:
+    for v in Concept.select():
+      print("Name: " + v.name)
+      print("Last Rekall: " + str(v.last_rekall))
+      print("Rekalls: " + str(v.rekalls))
+      print("Text: " + v.text)
+      print("===========================")
+    quit()
+
+  if args.concept is None:
     print("--concept required")
     quit()
-concept_key = args.concept.lower()
+  concept_key = args.concept.lower()
 
-if args.rekall:
+  if args.rekall:
+    try:
+      concept = Concept.get(Concept.name == concept_key)
+      print("Rekalled: " + str(concept.rekalls))
+      concept.rekalls += 1
+      concept.last_rekall = datetime.datetime.now()
+      concept.save()
+    except Concept.DoesNotExist:
+      print("Could not find concept")
+    quit()
+
+  if args.remove:
+    try:
+      concept = Concept.get(Concept.name == concept_key)
+      concept.delete_instance()
+      print("Removed " + concept.name)
+    except Concept.DoesNotExist:
+      print("Could not find concept")
+    quit()
+
   try:
     concept = Concept.get(Concept.name == concept_key)
-    print("Rekalled: " + str(concept.rekalls))
-    concept.rekalls += 1
-    concept.last_rekall = datetime.datetime.now()
-    concept.save()
   except Concept.DoesNotExist:
-    print("Could not find concept")
-  quit()
+    concept = Concept()
+    concept.name = "hello"
 
-if args.remove:
-  try:
-    concept = Concept.get(Concept.name == concept_key)
-    concept.delete_instance()
-    print("Removed " + concept.name)
-  except Concept.DoesNotExist:
-    print("Could not find concept")
-  quit()
+    # create session
+Session = sessionmaker()
+Session.configure(bind=engine)
+session = Session()
 
+data = {'a': 5566, 'b': 9527, 'c': 183}
 try:
-  concept = Concept.get(Concept.name == concept_key)
-except Concept.DoesNotExist:
-  concept = Concept()
-  concept.name = args.concept
+    for _key, _val in data.items():
+        row = TestTable(key=_key, val=_val)
+        session.add(row)
+    session.commit()
+except SQLAlchemyError as e:
+    print(e)
+finally:
+    session.close()
 
-with tempfile.NamedTemporaryFile() as f:
-  f.write(concept.text.encode('utf-8'))
-  f.flush()
-  call([EDITOR, f.name])
-  f.seek(0)
-  concept.text = f.read()
-  concept.save()
+    concept.
+    concept.name = args.concept
 
+  with tempfile.NamedTemporaryFile() as f:
+    f.write(concept.text.encode('utf-8'))
+    f.flush()
+    call([EDITOR, f.name])
+    f.seek(0)
+    concept.text = f.read()
+    concept.save()
+
+
+if __name__ == '__main__':
+  app.run(main)

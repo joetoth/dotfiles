@@ -64,6 +64,7 @@ set surround
 "map <A-9> :action ActivateVersionToolWindow<CR>
 "
 map <C-S-x> :action ChooseRunConfiguration<CR>
+map <C-x> <esc>:action ChooseRunConfiguration<CR>
 imap <C-x> <esc>:action ChooseRunConfiguration<CR>
 
 "Rerun doesn't work for some reason

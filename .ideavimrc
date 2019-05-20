@@ -64,7 +64,9 @@ set surround
 "map <A-9> :action ActivateVersionToolWindow<CR>
 "
 map <C-S-x> :action ChooseRunConfiguration<CR>
+imap <C-S-x> :action ChooseRunConfiguration<CR>
 map <C-x> :action Rerun<CR>
+imap <C-x> :action Rerun<CR>
 
 " Need to map as IDE as visual mode doesn't work this way
 " map <A-x> :action ExecuteInPyConsoleAction<CR>
@@ -86,10 +88,10 @@ map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 map <A-S-h> :action TypeHierarchy<CR>
 map <C-b> :action ToggleLineBreakpoint<cr>
 
-"map <C-f> :action Find<CR>
-"map <C-S-f> :action FindInPath<CR>
-"vmap jC-f> :action Find<CR>
-"vmap <C-S-f> :action FindInPath<CR>
+map <C-f> :action Find<CR>
+map <C-S-f> :action FindInPath<CR>
+vmap C-f> :action Find<CR>
+vmap <C-S-f> :action FindInPath<CR>
 
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
@@ -126,7 +128,9 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :edit ~/projects/joetoth.com/README.md<cr>
+"map t :vsp ~/projects/joetoth.com/README.md<cr>
+map t :vsp ~/sync/todo.md<cr>
+"map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>

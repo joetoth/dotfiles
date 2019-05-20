@@ -38,9 +38,9 @@ call plug#begin('~/.vim/plugged')
 "Plug 'lifepillar/vim-mucomplete'
 "let g:mucomplete#no_mappings=1
 
-" let g:ale_completion_enabled = 1 " Before ale is loaded
+let g:ale_completion_enabled = 0 " Before ale is loaded
 
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 highlight link ALEVirtualTextError ErrorMsg
 highlight link ALEVirtualTextStyleError ALEVirtualTextError
@@ -449,4 +449,4 @@ noremap <c-m> :ALEFindReferences<cr>
 " :%s//replace/c
 " % - 1,$ aka whole document, s// will replace the last search and c will
 " confirm each 
-"
+let g:NERDTreeNotificationThreshold = 500

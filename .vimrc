@@ -10,7 +10,6 @@ function! IsWork()
 endfunction
 
 "let g:python3_host_prog='/usr/bin/python3'
-"let g:python3_host_prog='/Users/joetoth/.nix-profile/bin/python3'
 
 let mapleader = ","
 
@@ -38,19 +37,15 @@ call plug#begin('~/.vim/plugged')
 "Plug 'lifepillar/vim-mucomplete'
 "let g:mucomplete#no_mappings=1
 
-" let g:ale_completion_enabled = 1 " Before ale is loaded
+let g:ale_completion_enabled = 0 " Before ale is loaded
 
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 highlight link ALEVirtualTextError ErrorMsg
 highlight link ALEVirtualTextStyleError ALEVirtualTextError
 highlight link ALEVirtualTextWarning WarningMsg
 highlight link ALEVirtualTextInfo ALEVirtualTextWarning
 highlight link ALEVirtualTextStyleWarning ALEVirtualTextWarning
-
-noremap <c-g> :ALEGoToDefinitionInVSplit<cr>
-noremap <c-m> :ALEFindReferences<cr>
-noremap <c-s-g> :ALEFindReferences<cr>
 
 let g:ale_sign_warning = '➤'
 let g:ale_sign_error = '✘'
@@ -69,6 +64,10 @@ let g:ale_linters = {
 \   'typescript': ['tsserver', 'typecheck'],
 \}
 let b:ale_fixers = ['yapf']
+
+noremap <c-m> :AimmLEFindReferences<cr>
+noremap <c-s-g> :ALEFindReferences<cr>
+noremap <c-g> :ALEGoToDefinitionInVSplit<cr>
 
 
 " Workflow {{{
@@ -181,9 +180,6 @@ augroup vimrc
     au BufEnter * if empty(&buftype) | call system('tmux rename-window '.expand('%:t:S')) | endif
     au VimLeave * call system('tmux set-window automatic-rename on')
   endif
-  if IsWork()
-    so ~/wdf/work.vim
-  endif
 augroup END
 
 
@@ -196,20 +192,19 @@ augroup END
 " Change tabs to spaces
 set expandtab
 
-" Two-space tabwidth
-set sw=2
-set softtabstop=2
-
 " auto-indent
 set ai
 
-" 2-space indents in c/c++/java/python files
-autocmd FileType c set sw=2
-autocmd FileType c set softtabstop=2
-autocmd FileType cpp set sw=2
-autocmd FileType cpp set softtabstop=2
-autocmd FileType java set sw=2
-autocmd FileType java set sw=2
+set tabstop=2       " The width of a TAB is set to 4.
+                    " Still it is a \t. It is just that
+                    " Vim will interpret it to be having
+                    " a width of 4.
+
+set shiftwidth=2    " Indents will have a width of 4
+
+set softtabstop=2   " Sets the number of columns for a TAB
+
+set expandtab       " Expand TABs to spaces
 
 " }}}
 
@@ -368,6 +363,9 @@ inoremap <C-k> <esc><C-w>k
 inoremap <C-l> <esc><C-w>l
 
 " Quickly create a new terminal in a new tab
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+tnoremap jj <C-\><C-n>
+
 tnoremap <c-a>c <c-w>:tab term<CR>
 noremap <c-a>c <esc>:tab term<CR>
 inoremap <c-a>c <esc>:tab term<CR>
@@ -443,10 +441,19 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 nmap <leader>gp :Gpush<cr>
 
-noremap <c-m> :ALEFindReferences<cr>
-" Search and replace
+" ** Search and replace
 " / for searching
 " :%s//replace/c
 " % - 1,$ aka whole document, s// will replace the last search and c will
 " confirm each 
+let g:NERDTreeNotificationThreshold = 500
 "
+" ** Copy Key Mappings to @a register
+" redir @a
+" :map
+" redir END
+"
+if IsWork()
+  so ~/wdf/work.vim
+endif
+

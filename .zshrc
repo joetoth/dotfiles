@@ -26,7 +26,7 @@ zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -96,7 +96,7 @@ export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PYTHONIOENCODING="utf-8"
 export _JAVA_AWT_WM_NONREPARENTING=1
-#export PYTHONSTARTUP="$HOME/.pythonrc"
+export PYTHONSTARTUP="$HOME/bin/python/startup.py"
 
 # Load
 #
@@ -364,8 +364,6 @@ alias vpn='sudo openvpn --config $HOME/vpn/1.ovpn --auth-user-pass $HOME/ovpn.tx
 alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias blog='vi ~/projects/joe.ai/content/'
-alias h='hg'
-alias u='hg uploadchain'
 
 # FUNCTIONS
 source_if_exists() {
@@ -376,7 +374,6 @@ source_if_exists() {
 source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
 source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
 
-source_if_exists $HOME/wdf/work.zsh
 
 # OPAM configuration
 source_if_exists $HOME/.opam/opam-init/init.zsh
@@ -459,6 +456,92 @@ alias gaa='git add -A'
 alias gs='git stash'
 alias gsp='git stash pop'
 
+
+# No arguments: `hg xl`
+# With arguments: acts like `hg`
+compdef h=hg
+
+h() {
+  if [[ $# > 0 ]]; then
+    hg $@
+  else
+    hg status
+    hg xl
+  fi
+}
+
+gl() {
+  LINES=20
+  if [ $1 ]; then
+    LINES=$1
+  fi
+  git log --decorate --all --pretty="$git_log_defaults" "-$LINES"
+}
+
+glb() {
+  LINES=20
+  if [ $1 ]; then
+    LINES=$1
+  fi
+  git log --decorate --pretty="$git_log_defaults" "-$LINES"
+}
+
+git-mini-log() {
+  git log --pretty=format:"%C(3)%h%C(5) %<(8,trunc)%an %C(10)%ad %Creset%<(50,trunc)%s" --date=format:%d/%m/%y "$@"
+}
+
+tb() {
+  tensorboard --logdir "$@"
+}
+
+gc() {
+  if [[ $@ == "-vp" ]]; then
+    clear && git commit -vp
+  else
+    git commit "$@"
+  fi
+}
+
+D() {
+  if test "$#" = 0; then
+    (
+      git diff --color | diff-so-fancy
+      git ls-files --others --exclude-standard | while read -r i; do git diff --color -- /dev/null "$i" | diff-so-fancy; done
+    ) | less -R
+  else
+    git diff "$@"
+  fi
+}
+
+
+
+# Mercurial
+alias hgc='hg commit'
+alias hgb='hg branch'
+alias hgba='hg branches'
+alias hgbk='hg bookmarks'
+alias hgco='hg checkout'
+alias hgd='hg diff'
+alias hged='hg diffmerge'
+# pull and update
+alias hgi='hg incoming'
+alias hgl='hg pull -u'
+alias hglr='hg pull --rebase'
+alias hgo='hg outgoing'
+alias hgp='hg push'
+alias hgs='hg status'
+alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n" '
+# this is the 'git commit --amend' equivalent
+alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
+# list unresolved files (since hg does not list unmerged files in the status command)
+alias hgun='hg resolve --list'
+
+alias u='hg uploadchain'
+
+
+d() {
+  git diff 
+}
 
 function lvar() {
   lvar=$(</dev/stdin)
@@ -826,28 +909,6 @@ bindkey '^S' 'termjt-screen-widget'
 #done
 
 
-# Mercurial
-alias hgc='hg commit'
-alias hgb='hg branch'
-alias hgba='hg branches'
-alias hgbk='hg bookmarks'
-alias hgco='hg checkout'
-alias hgd='hg diff'
-alias hged='hg diffmerge'
-# pull and update
-alias hgi='hg incoming'
-alias hgl='hg pull -u'
-alias hglr='hg pull --rebase'
-alias hgo='hg outgoing'
-alias hgp='hg push'
-alias hgs='hg status'
-alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n" '
-# this is the 'git commit --amend' equivalent
-alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
-# list unresolved files (since hg does not list unmerged files in the status command)
-alias hgun='hg resolve --list'
-
-
 # Base16 Shell
 #BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
 #[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
@@ -880,6 +941,8 @@ alias hgun='hg resolve --list'
 
 
 ######### Initialize completion
+source_if_exists $HOME/wdf/work.zsh
+
 autoload -Uz compinit
 
 export PATH="/Users/joetoth/homebrew/opt/llvm/bin:$PATH"

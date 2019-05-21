@@ -52,6 +52,7 @@ set surround
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
 
+inoremap jj <Esc>
 
 " Alt
 "
@@ -64,8 +65,9 @@ set surround
 "map <A-9> :action ActivateVersionToolWindow<CR>
 "
 map <C-S-x> :action ChooseRunConfiguration<CR>
-map <C-x> <esc>:action ChooseRunConfiguration<CR>
-imap <C-x> <esc>:action ChooseRunConfiguration<CR>
+imap <C-S-x> <esc>:action ChooseRunConfiguration<CR>
+map <C-x> :action Rerun<CR>
+imap <C-x> <esc>:action Rerun<CR>
 
 "Rerun doesn't work for some reason
 "map <C-x> :action Rerun<CR>
@@ -91,19 +93,22 @@ map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 map <A-S-h> :action TypeHierarchy<CR>
 map <C-b> :action ToggleLineBreakpoint<cr>
 
-"map <C-f> :action Find<CR>
-"map <C-S-f> :action FindInPath<CR>
-"vmap jC-f> :action Find<CR>
-"vmap <C-S-f> :action FindInPath<CR>
+map <C-f> :action Find<CR>
+map <C-S-f> :action FindInPath<CR>
+vmap C-f> :action Find<CR>
+vmap <C-S-f> :action FindInPath<CR>
+imap <C-f> <esc>:action Find<CR>
+imap <C-S-f> <esc>:action FindInPath<CR>
+nmap <C-f> :action Find<CR>
+nmap <C-S-f> :action FindInPath<CR:action Find>
 
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
 map <C-e> :action RecentFiles<CR>
-"map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
 map <C-S-g> :action FindUsages<CR>
-"map <C-S-g> :action Generate<CR>
+map <C-S-e> :action Generate<CR>
 map <C-g> :action GotoDeclaration<CR>
 map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 
@@ -121,6 +126,8 @@ map <C-p> :action ParameterInfo<CR>
 map <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
+map <C-S-l> :action SaveAsTemplate<CR>
+
 
 map <A-Space>:action ActivateTerminalToolWindow<cr>
 
@@ -131,7 +138,9 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :edit ~/projects/joetoth.com/README.md<cr>
+"map t :vsp ~/projects/joetoth.com/README.md<cr>
+map t :vsp ~/sync/todo.md<cr>
+"map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>
@@ -1945,3 +1954,50 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""XmlGenerateToolsGroup
 ""XSD2Document
 ""ZoomCurrentWindow
+
+
+"5. Ex commands
+"" *
+"" * tag                    handler
+"" * -------------------------------------------------------------------------------------------------------------------
+"" *
+"" * |:map|                 {@link com.maddyhome.idea.vim.ex.handler.MapHandler}
+"" * |:nmap|                ...
+"" * |:vmap|                ...
+"" * |:omap|                ...
+"" * |:imap|                ...
+"" * |:cmap|                ...
+"" * |:noremap|             ...
+"" * |:nnoremap|            ...
+"" * |:vnoremap|            ...
+"" * |:onoremap|            ...
+"" * |:inoremap|            ...
+"" * |:cnoremap|            ...
+"" * |:shell|               {@link com.maddyhome.idea.vim.ex.handler.ShellHandler}
+"" * |:sort|                {@link com.maddyhome.idea.vim.ex.handler.SortHandler}
+"" * |:source|              {@link com.maddyhome.idea.vim.ex.handler.SourceHandler}
+"" * |:qall|                {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:quitall|             {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:quitall|             {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:wqall|               {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:xall|                {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:command|             {@link com.maddyhome.idea.vim.ex.handler.CmdHandler} [To Be Released]
+"" * |:delcommand|          {@link com.maddyhome.idea.vim.ex.handler.DelCmdHandler} [To Be Released]
+"" * |:comclear|            {@link com.maddyhome.idea.vim.ex.handler.CmdClearHandler} [To Be Released]
+"" * ...
+"" *
+"" * The list of supported Ex commands is incomplete.
+"" *
+"" *
+"" * A. Misc commands
+"" *
+"" * tag                    handler
+"" * -------------------------------------------------------------------------------------------------------------------
+"" * |]b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelEndLeftAction}
+"" * |]w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelEndRightAction}
+"" * |[b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelLeftAction}
+"" * |[w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelRightAction}
+"" * |g(|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentencePreviousEndAction}
+"" * |g)|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentenceNextEndAction}
+"" *
+"" *

@@ -6,6 +6,24 @@ import sys
 import json
 from subprocess import CalledProcessError, Popen, PIPE
 
+import os
+
+import pynvim
+
+@pynvim.plugin
+class Main(object):
+    def __init__(self, vim):
+        self.vim = vim
+
+    @pynvim.function('DoItPython')
+    def doItPython(self, args):
+        self.vim.command('echo "hello from DoItPython"')
+
+# nvim = pynvim.attach('socket', path='/tmp/nvim')
+# nvim.current.buffer.name
+# m  = Main(nvim)
+# m.doItPython([])
+
 #-p works with the PRIMARY selection. That's the middle click one.
 #-s works with the SECONDARY selection. I don't know if this is used anymore.
 #-b works with the CLIPBOARD selection. That's your Ctrl + V one.

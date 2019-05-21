@@ -96,7 +96,7 @@ export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
 export MY_PYTHON_BIN="$HOME/bin/python"
 export PYTHONIOENCODING="utf-8"
 export _JAVA_AWT_WM_NONREPARENTING=1
-#export PYTHONSTARTUP="$HOME/.pythonrc"
+export PYTHONSTARTUP="$HOME/bin/python/startup.py"
 
 # Load
 #

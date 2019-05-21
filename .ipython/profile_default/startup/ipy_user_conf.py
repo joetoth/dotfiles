@@ -77,4 +77,3 @@ def import_all(modules):
 def execf(fname):
     """ Execute a file in user namespace """
     ip.ex('execfile("%s")' % os.path.expanduser(fname))
-

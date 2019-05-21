@@ -100,11 +100,10 @@ vmap <C-S-f> :action FindInPath<CR>
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
 map <C-e> :action RecentFiles<CR>
-"map <C-S-e> :action RecentChangedFiles<CR>
 map <A-s> :action RecentChanges<CR>
 
 map <C-S-g> :action FindUsages<CR>
-"map <C-S-g> :action Generate<CR>
+map <C-S-e> :action Generate<CR>
 map <C-g> :action GotoDeclaration<CR>
 map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 
@@ -122,6 +121,8 @@ map <C-p> :action ParameterInfo<CR>
 map <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
+map <C-S-l> :action SaveAsTemplate<CR>
+
 
 map <A-Space>:action ActivateTerminalToolWindow<cr>
 

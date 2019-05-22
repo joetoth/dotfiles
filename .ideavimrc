@@ -91,7 +91,7 @@ map <C-S-r> :action ReplaceInPath<CR>
 map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
-map <C-b> :action ToggleLineBreakpoint<cr>
+map <C-b> :action ToggleTemporaryLineBreakpoint<cr>
 
 map <C-f> :action Find<CR>
 map <C-S-f> :action FindInPath<CR>

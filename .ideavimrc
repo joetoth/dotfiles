@@ -52,6 +52,7 @@ set surround
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
 
+inoremap jj <Esc>
 
 " Alt
 "
@@ -90,12 +91,16 @@ map <C-S-r> :action ReplaceInPath<CR>
 map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
-map <C-b> :action ToggleLineBreakpoint<cr>
+map <C-b> :action ToggleTemporaryLineBreakpoint<cr>
 
 map <C-f> :action Find<CR>
 map <C-S-f> :action FindInPath<CR>
 vmap C-f> :action Find<CR>
 vmap <C-S-f> :action FindInPath<CR>
+imap <C-f> <esc>:action Find<CR>
+imap <C-S-f> <esc>:action FindInPath<CR>
+nmap <C-f> :action Find<CR>
+nmap <C-S-f> :action FindInPath<CR:action Find>
 
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
@@ -1949,3 +1954,50 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 ""XmlGenerateToolsGroup
 ""XSD2Document
 ""ZoomCurrentWindow
+
+
+"5. Ex commands
+"" *
+"" * tag                    handler
+"" * -------------------------------------------------------------------------------------------------------------------
+"" *
+"" * |:map|                 {@link com.maddyhome.idea.vim.ex.handler.MapHandler}
+"" * |:nmap|                ...
+"" * |:vmap|                ...
+"" * |:omap|                ...
+"" * |:imap|                ...
+"" * |:cmap|                ...
+"" * |:noremap|             ...
+"" * |:nnoremap|            ...
+"" * |:vnoremap|            ...
+"" * |:onoremap|            ...
+"" * |:inoremap|            ...
+"" * |:cnoremap|            ...
+"" * |:shell|               {@link com.maddyhome.idea.vim.ex.handler.ShellHandler}
+"" * |:sort|                {@link com.maddyhome.idea.vim.ex.handler.SortHandler}
+"" * |:source|              {@link com.maddyhome.idea.vim.ex.handler.SourceHandler}
+"" * |:qall|                {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:quitall|             {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:quitall|             {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:wqall|               {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:xall|                {@link com.maddyhome.idea.vim.ex.handler.ExitHandler}
+"" * |:command|             {@link com.maddyhome.idea.vim.ex.handler.CmdHandler} [To Be Released]
+"" * |:delcommand|          {@link com.maddyhome.idea.vim.ex.handler.DelCmdHandler} [To Be Released]
+"" * |:comclear|            {@link com.maddyhome.idea.vim.ex.handler.CmdClearHandler} [To Be Released]
+"" * ...
+"" *
+"" * The list of supported Ex commands is incomplete.
+"" *
+"" *
+"" * A. Misc commands
+"" *
+"" * tag                    handler
+"" * -------------------------------------------------------------------------------------------------------------------
+"" * |]b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelEndLeftAction}
+"" * |]w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelEndRightAction}
+"" * |[b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelLeftAction}
+"" * |[w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelRightAction}
+"" * |g(|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentencePreviousEndAction}
+"" * |g)|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentenceNextEndAction}
+"" *
+"" *

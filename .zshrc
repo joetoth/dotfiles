@@ -26,7 +26,7 @@ zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
-zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

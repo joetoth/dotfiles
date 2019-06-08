@@ -43,7 +43,14 @@ fpath[1,0]=~/.zsh/completion/
 
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
-export VULKAN_SDK=$HOME/opt/vulkansdk
+
+export FILAMENT_SDK=$HOME/opt/filament
+export PATH="$FILAMENT_SDK/bin:$PATH"
+
+export VULKAN_SDK=$HOME/opt/vulkan-sdk
+export VK_LAYER_PATH="$VULKAN_SDK/x86_64/etc/explicit_layer.d"
+export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
+
 
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin

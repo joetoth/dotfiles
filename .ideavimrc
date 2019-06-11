@@ -91,7 +91,7 @@ map <C-S-r> :action ReplaceInPath<CR>
 map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
-map <C-b> :action ToggleLineBreakpoint<cr>
+map <C-b> :action ToggleTemporaryLineBreakpoint<cr>
 
 map <C-f> :action Find<CR>
 map <C-S-f> :action FindInPath<CR>
@@ -115,6 +115,12 @@ map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>
 map <C-S-v> :action PasteMultiple<CR>
+
+" KJump
+nmap <space> :action KJumpAction<cr>
+nmap <leader><leader>w :action KJumpAction.Word0<cr>
+nmap <leader><leader>l :action KJumpAction.Line<cr>
+// more action see table below
 
 " Leave / to the IDE
 "map <C-_> :action CommentByLineComment<CR>

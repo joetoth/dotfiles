@@ -145,7 +145,7 @@ map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
 "map t :vsp ~/projects/joetoth.com/README.md<cr>
-map t :vsp ~/sync/todo.md<cr>
+map t :vsp ~/drive/sync/todo.md<cr>
 "map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 

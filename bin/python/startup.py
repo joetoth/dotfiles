@@ -5,13 +5,13 @@
 #
 import os
 from os.path import expanduser
-import numpy as np
-import pandas as pd
-#import pyarrow as pa
-import multiprocessing as mp
-import tensorflow as tf
-tf.enable_v2_behavior()
-import apache_beam as beam
+#import numpy as np
+#import pandas as pd
+##import pyarrow as pa
+#import multiprocessing as mp
+#import tensorflow as tf
+#tf.enable_v2_behavior()
+#import apache_beam as beam
 #import tensorflow.google as tf
 # Auto reload modules
 

@@ -909,6 +909,13 @@ termjt-screen-widget() {
 
 zle     -N   termjt-screen-widget
 bindkey '^S' 'termjt-screen-widget'
+
+alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'
+unenc () {
+  openssl enc -d -pbkdf2 -in $1 | tar xz --one-top-level=$2
+}
+
+
 #bindkey -s '^S' 'tmux-copy\n'
 
 #for script in $HOME/bin/python; do

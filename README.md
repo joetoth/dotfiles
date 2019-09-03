@@ -5,6 +5,10 @@ stow dotfiles/
 
 base16 tomorrow-night
 
+sudo apt remove mawk
+
+sudo apt install gawk
+
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 # Install Source Code Pro Font

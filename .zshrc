@@ -3,6 +3,10 @@
 #exit
 #
 #
+source_if_exists() {
+  [[ -s $1 ]] && source $1
+}
+source_if_exists $HOME/wdf/work.zsh
 export PATH=/usr/git:$PATH
 
 if [[ ! -d ~/.zplug ]]; then
@@ -26,7 +30,8 @@ zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+# starts ssh-agent and sets SSH_AUTH_SOCK
+zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -367,9 +372,6 @@ alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.t
 alias blog='vi ~/projects/joe.ai/content/'
 
 # FUNCTIONS
-source_if_exists() {
-  [[ -s $1 ]] && source $1
-}
 
 # PATH for the Google Cloud SDK and completion
 source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
@@ -537,7 +539,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 # list unresolved files (since hg does not list unmerged files in the status command)
 alias hgun='hg resolve --list'
 
-alias u='hg uploadchain'
+alias u='hg uploadall'
 
 
 d() {
@@ -942,7 +944,6 @@ bindkey '^S' 'termjt-screen-widget'
 
 
 ######### Initialize completion
-source_if_exists $HOME/wdf/work.zsh
 
 autoload -Uz compinit
 

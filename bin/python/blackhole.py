@@ -8,17 +8,17 @@ from subprocess import CalledProcessError, Popen, PIPE
 
 import os
 
-import pynvim
-
-@pynvim.plugin
-class Main(object):
-    def __init__(self, vim):
-        self.vim = vim
-
-    @pynvim.function('DoItPython')
-    def doItPython(self, args):
-        self.vim.command('echo "hello from DoItPython"')
-
+#import pynvim
+#
+#@pynvim.plugin
+#class Main(object):
+#    def __init__(self, vim):
+#        self.vim = vim
+#
+#    @pynvim.function('DoItPython')
+#    def doItPython(self, args):
+#        self.vim.command('echo "hello from DoItPython"')
+#
 # nvim = pynvim.attach('socket', path='/tmp/nvim')
 # nvim.current.buffer.name
 # m  = Main(nvim)

@@ -119,6 +119,7 @@ Plug 'tpope/vim-commentary'
   map  gc  <Plug>Commentary
   nmap gcc <Plug>CommentaryLine
   nmap <c-\> <Plug>CommentaryLine
+  " nmap <c-\/> <Plug>CommentaryLine
 "Plug 'sheerun/vim-polyglot'  
 "Plug 'vim-syntastic/syntastic'
 "Vim syntax for Elsa, the lambda calculus evaluator.

@@ -31,9 +31,10 @@
 ""'visualbell'     'vb'    use visual bell instead of beeping
 ""'wrapscan'       'ws'    searches wrap around the end of the file
 
-set visualbellaction
+set visualbell
 set noerrorbells
 set clipboard=unnamedplus
+set clipboard+=ideaput
 set shiftwidth=2
 set textwidth=80
 set number
@@ -43,6 +44,7 @@ set smartcase
 set showmode
 set surround
 "set relativenumber
+set easymotion
 
 " Tabs Off
 
@@ -144,21 +146,20 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-"map t :vsp ~/projects/joetoth.com/README.md<cr>
-map t :vsp ~/drive/sync/todo.md<cr>
+map t :vsp ~/projects/psycho/joetoth.com/README.md<cr>
+#map t :vsp ~/drive/sync/todo.md<cr>
 "map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>
-map ,, :action GotoFile<CR>
-#map ,, :action Macro.gotofile<CR>
+"map ,, :action GotoFile<CR>
+"map ,, :action Macro.gotofile<CR>
 map ,s :action SearchEverywhere<CR>
 map ,g :action GotoDeclaration<CR>
 map ,r :action Refactorings.QuickListPopupAction<CR>
 map ,p :action ParameterInfo<CR>
 map ,e :action Run<CR>
 map ,n :action SelectIn<CR>
-map ,f :action FindInPath<CR>
 map ,u :action LocalHistory.ShowHistory<CR>
 map ,l :action LintBlaze<CR>
 map Q :action FillParagraph<CR>
@@ -173,7 +174,8 @@ map ,x :action Rerun<CR>
 map ,ag :action FindInPath<CR>
 map ,z :action FindUsages<CR>
 
-"map ,, :action EasyMotion<CR>
+"map <Leader><Leader> <Plug>(easymotion-prefix)
+map ,, :action EasyMotion<CR>
 "map ,, :action AceJumpAction<CR>
 "map ,bp :action ToggleLineBreakpoint<CR>
 "map ,p :action ToggleLineBreakpoint<CR>
@@ -231,6 +233,8 @@ nnoremap <leader>w{ :action :cursive.actions.paredit/wrap-curly<cr>
 nnoremap <leader>w" :action :cursive.actions.paredit/wrap-quotes<cr>
 nnoremap <leader>< :action :cursive.actions.paredit/barf-forwards<cr>
 nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
+nnoremap K "_dd
+vnoremap K "_dd
 
 
 ""--- Actions ---
@@ -2007,3 +2011,4 @@ nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
 "" * |g)|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentenceNextEndAction}
 "" *
 "" *
+set ideajoin

@@ -1,9 +1,7 @@
-# Set up the prompt
-#xonsh
-#exit
-#
-#
-export PATH=/usr/git:$PATH
+source_if_exists() {
+  [[ -s $1 ]] && source $1
+}
+source_if_exists $HOME/wdf/work.zsh
 
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
@@ -28,7 +26,8 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+# starts ssh-agent and sets SSH_AUTH_SOCK
+zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -49,11 +48,6 @@ export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/
 export FILAMENT_SDK=$HOME/opt/filament
 export PATH="$FILAMENT_SDK/bin:$PATH"
 
-export VULKAN_SDK=$HOME/opt/vulkan-sdk
-export VK_LAYER_PATH="$VULKAN_SDK/x86_64/etc/explicit_layer.d"
-export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
-
-
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$MY_PYTHON_BIN
@@ -63,19 +57,24 @@ case `uname` in
     
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
-    export PATH=$HOME/opt/nvim/bin:$PATH
+    # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls
     #export PATH="$HOME/homebrew/opt/coreutils/libexec/gnubin:$PATH"
     #export CXXFLAGS="-I$HOME/homebrew/include, -I$HOME/homebrew/opt/llvm/include, -I$HOME/homebrew/opt/llvm/include/c++/v1"
     #export CFLAGS="$CXXFLAGS"
     #export LDFLAGS="-L$HOME/homebrew/opt/llvm/lib -Wl,-rpath,$HOME/homebrew/opt/llvm/lib"
-    #
-    export PATH=$PATH:$VULKAN_SDK/macOS/bin
-    export DYLD_LIBRARY_PATH=$VULKAN_SDK/macOS/lib
-    export VK_LAYER_PATH=$VULKAN_SDK/macOS/etc/vulkan/explicit_layers.d
-    export VK_ICD_FILENAMES=$VULKAN_SDK/etc/vulkan/icd.d/MoltenVK_icd.json
-    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS/
+    # export PATH="/usr/local/opt/llvm/bin:$PATH"
+    # export LDFLAGS="-L/usr/local/opt/llvm/lib"
+    # export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    export PATH=$VULKAN_SDK/bin:$PATH
+    # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
+    # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
+    # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
+    # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
+    # the file name.
 
 
     fortune
@@ -86,7 +85,9 @@ case `uname` in
     export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
     export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
     export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
-    #/usr/games/fortune
+    export VULKAN_SDK=$HOME/opt/vulkansdk
+    export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
+    /usr/games/fortune
   ;;
   FreeBSD)
   ;;
@@ -376,9 +377,6 @@ alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.t
 alias blog='vi ~/projects/joe.ai/content/'
 
 # FUNCTIONS
-source_if_exists() {
-  [[ -s $1 ]] && source $1
-}
 
 # PATH for the Google Cloud SDK and completion
 source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
@@ -546,7 +544,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 # list unresolved files (since hg does not list unmerged files in the status command)
 alias hgun='hg resolve --list'
 
-alias u='hg uploadchain'
+alias u='hg uploadall'
 
 
 d() {
@@ -958,8 +956,6 @@ unenc () {
 
 
 ######### Initialize completion
-source_if_exists $HOME/wdf/work.zsh
 
 autoload -Uz compinit
 
-export PATH="/Users/joetoth/homebrew/opt/llvm/bin:$PATH"

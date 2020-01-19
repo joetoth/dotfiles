@@ -7,7 +7,7 @@ export PATH=/usr/git:$PATH
 
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
+  source ~/.zplug/init.zsh && zplug --self-manage update 
 fi
 
 source ~/.zplug/init.zsh
@@ -24,6 +24,8 @@ zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
 #zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
@@ -84,7 +86,7 @@ case `uname` in
     export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
     export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
     export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
-    /usr/games/fortune
+    #/usr/games/fortune
   ;;
   FreeBSD)
   ;;

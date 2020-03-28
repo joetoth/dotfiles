@@ -130,8 +130,8 @@ nmap <leader><leader>l :action KJumpAction.Line<cr>
 "vmap <C-_> :action CommentByLineComment<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
 
-map <C-p> :action ParameterInfo<CR>
-map <C-p> <ESC> :action ParameterInfo<CR>
+"map <C-p> :action ParameterInfo<CR>
+"map <C-p> <ESC> :action ParameterInfo<CR>
 
 map <C-4> :action ReformatCode<CR>
 map <C-S-l> :action SaveAsTemplate<CR>

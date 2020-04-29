@@ -3,6 +3,8 @@ source_if_exists() {
 }
 source_if_exists $HOME/wdf/work.zsh
 
+export PATH=/usr/git:$PATH
+
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
   source ~/.zplug/init.zsh && zplug update --self
@@ -12,7 +14,7 @@ source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-zplug "cdown/clipmenu", as:command
+zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
@@ -25,7 +27,7 @@ zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
 # starts ssh-agent and sets SSH_AUTH_SOCK
-zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -146,6 +148,7 @@ bindkey '^ ' autosuggest-accept
 bindkey -v
 bindkey -M vicmd v edit-command-line
 autoload edit-command-line; zle -N edit-command-line
+
 
 KEYTIMEOUT=10
 
@@ -889,7 +892,7 @@ zle     -N   fzf-tmuxcopy-widget
 bindkey '^P' fzf-tmuxcopy-widget
 
 __termjt() {
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
+  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
 #  f="/tmp/termjt"
 #  echo "" >! $f
 #  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
@@ -901,7 +904,7 @@ __termjt() {
 
 termjt-screen-widget() {
   #LBUFFER="${LBUFFER}$(__termjt)"
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
+  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
   zle redisplay
 }
 
@@ -957,3 +960,9 @@ unenc () {
 
 autoload -Uz compinit
 
+<<<<<<< Updated upstream
+=======
+export PATH="/Users/joetoth/homebrew/opt/llvm/bin:$PATH"
+
+source_if_exists $HOME/wdf/work.zsh
+>>>>>>> Stashed changes

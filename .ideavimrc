@@ -54,7 +54,8 @@ set easymotion
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
 
-inoremap jj <Esc>
+"inoremap jj <Esc>
+"
 
 " Alt
 "
@@ -116,7 +117,7 @@ map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>
-map <C-S-v> :action PasteMultiple<CR>
+map <C-S-v> <PasteMultiple>
 
 " KJump
 nmap <space> :action KJumpAction<cr>
@@ -146,9 +147,6 @@ map ,ct :vsp ~/projects/coin/psy/TODO<cr>
 map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :vsp ~/projects/psycho/joetoth.com/README.md<cr>
-#map t :vsp ~/drive/sync/todo.md<cr>
-"map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>

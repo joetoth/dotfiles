@@ -54,8 +54,6 @@ set easymotion
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
 
-"inoremap jj <Esc>
-"
 
 " Alt
 "
@@ -126,13 +124,17 @@ nmap <leader><leader>l :action KJumpAction.Line<cr>
 // more action see table below
 
 " Leave / to the IDE
+unmap <c-/>
+map <c-/><CommentByLineComment>
 "map <C-_> :action CommentByLineComment<CR>
 "map <C-S-_> :action CommentByBlockComment<CR>
 "vmap <C-_> :action CommentByLineComment<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
 
-map <C-p> :action ParameterInfo<CR>
-map <C-p> <ESC> :action ParameterInfo<CR>
+map<C-S-p><ParameterInfo>
+map<C-p><EditorUp>
+imap<C-p><EditorUp>
+map<C-n><EditorDown>
 
 map <C-4> :action ReformatCode<CR>
 map <C-S-l> :action SaveAsTemplate<CR>
@@ -143,8 +145,8 @@ map <A-Space>:action ActivateTerminalToolWindow<cr>
 map ; :
 map ,R :source ~/.ideavimrc<cr>
 map ,vim :vsp ~/.ideavimrc<cr>
-map ,ct :vsp ~/projects/coin/psy/TODO<cr>
-map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
+map ,cr :vsp ~/projects/psycho/joetoth.com//README.md<cr>
+map ,cb :vsp ~/projects/psycho/joetoth.com/content/current.md<cr>
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
@@ -2006,7 +2008,4 @@ vnoremap K "_dd
 "" * |[b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelLeftAction}
 "" * |[w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelRightAction}
 "" * |g(|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentencePreviousEndAction}
-"" * |g)|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentenceNextEndAction}
-"" *
-"" *
-set ideajoin
+"" * |g)|                   {@link com.

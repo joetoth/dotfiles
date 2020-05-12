@@ -43,12 +43,16 @@ fpath[1,0]=~/.zsh/completion/
 
 
 export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
 
 export FILAMENT_SDK=$HOME/opt/filament
 export PATH="$FILAMENT_SDK/bin:$PATH"
 
+
+export ANDROID_HOME=$HOME/opt/android-sdk-linux
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$MY_PYTHON_BIN
 
@@ -97,7 +101,6 @@ esac
 export EDITOR='vi'
 export VISUAL='vi'
 export BROWSER=google-chrome
-export ANDROID_HOME=$HOME/opt/android-sdk-linux
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='rg ""'
@@ -954,6 +957,8 @@ unenc () {
 # You can also get a list of available access points with:
 #
 # nmcli dev wifi list
+# List Libaries
+# /sbin/ldconfig -p
 
 
 ######### Initialize completion

@@ -965,9 +965,4 @@ unenc () {
 
 autoload -Uz compinit
 
-<<<<<<< Updated upstream
-=======
-export PATH="/Users/joetoth/homebrew/opt/llvm/bin:$PATH"
-
 source_if_exists $HOME/wdf/work.zsh
->>>>>>> Stashed changes

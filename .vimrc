@@ -69,6 +69,9 @@ noremap <c-m> :AimmLEFindReferences<cr>
 noremap <c-s-g> :ALEFindReferences<cr>
 noremap <c-g> :ALEGoToDefinitionInVSplit<cr>
 
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <C-O>:update<CR>
 
 " Workflow {{{
 "Plug 'tpope/vim-fugitive' 
@@ -324,8 +327,8 @@ endif
 "noremap <c-x> :x<cr>
 
 " force-close a buffer
-inoremap <c-q> <esc>:q!<cr>
-noremap <c-q> :q!<cr>
+inoremap <c-q> <esc>:q<cr>
+noremap <c-q> :q<cr>
 
 " create a new tab using ctrl+t
 noremap <c-t> <esc>:tabnew<cr>

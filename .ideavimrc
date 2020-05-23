@@ -95,13 +95,14 @@ map <A-S-h> :action TypeHierarchy<CR>
 map <C-b> :action ToggleTemporaryLineBreakpoint<cr>
 
 map <C-f> :action Find<CR>
-map <C-S-f> :action FindInPath<CR>
 vmap C-f> :action Find<CR>
-vmap <C-S-f> :action FindInPath<CR>
 imap <C-f> <esc>:action Find<CR>
-imap <C-S-f> <esc>:action FindInPath<CR>
 nmap <C-f> :action Find<CR>
-nmap <C-S-f> :action FindInPath<CR:action Find>
+
+map <C-S-f> :action FindInPath<CR>
+vmap <C-S-f> :action FindInPath<CR>
+imap <C-S-f> <esc>:action FindInPath<CR>
+nmap <C-S-f> :action FindInPath<CR>
 
 " intellij wants to owns these or it gives a weird problem
 " where the dialog boxes don't get focus
@@ -115,7 +116,14 @@ map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
 
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>
-map <C-S-v> <PasteMultiple>
+map <C-S-v> :action PasteMultiple<cr>
+map <C-S-v> :action PasteMultiple<cr>
+
+map <C-S-v> :action PasteMultiple<CR>
+imap <C-S-v> <esc>:action PasteMultiple<CR>
+//vmap <C-S-f> :action FindInPath<CR>
+//imap <C-S-f> <esc>:action FindInPath<CR>
+//nmap <C-S-f> :action FindInPath<CR>
 
 " KJump
 nmap <space> :action KJumpAction<cr>
@@ -145,8 +153,10 @@ map <A-Space>:action ActivateTerminalToolWindow<cr>
 map ; :
 map ,R :source ~/.ideavimrc<cr>
 map ,vim :vsp ~/.ideavimrc<cr>
-map ,cr :vsp ~/projects/psycho/joetoth.com//README.md<cr>
-map ,cb :vsp ~/projects/psycho/joetoth.com/content/current.md<cr>
+map ,ct :vsp ~/projects/coin/psy/TODO<cr>
+map ,cb  :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
+map <C-0> :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
+imap <C-0> <esc>:vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>i
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>

@@ -548,7 +548,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 # list unresolved files (since hg does not list unmerged files in the status command)
 alias hgun='hg resolve --list'
 
-alias u='hg uploadall'
+alias u='hg uploadchain'
 
 
 d() {
@@ -965,4 +965,5 @@ unenc () {
 
 autoload -Uz compinit
 
+# Also here to override aliases
 source_if_exists $HOME/wdf/work.zsh

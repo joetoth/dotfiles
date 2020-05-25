@@ -5,6 +5,8 @@ source_if_exists() {
 }
 source_if_exists $HOME/wdf/work.zsh
 
+export PATH=/usr/git:$PATH
+
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
   source ~/.zplug/init.zsh && zplug update --self
@@ -14,7 +16,7 @@ source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-zplug "cdown/clipmenu", as:command
+zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
@@ -27,7 +29,7 @@ zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
 # starts ssh-agent and sets SSH_AUTH_SOCK
-zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -43,12 +45,16 @@ fpath[1,0]=~/.zsh/completion/
 
 
 export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
 
 export FILAMENT_SDK=$HOME/opt/filament
 export PATH="$FILAMENT_SDK/bin:$PATH"
 
+
+export ANDROID_HOME=$HOME/opt/android-sdk-linux
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$MY_PYTHON_BIN
 
@@ -97,7 +103,6 @@ esac
 export EDITOR='vi'
 export VISUAL='vi'
 export BROWSER=google-chrome
-export ANDROID_HOME=$HOME/opt/android-sdk-linux
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='rg ""'
@@ -148,6 +153,7 @@ bindkey '^ ' autosuggest-accept
 bindkey -v
 bindkey -M vicmd v edit-command-line
 autoload edit-command-line; zle -N edit-command-line
+
 
 KEYTIMEOUT=10
 
@@ -544,7 +550,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 # list unresolved files (since hg does not list unmerged files in the status command)
 alias hgun='hg resolve --list'
 
-alias u='hg uploadall'
+alias u='hg uploadchain'
 
 
 d() {
@@ -891,7 +897,7 @@ zle     -N   fzf-tmuxcopy-widget
 bindkey '^P' fzf-tmuxcopy-widget
 
 __termjt() {
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
+  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
 #  f="/tmp/termjt"
 #  echo "" >! $f
 #  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
@@ -903,7 +909,7 @@ __termjt() {
 
 termjt-screen-widget() {
   #LBUFFER="${LBUFFER}$(__termjt)"
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
+  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
   zle redisplay
 }
 
@@ -953,12 +959,15 @@ unenc () {
 # You can also get a list of available access points with:
 #
 # nmcli dev wifi list
+# List Libaries
+# /sbin/ldconfig -p
 
 
 ######### Initialize completion
 
 autoload -Uz compinit
 
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# Also here to override aliases
+source_if_exists $HOME/wdf/work.zsh

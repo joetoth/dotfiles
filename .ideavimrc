@@ -54,7 +54,7 @@ set easymotion
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
 
-inoremap jj <Esc>
+" inoremap jj <Esc>
 
 " Alt
 "
@@ -124,11 +124,9 @@ nmap <leader><leader>w :action KJumpAction.Word0<cr>
 nmap <leader><leader>l :action KJumpAction.Line<cr>
 // more action see table below
 
-" Leave / to the IDE
-"map <C-_> :action CommentByLineComment<CR>
-"map <C-S-_> :action CommentByBlockComment<CR>
-"vmap <C-_> :action CommentByLineComment<CR>
-"vmap <C-S-_> :action CommentByBlockComment<CR>
+nnoremap <c-/> :action CommentByLineComment<cr>
+vnoremap <c-/> :action CommentByLineComment<cr>
+inoremap <c-/> <ESC>:action CommentByLineComment<cr>
 
 "map <C-p> :action ParameterInfo<CR>
 "map <C-p> <ESC> :action ParameterInfo<CR>

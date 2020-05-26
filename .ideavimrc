@@ -131,11 +131,19 @@ nnoremap <c-/> :action CommentByLineComment<cr>
 vnoremap <c-/> :action CommentByLineComment<cr>
 inoremap <c-/> <ESC>:action CommentByLineComment<cr>
 
-" Leave to the IDE
-"map<C-S-p><ParameterInfo>
-"map<C-p><EditorUp>
-"imap<C-p><EditorUp>
-"map<C-n><EditorDown>
+map<C-S-p><ParameterInfo>
+
+" Leave / to the IDE
+"unmap <c-/>
+"map <c-/><CommentByLineComment>
+"map <C-_> :action CommentByLineComment<CR>
+"map <C-S-_> :action CommentByBlockComment<CR>
+"vmap <C-_> :action CommentByLineComment<CR>
+"vmap <C-S-_> :action CommentByBlockComment<CR>
+"nnoremap<C-p><EditorUp>
+"inoremap<C-p><EditorUp>
+"nnoremap<C-n><EditorDown>
+"inoremap<C-n><EditorDown>
 
 map <C-4> :action ReformatCode<CR>
 map <C-S-l> :action SaveAsTemplate<CR>

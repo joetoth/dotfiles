@@ -301,6 +301,19 @@ faded_purple="#8F3F71"
 faded_aqua="#427B58"
 faded_orange="#AF3A03"
 
+function check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT=' '
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
+
+RPROMPT='$(check_last_exit_code)'
+
 # Predictable SSH authentication socket location.
 #alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
 #eval $(tmux showenv -s SSH_AUTH_SOCK)
@@ -359,6 +372,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
+alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 # Zippin

@@ -20,7 +20,8 @@ zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
-zplug "Morantron/tmux-fingers"
+zplug "fcsonline/tmux-thumbs"
+#zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
@@ -63,6 +64,7 @@ case `uname` in
     
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
+    export PATH=$PATH:$HOME/Library/Python/3.6/bin
     # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls

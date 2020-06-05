@@ -33,6 +33,7 @@ try:
   from google3.research.colab.lib import googlefiles
   googlefiles.EnableGoogleFilesStat()
   googlefiles.EnableOpenGoogleFiles()
+  print('goog file stat enabled')
 except Exception as e:
   print(e)
 
@@ -42,4 +43,6 @@ ipython = get_ipython()
 if ipython:
   ipython.magic("load_ext autoreload")
   ipython.magic("autoreload 2")
+  print("autoreload enabled")
 
+print('PYTHONSTARTUP LOADED', __file__)

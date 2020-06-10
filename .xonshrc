@@ -36,7 +36,7 @@ def topdirs():
 
 
 aliases['what_port_app'] = 'sudo netstat -nlp | grep'
-aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK"&'
+#aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK\nBREAK BREAK BREAK"&'
 #alias learnd='python $HOME/bin/python/learn.py --daemon=true'
 #alias learn-concept='python $HOME/bin/python/learn.py --concept '
 #alias learn-printall='python $HOME/bin/python/learn.py --printall=true'
@@ -48,7 +48,7 @@ aliases['pomo'] = 'sleep 1500; notify-send -u critical "BREAK BREAK BREAK\nBREAK
 
 import os
 import re
-#from prompt_toolkit.keys import Keys
+from prompt_toolkit.keys import Keys
 #from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
 
 def _h(cmd):
@@ -105,7 +105,9 @@ def custom_keybindings(bindings, **kw):
      def fzf_history(event):
          fzf_insert(event.current_buffer)
 
-if os.path.isfile($WORK_XSH):
-  source $WORK_XSH
+#if os.path.isfile($WORK_XSH):
+#  source $WORK_XSH
+
+aliases['cda']='g4d abe'
 
 /usr/games/fortune

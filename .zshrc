@@ -20,7 +20,8 @@ zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
-zplug "Morantron/tmux-fingers"
+zplug "fcsonline/tmux-thumbs"
+#zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
@@ -63,6 +64,7 @@ case `uname` in
     
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
+    export PATH=$PATH:$HOME/Library/Python/3.6/bin
     # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls
@@ -301,6 +303,19 @@ faded_purple="#8F3F71"
 faded_aqua="#427B58"
 faded_orange="#AF3A03"
 
+function check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT=' '
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
+
+RPROMPT='$(check_last_exit_code)'
+
 # Predictable SSH authentication socket location.
 #alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
 #eval $(tmux showenv -s SSH_AUTH_SOCK)
@@ -359,6 +374,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
+alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 # Zippin

@@ -65,6 +65,7 @@ case `uname` in
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
     export PATH=$PATH:$HOME/Library/Python/3.6/bin
+    export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
     # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls

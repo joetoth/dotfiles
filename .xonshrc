@@ -22,11 +22,11 @@ aliases['cda'] = 'cd ' + $HOME + '/projects/coin'
 aliases['cdp'] = 'cd ' + $HOME + '/projects/'
 aliases['cde'] = 'cd ' + $HOME + '/projects/coin/psy/eth'
 aliases['cdd'] = 'cd ' + $HOME + '/projects/datasets'
-aliases['ll'] = 'ls -alh --color'
-aliases['lt'] = 'ls -alhrt --color'
-aliases['ls'] = 'ls -h --color'
-aliases['lss'] = 'ls -SlaGhr --color'
-aliases['lsg'] = 'll | grep --color'
+# aliases['ll'] = 'ls -alh --color'
+# aliases['lt'] = 'ls -alhrt --color'
+# aliases['ls'] = 'ls -h --color'
+# aliases['lss'] = 'ls -SlaGhr --color'
+# aliases['lsg'] = 'll | grep --color'
 aliases['vpn'] = 'sudo openvpn --config /etc/openvpn/USA-New_York.ovpn'
 aliases['vpn1'] = 'sudo openvpn --config /etc/openvpn/USA-New_Jersey.ovpn'
 aliases['vpn2'] = 'sudo openvpn --config /etc/openvpn/USA-Washington.ovpn'
@@ -110,4 +110,3 @@ def custom_keybindings(bindings, **kw):
 
 aliases['cda']='g4d abe'
 
-/usr/games/fortune

@@ -95,8 +95,8 @@ imap <C-S-r> <esc>:action ReplaceInPath<CR>
 map<C-S-o> :action OptimizeImports<CR>
 imap<C-S-o> <esc>:action OptimizeImports<CR>
 
-map <C-e> :action RecentFiles<CR>
-imap <C-e> <esc> :action RecentFiles<CR>
+map <C-e> :action SearchEverywhere<CR>
+imap <C-e> <esc> :action SearchEverywhere<CR>
 
 map <C-S-e> :action LocalHistory.ShowHistory<CR>
 imap <C-S-e> <esc> :action LocalHistory.ShowHistory<CR>

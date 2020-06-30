@@ -140,7 +140,7 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 
 " Themes {{{
 "Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
+""Plug 'morhetz/gruvbox'
 Plug 'kassio/neoterm'
 call plug#end()
 
@@ -232,8 +232,8 @@ set t_ut=
 
 " Set the color scheme
 "colors Tomorrow-Night
-colors gruvbox
-set bg=dark
+"colors gruvbox
+"set bg=dark
 
 " colorcolumn
 silent! set colorcolumn=80

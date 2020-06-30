@@ -61,20 +61,32 @@ map <C-x> :action Rerun<CR>
 imap <C-x> <esc>:action Rerun<CR>
 
 " Buffer Navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-imap <C-h> <esc> <C-w>h
-imap <C-j> <esc> <C-w>j
-imap <C-k> <esc> <C-w>k
-imap <C-l> <esc> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+inoremap <C-h> <esc> <C-w>h
+inoremap <C-j> <esc> <C-w>j
+inoremap <C-k> <esc> <C-w>k
+inoremap <C-l> <esc> <C-w>l
 
-map <C-o> :action Back<CR>
-map <C-i> :action Forward<CR>
-map <C-s> :action SaveAll<CR>
+nnoremap <C-o> :action Back<CR>
+inoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+inoremap <C-i> :action Forward<CR>
+nnoremap <C-s> :action SaveAll<CR>
+inoremap <C-s> :action SaveAll<CR>
 
-map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
+nnoremap <C-r> :action Replace<CR>
+inoremap <C-r> :action Replace<CR>
+nnoremap <C-S-r> :action ReplaceInPath<CR>
+inoremap <C-S-r> :action ReplaceInPath<CR>
+
+inoremap <C-f> <esc>:action Find<CR>
+inoremap <C-S-f> <esc>:action FindInPath<CR>
+nnoremap <C-f> :action Find<CR>
+nnoremap <C-S-f> :action FindInPath<CR>
+
 map <A-S-h> :action TypeHierarchy<CR>
 
 map <C-b> :action ToggleLineBreakpoint<cr>

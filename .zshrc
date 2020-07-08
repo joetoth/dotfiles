@@ -61,6 +61,7 @@ export PATH=$PATH:$MY_PYTHON_BIN
 
 case `uname` in
   Darwin)
+    alias ls='ls -G'
     
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
@@ -304,6 +305,7 @@ bindkey '^P' down-line-or-search
 #faded_aqua="#427B58"
 #faded_orange="#AF3A03"
 #
+
 function check_last_exit_code() {
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -ne 0 ]]; then
@@ -841,14 +843,14 @@ fport() {
 }
 
 
-
-### WIDGETS
-#  tmux set-buffer -b "a" "" && 
-tmux-copy() {
-  tmux copy-mode && tmux send-keys "?"
+alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'
+unenc () {
+  openssl enc -d -pbkdf2 -in $1 | tar xz --one-top-level=$2
 }
 
-bindkey -s '^Q' 'tmux-copy\n'
+
+
+### WIDGETS
 
 # CTRL-U - Select user
 __user() {
@@ -882,75 +884,35 @@ fzf-clipster-widget() {
 zle     -N   fzf-clipster-widget
 bindkey '^B' fzf-clipster-widget
 
-# CTRL-E - Complete word on screen
-__tmuxcomplete() {
-  local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) | while read item; do
-    printf '%q ' "$item"
-  done
+
+# CTRL-O - Enter copy mode and prompt to search backwards.
+__tmux-copy() {
+  tmux copy-mode && tmux send-keys "?"
   echo
 }
 
-fzf-tmuxcomplete-widget() {
-  LBUFFER="${LBUFFER}$(__tmuxcomplete)"
+tmux-copy-widget() {
+  LBUFFER="${LBUFFER}$(__tmux-copy)"
   zle redisplay
 }
-zle     -N   fzf-tmuxcomplete-widget
-bindkey '^E' fzf-tmuxcomplete-widget
-
-# CTRL-P - Copy word on screen to clipboard
-__tmuxcopy() {
-  local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) -m | while read item; do print "$item" | xclip -sel clip -i 
-  done
-  echo
-}
-
-fzf-tmuxcopy-widget() {
-  LBUFFER="${LBUFFER}$(__tmuxcopy)"
-  zle redisplay
-}
-zle     -N   fzf-tmuxcopy-widget
-bindkey '^P' fzf-tmuxcopy-widget
-
-__termjt() {
-  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
-#  f="/tmp/termjt"
-#  echo "" >! $f
-#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
-#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
-#  ##termjt -outputFilename $f
-#  value=$(cat $f) 
-#  echo "$value"
-}
-
-termjt-screen-widget() {
-  #LBUFFER="${LBUFFER}$(__termjt)"
-  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
-  zle redisplay
-}
-
-zle     -N   termjt-screen-widget
-bindkey '^S' 'termjt-screen-widget'
-
-alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'
-unenc () {
-  openssl enc -d -pbkdf2 -in $1 | tar xz --one-top-level=$2
-}
+zle     -N   tmux-copy-widget
+bindkey '^O' tmux-copy-widget
 
 
-#bindkey -s '^S' 'tmux-copy\n'
-
-#for script in $HOME/bin/python; do
-#  x="python $script"
-#  alias "${script:t:r}=$x"
-#done
 
 
-# Base16 Shell
-#BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
-#[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+######### Initialize completion
 
+autoload -Uz compinit
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Also here to override aliases
+source_if_exists $HOME/wdf/work.zsh
+
+
+
+# INFO =================================
 # Kill app on port
 # fuser -k 2222/tcp
 
@@ -980,11 +942,25 @@ unenc () {
 # /sbin/ldconfig -p
 
 
-######### Initialize completion
-
-autoload -Uz compinit
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# Also here to override aliases
-source_if_exists $HOME/wdf/work.zsh
+# JUNK >.....
+#
+#__termjt() {
+#  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
+#  f="/tmp/termjt"
+#  echo "" >! $f
+#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
+#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
+#  ##termjt -outputFilename $f
+#  value=$(cat $f) 
+#  echo "$value"
+#}
+#
+#termjt-screen-widget() {
+#  #LBUFFER="${LBUFFER}$(__termjt)"
+#  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
+#  zle redisplay
+#}
+#zle     -N   termjt-screen-widget
+#bindkey '^S' 'termjt-screen-widget'
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

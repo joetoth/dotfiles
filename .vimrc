@@ -139,15 +139,70 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 
 
 " Themes {{{
-"Plug 'chriskempson/vim-tomorrow-theme'
-""Plug 'morhetz/gruvbox'
-Plug 'kassio/neoterm'
+"
+Plug 'fugalh/desert.vim'
+Plug 'junegunn/seoul256.vim' 
+Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+
 call plug#end()
 
 command! PI PlugInstall
 command! PU PlugUpdate | PlugUpgrade
 
 " }}}
+"
+"
+" +--------------+
+" | visual aides |
+" +--------------+
+" {{{
+
+" Enable syntax highlighting
+syntax on
+
+" Highlight the current line
+set cursorline
+
+" Show line numbers
+set nu
+
+" 256 colors
+set t_Co=256
+set t_ut=
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+" colors onehalflight
+" colors onehalfdark
+
+"let g:airline_theme='onehalfdark'
+" lightline
+" let g:lightline.colorscheme='onehalfdark'
+
+" let g:seoul256_srgb = 1
+" let g:seoul256_background =250
+
+colo seoul256
+
+" Set the color scheme
+"colors desert
+"colors Tomorrow-Night
+"colors gruvbox
+"colors seoul256
+"set bg=dark
+
+
+" colorcolumn
+silent! set colorcolumn=80
+
+" }}}
+" 
 "
 "
 " ============================================================================
@@ -212,33 +267,6 @@ set expandtab       " Expand TABs to spaces
 
 " }}}
 
-" +--------------+
-" | visual aides |
-" +--------------+
-" {{{
-
-" Enable syntax highlighting
-syntax on
-
-" Highlight the current line
-set cursorline
-
-" Show line numbers
-set nu
-
-" 256 colors
-set t_Co=256
-set t_ut=
-
-" Set the color scheme
-"colors Tomorrow-Night
-"colors gruvbox
-"set bg=dark
-
-" colorcolumn
-silent! set colorcolumn=80
-
-" }}}
 
 " +----------------+
 " | normalize keys |
@@ -461,3 +489,8 @@ if IsWork()
   so ~/wdf/work.vim
 endif
 
+
+" if filereadable(expand("~/.vimrc_background"))
+"   let base16colorspace=256
+"   source ~/.vimrc_background
+" endif

@@ -48,18 +48,12 @@ fpath[1,0]=~/.zsh/completion/
 
 
 export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:/snap/bin
 
 export FILAMENT_SDK=$HOME/opt/filament
 export PATH="$FILAMENT_SDK/bin:$PATH"
 
-
 export ANDROID_HOME=$HOME/opt/android-sdk-linux
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
-export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
-export PATH=$PATH:$MY_PYTHON_BIN
 
 case `uname` in
   Darwin)
@@ -105,6 +99,9 @@ case `uname` in
   ;;
 esac
 
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
+export PATH=$PATH:$MY_PYTHON_BIN
 
 export EDITOR='vi'
 export VISUAL='vi'
@@ -944,6 +941,7 @@ source_if_exists $HOME/wdf/work.zsh
 # /sbin/ldconfig -p
 
 
+<<<<<<< Updated upstream
 # JUNK >.....
 #
 #__termjt() {
@@ -966,3 +964,128 @@ source_if_exists $HOME/wdf/work.zsh
 #bindkey '^S' 'termjt-screen-widget'
 # BASE16_SHELL=$HOME/.config/base16-shell/
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+=======
+######### Initialize completion
+
+autoload -Uz compinit
+
+alias kubectl=microk8s.kubectl
+source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
+echo "if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi" >> ~/.zshrc # add autocomplete permanently to your zsh shell
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+if [  ]; then source <(kubectl completion zsh); fi
+>>>>>>> Stashed changes

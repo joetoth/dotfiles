@@ -1,8 +1,3 @@
-"" multi-word-line  (word1).*(word2)|\2.*\1
-"" Tips for creating "sections"
-"" While in insert mode: ctrl-o 80i-<esc>
-"" R - Replace mode
-
 
 ""'clipboard'      'cb'    clipboard options
 ""'digraph'        'dg'    enable the entering of digraphs in Insert mode
@@ -46,18 +41,10 @@ set surround
 "set relativenumber
 set easymotion
 
-" Tabs Off
-
 " Shift+ESC Closes 'other' Windows
-
 
 " leader combination to stop search highlighting
 "noremap / :nohlsearch <CR>/
-
-inoremap jj <Esc>
-
-" Alt
-"
 
 "map <A-z> <C-w>h
 "map <A-1> :action ActivateProjectToolWindow<CR>
@@ -65,73 +52,100 @@ inoremap jj <Esc>
 "map <A-6> :action ActivateTODOToolWindow<CR>
 "map <A-7> :action ActivateStructureToolWindow<CR>
 "map <A-9> :action ActivateVersionToolWindow<CR>
-"
+
+
 map <C-S-x> :action ChooseRunConfiguration<CR>
 imap <C-S-x> <esc>:action ChooseRunConfiguration<CR>
+
 map <C-x> :action Rerun<CR>
 imap <C-x> <esc>:action Rerun<CR>
 
-"Rerun doesn't work for some reason
-"map <C-x> :action Rerun<CR>
-"map <C-x> <esc>:action Rerun<CR>
-
-" Need to map as IDE as visual mode doesn't work this way
-" map <A-x> :action ExecuteInPyConsoleAction<CR>
-
 " Buffer Navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+inoremap <C-h> <esc> <C-w>h
+inoremap <C-j> <esc> <C-w>j
+inoremap <C-k> <esc> <C-w>k
+inoremap <C-l> <esc> <C-w>l
 
-map <C-o> :action Back<CR>
-map <C-i> :action Forward<CR>
-map <C-s> :action SaveAll<CR>
+nnoremap <C-o> :action Back<CR>
+inoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+inoremap <C-i> :action Forward<CR>
+nnoremap <C-s> :action SaveAll<CR>
+inoremap <C-s> :action SaveAll<CR>
 
-map <C-r> :action Replace<CR>
-map <C-S-r> :action ReplaceInPath<CR>
-map <A-S-r> :action Refactorings.QuickListPopupAction<CR>
+nnoremap <C-r> :action Replace<CR>
+inoremap <C-r> :action Replace<CR>
+nnoremap <C-S-r> :action ReplaceInPath<CR>
+inoremap <C-S-r> :action ReplaceInPath<CR>
+
+inoremap <C-f> <esc>:action Find<CR>
+inoremap <C-S-f> <esc>:action FindInPath<CR>
+nnoremap <C-f> :action Find<CR>
+nnoremap <C-S-f> :action FindInPath<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
-map <C-b> :action ToggleTemporaryLineBreakpoint<cr>
+
+map <C-b> :action ToggleLineBreakpoint<cr>
+imap <C-b> <esc>:action ToggleLineBreakpoint<cr>
 
 map <C-f> :action Find<CR>
-map <C-S-f> :action FindInPath<CR>
-vmap C-f> :action Find<CR>
-vmap <C-S-f> :action FindInPath<CR>
 imap <C-f> <esc>:action Find<CR>
-imap <C-S-f> <esc>:action FindInPath<CR>
-nmap <C-f> :action Find<CR>
-nmap <C-S-f> :action FindInPath<CR:action Find>
 
-" intellij wants to owns these or it gives a weird problem
-" where the dialog boxes don't get focus
-map <C-e> :action RecentFiles<CR>
-map <A-s> :action RecentChanges<CR>
+map <C-S-f> :action FindInPath<CR>
+imap <C-S-f> <esc>:action FindInPath<CR>
+
+map <C-r> :action Replace<CR>
+imap <C-r> <esc>:action Replace<CR>
+
+map <C-S-r> :action ReplaceInPath<CR>
+imap <C-S-r> <esc>:action ReplaceInPath<CR>
+
+map<C-S-o> :action OptimizeImports<CR>
+imap<C-S-o> <esc>:action OptimizeImports<CR>
+
+map <C-e> :action SearchEverywhere<CR>
+imap <C-e> <esc> :action SearchEverywhere<CR>
+
+map <C-S-e> :action LocalHistory.ShowHistory<CR>
+imap <C-S-e> <esc> :action LocalHistory.ShowHistory<CR>
+
+map <C-g> :action GotoDeclaration<CR>
+imap <C-g> <esc> :action GotoDeclaration<CR>
 
 map <C-S-g> :action FindUsages<CR>
-map <C-S-e> :action Generate<CR>
-map <C-g> :action GotoDeclaration<CR>
-map <A-S-g> :vsp<CR>:action GotoDeclaration<CR>
+imap <C-S-g> <esc> :action FindUsages<CR>
 
 " Simulate Peekaboo VIM plugin
 map @ :action PasteMultiple<CR>
 map <C-S-v> :action PasteMultiple<CR>
+imap <C-S-v> <esc>:action PasteMultiple<CR>
 
 " KJump
 nmap <space> :action KJumpAction<cr>
 nmap <leader><leader>w :action KJumpAction.Word0<cr>
 nmap <leader><leader>l :action KJumpAction.Line<cr>
-// more action see table below
+
+nnoremap <c-/> :action CommentByLineComment<cr>
+vnoremap <c-/> :action CommentByLineComment<cr>
+inoremap <c-/> <ESC>:action CommentByLineComment<cr>
+
+map<C-S-p><ParameterInfo>
 
 " Leave / to the IDE
+"unmap <c-/>
+"map <c-/><CommentByLineComment>
 "map <C-_> :action CommentByLineComment<CR>
 "map <C-S-_> :action CommentByBlockComment<CR>
 "vmap <C-_> :action CommentByLineComment<CR>
 "vmap <C-S-_> :action CommentByBlockComment<CR>
-
-map <C-p> :action ParameterInfo<CR>
-map <C-p> <ESC> :action ParameterInfo<CR>
+"nnoremap<C-p><EditorUp>
+"inoremap<C-p><EditorUp>
+"nnoremap<C-n><EditorDown>
+"inoremap<C-n><EditorDown>
 
 map <C-4> :action ReformatCode<CR>
 map <C-S-l> :action SaveAsTemplate<CR>
@@ -143,12 +157,11 @@ map ; :
 map ,R :source ~/.ideavimrc<cr>
 map ,vim :vsp ~/.ideavimrc<cr>
 map ,ct :vsp ~/projects/coin/psy/TODO<cr>
-map ,cb :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
+map ,cb  :vsp ~/projects/coin/joetoth.com/content/current.md<cr>
+map <C-0> :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
+imap <C-0> <esc>:vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>i
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
-map t :vsp ~/projects/psycho/joetoth.com/README.md<cr>
-#map t :vsp ~/drive/sync/todo.md<cr>
-"map t :vsp /google/src/cloud/joetoth/abe/google3/experimental/users/joetoth/g3doc/TODO.md<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
 
 map U :action $Redo<CR>
@@ -2008,7 +2021,4 @@ vnoremap K "_dd
 "" * |[b|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelLeftAction}
 "" * |[w|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionCamelRightAction}
 "" * |g(|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentencePreviousEndAction}
-"" * |g)|                   {@link com.maddyhome.idea.vim.action.motion.text.MotionSentenceNextEndAction}
-"" *
-"" *
-set ideajoin
+"" * |g)|                   {@link com.

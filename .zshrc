@@ -1,7 +1,11 @@
+export PATH=/usr/local/bin:$PATH
+
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
 source_if_exists $HOME/wdf/work.zsh
+
+export PATH=/usr/git:$PATH
 
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
@@ -12,10 +16,11 @@ source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
 
-zplug "cdown/clipmenu", as:command
+zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
+zplug "fcsonline/tmux-thumbs"
 zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
@@ -27,7 +32,7 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
 # starts ssh-agent and sets SSH_AUTH_SOCK
-zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -43,20 +48,27 @@ fpath[1,0]=~/.zsh/completion/
 
 
 export GOPATH=$HOME/projects/go
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
 
 export FILAMENT_SDK=$HOME/opt/filament
 export PATH="$FILAMENT_SDK/bin:$PATH"
 
+
+export ANDROID_HOME=$HOME/opt/android-sdk-linux
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
 export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
 export PATH=$PATH:$MY_PYTHON_BIN
 
 case `uname` in
   Darwin)
+    alias ls='ls -G'
     
     # Paths for Homebrew
     export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
+    export PATH=$PATH:$HOME/Library/Python/3.6/bin
+    export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
     # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls
@@ -97,7 +109,6 @@ esac
 export EDITOR='vi'
 export VISUAL='vi'
 export BROWSER=google-chrome
-export ANDROID_HOME=$HOME/opt/android-sdk-linux
 export R_LIBS=$HOME/rlibs
 export FZF_DEFAULT_OPTS="--extended-exact"
 export FZF_DEFAULT_COMMAND='rg ""'
@@ -148,6 +159,7 @@ bindkey '^ ' autosuggest-accept
 bindkey -v
 bindkey -M vicmd v edit-command-line
 autoload edit-command-line; zle -N edit-command-line
+
 
 KEYTIMEOUT=10
 
@@ -252,48 +264,62 @@ bindkey '^P' down-line-or-search
 #bindkey -M viins 'jj' vi-cmd-mode
 
 # gruvbox theme
-dark0_hard="#1D2021"
-dark0="#282828"
-dark0_soft="#32302F"
-dark1="#3c3836"
-dark2="#504945"
-dark3="#665c54"
-dark4="#7C6F64"
+#dark0_hard="#1D2021"
+#dark0="#282828"
+#dark0_soft="#32302F"
+#dark1="#3c3836"
+#dark2="#504945"
+#dark3="#665c54"
+#dark4="#7C6F64"
+#
+#gray_245="#928374"
+#gray_244="#928374"
+#
+#light0_hard="#FB4934"
+#light0="#FBF1C7"
+#light0_soft="#F2E5BC"
+#light1="#EBDBB2"
+#light2="#D5C4A1"
+#light3="#BDAE93"
+#light4="#A89984"
+#
+#bright_red="#FB4934"
+#bright_green="#B8BB26"
+#bright_yellow="#FABD2F"
+#bright_blue="#83A598"
+#bright_purple="#D3869B"
+#bright_aqua="#8EC07C"
+#bright_orange="#FE8019"
+#
+#neutral_red="#CC241D"
+#neutral_green="#98971A"
+#neutral_yellow="#D79921"
+#neutral_blue="#458588"
+#neutral_purple="#B16286"
+#neutral_aqua="#689D6A"
+#neutral_orange="#D65D0E"
+#
+#faded_red="#9D0006"
+#faded_green="#79740E"
+#faded_yellow="#B57614"
+#faded_blue="#076678"
+#faded_purple="#8F3F71"
+#faded_aqua="#427B58"
+#faded_orange="#AF3A03"
+#
 
-gray_245="#928374"
-gray_244="#928374"
+function check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT=' '
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+    EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
 
-light0_hard="#FB4934"
-light0="#FBF1C7"
-light0_soft="#F2E5BC"
-light1="#EBDBB2"
-light2="#D5C4A1"
-light3="#BDAE93"
-light4="#A89984"
-
-bright_red="#FB4934"
-bright_green="#B8BB26"
-bright_yellow="#FABD2F"
-bright_blue="#83A598"
-bright_purple="#D3869B"
-bright_aqua="#8EC07C"
-bright_orange="#FE8019"
-
-neutral_red="#CC241D"
-neutral_green="#98971A"
-neutral_yellow="#D79921"
-neutral_blue="#458588"
-neutral_purple="#B16286"
-neutral_aqua="#689D6A"
-neutral_orange="#D65D0E"
-
-faded_red="#9D0006"
-faded_green="#79740E"
-faded_yellow="#B57614"
-faded_blue="#076678"
-faded_purple="#8F3F71"
-faded_aqua="#427B58"
-faded_orange="#AF3A03"
+RPROMPT='$(check_last_exit_code)'
 
 # Predictable SSH authentication socket location.
 #alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
@@ -353,6 +379,7 @@ alias lh='ls -alt | head' # see the last modified files
 alias cl='clear'
 alias invert-laptop='xrandr --output eDP1 --rotate inverted'
 alias pyserve='python -m SimpleHTTPServer 8000'
+alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 
 # Zippin
@@ -473,7 +500,6 @@ h() {
   if [[ $# > 0 ]]; then
     hg $@
   else
-    hg status
     hg xl
   fi
 }
@@ -538,13 +564,14 @@ alias hglr='hg pull --rebase'
 alias hgo='hg outgoing'
 alias hgp='hg push'
 alias hgs='hg status'
+alias hs='hg status'
 alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n" '
 # this is the 'git commit --amend' equivalent
 alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 # list unresolved files (since hg does not list unmerged files in the status command)
 alias hgun='hg resolve --list'
 
-alias u='hg uploadall'
+alias u='hg uploadchain'
 
 
 d() {
@@ -818,14 +845,14 @@ fport() {
 }
 
 
-
-### WIDGETS
-#  tmux set-buffer -b "a" "" && 
-tmux-copy() {
-  tmux copy-mode && tmux send-keys "?"
+alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'
+unenc () {
+  openssl enc -d -pbkdf2 -in $1 | tar xz --one-top-level=$2
 }
 
-bindkey -s '^Q' 'tmux-copy\n'
+
+
+### WIDGETS
 
 # CTRL-U - Select user
 __user() {
@@ -859,75 +886,35 @@ fzf-clipster-widget() {
 zle     -N   fzf-clipster-widget
 bindkey '^B' fzf-clipster-widget
 
-# CTRL-E - Complete word on screen
-__tmuxcomplete() {
-  local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) | while read item; do
-    printf '%q ' "$item"
-  done
+
+# CTRL-O - Enter copy mode and prompt to search backwards.
+__tmux-copy() {
+  tmux copy-mode && tmux send-keys "?"
   echo
 }
 
-fzf-tmuxcomplete-widget() {
-  LBUFFER="${LBUFFER}$(__tmuxcomplete)"
+tmux-copy-widget() {
+  LBUFFER="${LBUFFER}$(__tmux-copy)"
   zle redisplay
 }
-zle     -N   fzf-tmuxcomplete-widget
-bindkey '^E' fzf-tmuxcomplete-widget
-
-# CTRL-P - Copy word on screen to clipboard
-__tmuxcopy() {
-  local cmd="tmuxcomplete"
-  eval "$cmd" | $(__fzfcmd) -m | while read item; do print "$item" | xclip -sel clip -i 
-  done
-  echo
-}
-
-fzf-tmuxcopy-widget() {
-  LBUFFER="${LBUFFER}$(__tmuxcopy)"
-  zle redisplay
-}
-zle     -N   fzf-tmuxcopy-widget
-bindkey '^P' fzf-tmuxcopy-widget
-
-__termjt() {
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
-#  f="/tmp/termjt"
-#  echo "" >! $f
-#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
-#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
-#  ##termjt -outputFilename $f
-#  value=$(cat $f) 
-#  echo "$value"
-}
-
-termjt-screen-widget() {
-  #LBUFFER="${LBUFFER}$(__termjt)"
-  tmux -c "/usr/bin/python3 /home/joetoth/bin/python/sel.py"
-  zle redisplay
-}
-
-zle     -N   termjt-screen-widget
-bindkey '^S' 'termjt-screen-widget'
-
-alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'
-unenc () {
-  openssl enc -d -pbkdf2 -in $1 | tar xz --one-top-level=$2
-}
+zle     -N   tmux-copy-widget
+bindkey '^O' tmux-copy-widget
 
 
-#bindkey -s '^S' 'tmux-copy\n'
-
-#for script in $HOME/bin/python; do
-#  x="python $script"
-#  alias "${script:t:r}=$x"
-#done
 
 
-# Base16 Shell
-#BASE16_SHELL="$HOME/base16-tomorrow.dark.sh"
-#[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+######### Initialize completion
 
+autoload -Uz compinit
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Also here to override aliases
+source_if_exists $HOME/wdf/work.zsh
+
+
+
+# INFO =================================
 # Kill app on port
 # fuser -k 2222/tcp
 
@@ -953,9 +940,29 @@ unenc () {
 # You can also get a list of available access points with:
 #
 # nmcli dev wifi list
+# List Libaries
+# /sbin/ldconfig -p
 
 
-######### Initialize completion
-
-autoload -Uz compinit
-
+# JUNK >.....
+#
+#__termjt() {
+#  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
+#  f="/tmp/termjt"
+#  echo "" >! $f
+#  tmux capture-pane -J -S 0 -p >| /tmp/tmux-pane-buffer
+#  cat /tmp/tmux-pane-buffer | sed 's/[ \t]*$//' | tmux -c "termjt -regexp '(?m)\S{12,}|\d{4,10}' -outputFilename $f" 3>&1 1>&2 
+#  ##termjt -outputFilename $f
+#  value=$(cat $f) 
+#  echo "$value"
+#}
+#
+#termjt-screen-widget() {
+#  #LBUFFER="${LBUFFER}$(__termjt)"
+#  tmux -c "/usr/bin/python3 ~/bin/python/sel.py"
+#  zle redisplay
+#}
+#zle     -N   termjt-screen-widget
+#bindkey '^S' 'termjt-screen-widget'
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

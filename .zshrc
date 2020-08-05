@@ -570,6 +570,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 alias hgun='hg resolve --list'
 
 alias u='hg uploadchain'
+alias ua='hg uploadall'
 
 
 d() {

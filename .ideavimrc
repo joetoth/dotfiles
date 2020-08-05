@@ -26,6 +26,7 @@
 ""'visualbell'     'vb'    use visual bell instead of beeping
 ""'wrapscan'       'ws'    searches wrap around the end of the file
 
+set scrolloff=15
 set visualbell
 set noerrorbells
 set clipboard=unnamedplus
@@ -123,6 +124,9 @@ imap <C-S-g> <esc> :action FindUsages<CR>
 map @ :action PasteMultiple<CR>
 map <C-S-v> :action PasteMultiple<CR>
 imap <C-S-v> <esc>:action PasteMultiple<CR>
+
+map <C-S-c> :action Blaze.FixDepsForFile<CR>
+imap <C-S-c> <esc> :action Blaze.FixDepsForFile<CR>
 
 " KJump
 nmap <space> :action KJumpAction<cr>

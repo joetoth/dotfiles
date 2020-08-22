@@ -26,7 +26,6 @@
 ""'visualbell'     'vb'    use visual bell instead of beeping
 ""'wrapscan'       'ws'    searches wrap around the end of the file
 
-set scrolloff=15
 set visualbell
 set noerrorbells
 set clipboard=unnamedplus
@@ -108,8 +107,8 @@ imap <C-S-r> <esc>:action ReplaceInPath<CR>
 map<C-S-o> :action OptimizeImports<CR>
 imap<C-S-o> <esc>:action OptimizeImports<CR>
 
-map <C-e> :action SearchEverywhere<CR>
-imap <C-e> <esc> :action SearchEverywhere<CR>
+map <C-e> :action RecentFiles<CR>
+imap <C-e> <esc> :action RecentFiles<CR>
 
 map <C-S-e> :action LocalHistory.ShowHistory<CR>
 imap <C-S-e> <esc> :action LocalHistory.ShowHistory<CR>

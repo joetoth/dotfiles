@@ -70,22 +70,14 @@ inoremap <C-j> <esc> <C-w>j
 inoremap <C-k> <esc> <C-w>k
 inoremap <C-l> <esc> <C-w>l
 
-nnoremap <C-o> :action Back<CR>
-inoremap <C-o> :action Back<CR>
-nnoremap <C-i> :action Forward<CR>
-inoremap <C-i> :action Forward<CR>
-nnoremap <C-s> :action SaveAll<CR>
-inoremap <C-s> :action SaveAll<CR>
+map <C-o> :action Back<CR>
+imap <C-o> <esc>:action Back<CR>
 
-nnoremap <C-r> :action Replace<CR>
-inoremap <C-r> :action Replace<CR>
-nnoremap <C-S-r> :action ReplaceInPath<CR>
-inoremap <C-S-r> :action ReplaceInPath<CR>
+map <C-i> :action Forward<CR>
+imap <C-i> <esc>:action Forward<CR>
 
-inoremap <C-f> <esc>:action Find<CR>
-inoremap <C-S-f> <esc>:action FindInPath<CR>
-nnoremap <C-f> :action Find<CR>
-nnoremap <C-S-f> :action FindInPath<CR>
+map <C-s> :action SaveAll<CR>
+imap <C-s> <esc>:action SaveAll<CR>
 
 map <A-S-h> :action TypeHierarchy<CR>
 

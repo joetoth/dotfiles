@@ -140,11 +140,12 @@ Plug 'christoomey/vim-tmux-navigator' " {{{
 
 " Themes {{{
 "
-Plug 'fugalh/desert.vim'
-Plug 'junegunn/seoul256.vim' 
+"Plug 'fugalh/desert.vim'
+"Plug 'junegunn/seoul256.vim' 
+"Plug 'chriskempson/base16-vim'
+"Plug 'morhetz/gruvbox'
+"Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 call plug#end()
 
@@ -162,40 +163,16 @@ command! PU PlugUpdate | PlugUpgrade
 " Enable syntax highlighting
 syntax on
 
+
 " Highlight the current line
 set cursorline
 
 " Show line numbers
 set nu
 
-" 256 colors
-set t_Co=256
-set t_ut=
-
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-
-" colors onehalflight
-" colors onehalfdark
-
-"let g:airline_theme='onehalfdark'
-" lightline
-" let g:lightline.colorscheme='onehalfdark'
-
-" let g:seoul256_srgb = 1
-" let g:seoul256_background =250
-
-colo seoul256
-
-" Set the color scheme
-"colors desert
-"colors Tomorrow-Night
-"colors gruvbox
-"colors seoul256
-"set bg=dark
+" Colors and Theme
+let base16colorspace=256  " Access colors present in 256 colorspace
+colors base16-tomorrow-night
 
 
 " colorcolumn
@@ -470,7 +447,6 @@ tnoremap <c-a><c-a> <c-w>:exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 
-
 nmap <leader>gp :Gpush<cr>
 
 " ** Search and replace
@@ -489,8 +465,3 @@ if IsWork()
   so ~/wdf/work.vim
 endif
 
-
-" if filereadable(expand("~/.vimrc_background"))
-"   let base16colorspace=256
-"   source ~/.vimrc_background
-" endif

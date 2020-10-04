@@ -491,6 +491,7 @@ alias gsp='git stash pop'
 
 # No arguments: `hg xl`
 # With arguments: acts like `hg`
+alias hg='chg'
 compdef h=hg
 
 h() {
@@ -569,6 +570,7 @@ alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 alias hgun='hg resolve --list'
 
 alias u='hg uploadchain'
+alias ua='hg uploadall'
 
 
 d() {
@@ -941,7 +943,6 @@ source_if_exists $HOME/wdf/work.zsh
 # /sbin/ldconfig -p
 
 
-<<<<<<< Updated upstream
 # JUNK >.....
 #
 #__termjt() {
@@ -962,130 +963,16 @@ source_if_exists $HOME/wdf/work.zsh
 #}
 #zle     -N   termjt-screen-widget
 #bindkey '^S' 'termjt-screen-widget'
+#
 # BASE16_SHELL=$HOME/.config/base16-shell/
 # [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-=======
 ######### Initialize completion
 
 autoload -Uz compinit
 
-alias kubectl=microk8s.kubectl
-source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
-echo "if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi" >> ~/.zshrc # add autocomplete permanently to your zsh shell
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
-if [  ]; then source <(kubectl completion zsh); fi
->>>>>>> Stashed changes
+BASE16_THEME=tomorrow-night
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+ 
+[[ -e ~/mdproxy/mdproxy_zshrc ]] && source ~/mdproxy/mdproxy_zshrc # MDPROXY-ZSHRC
+[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env

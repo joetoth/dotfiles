@@ -7,3 +7,9 @@
 [submodule "base16-shell"]
 	path = base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
+[submodule "puppylv"]
+	path = puppylv
+	url = git@github.com:joetoth/puppy.lv.git
+[submodule "joetoth.com"]
+	path = joetoth.com
+	url = git@github.com:joetoth/joetoth.com.git

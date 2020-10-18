@@ -492,6 +492,7 @@ alias gsp='git stash pop'
 
 # No arguments: `hg xl`
 # With arguments: acts like `hg`
+alias hg='chg'
 compdef h=hg
 
 h() {

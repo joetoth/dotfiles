@@ -56,5 +56,9 @@ if ipython:
   ipython.magic("load_ext autoreload")
   ipython.magic("autoreload 2")
   print("autoreload enabled")
+  ipython.magic("load_ext ipython_autoimport")
+  # pip install ipython_autotimport
+  print("ipython_autoimport enabled")
+
 
 print('PYTHONSTARTUP LOADED', __file__)

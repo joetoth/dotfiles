@@ -855,20 +855,32 @@ unenc () {
 ### WIDGETS
 
 # CTRL-U - Select user
-__user() {
-  local cmd="cat $HOME/users.csv"
-  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
-    printf '%q ' "$item"
-  done
+#__user() {
+#  local cmd="cat $HOME/users.csv"
+#  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+#    printf '%q ' "$item"
+#  done
+#  echo
+#}
+#
+#fzf-user-widget() {
+#  LBUFFER="${LBUFFER}$(__user)"
+#  zle redisplay
+#}
+#zle     -N   fzf-user-widget
+#bindkey '^U' fzf-user-widget
+
+__tmux-up() {
+  tmux copy-mode && tmux send-keys "C-u"
   echo
 }
 
-fzf-user-widget() {
-  LBUFFER="${LBUFFER}$(__user)"
+tmux-up-widget() {
+  LBUFFER="${LBUFFER}$(__tmux-up)"
   zle redisplay
 }
-zle     -N   fzf-user-widget
-bindkey '^U' fzf-user-widget
+zle     -N   tmux-up-widget
+bindkey '^U' tmux-up-widget
 
 # CTRL-B - Select from clipboard history
 __clipster() {

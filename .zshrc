@@ -15,13 +15,12 @@ fi
 source ~/.zplug/init.zsh
 
 zplugs=() # Reset zplugs
-
 zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
 zplug "fcsonline/tmux-thumbs"
-zplug "Morantron/tmux-fingers"
+#zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
@@ -337,7 +336,7 @@ bindkey "^Xz" zce
 
 # ALIASES
 # ------------------------------------------------------------------------------
-alias note='vi ~/drive/note.txt'
+alias n='vi ~/projects/joetoth.com/content/_researching/_notes.md'
 alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 alias xo='xdg-open'
@@ -400,6 +399,7 @@ alias vpn='sudo openvpn --config $HOME/vpn/1.ovpn --auth-user-pass $HOME/ovpn.tx
 alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias blog='vi ~/projects/joe.ai/content/'
+alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 
 # FUNCTIONS
 

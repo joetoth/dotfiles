@@ -121,11 +121,17 @@ imap <C-S-v> <esc>:action PasteMultiple<CR>
 map <C-S-c> :action Blaze.FixDepsForFile<CR>
 imap <C-S-c> <esc> :action Blaze.FixDepsForFile<CR>
 
+nnoremap <C-s-n> :e ~/projects/joetoth.com/content/_researching/_notes.md<cr>
+
+vnoremap <C-s-n> :e ~/projects/joetoth.com/content/_researching/_notes.md<cr>
+inoremap <C-s-n> <ESC>:e ~/projects/joetoth.com/content/_researching/_notes.md<cr>
+
 nnoremap <c-/> :action CommentByLineComment<cr>
 vnoremap <c-/> :action CommentByLineComment<cr>
 inoremap <c-/> <ESC>:action CommentByLineComment<cr>
 
-map<C-S-p><ParameterInfo>
+map <C-S-p> :action ParameterInfo<CR>
+imap <C-S-p> <esc>:action ParameterInfo<CR>
 
 " Leave / to the IDE
 "unmap <c-/>
@@ -155,6 +161,11 @@ imap <C-0> <esc>:vsp /google/src/cloud/joetoth/abe/google3/experimental/users/jo
 map ,cs :action IdeScriptingConsole<cr>
 map ,cp :vsp ~/present.html<cr>
 map ,cdv :vsp ~/.ideavimrc<cr>
+
+"imap <C-t><esc> :e template.py<cr>
+"map <C-t> :action Run<CR>
+"map <C-t> :action Run<CR>
+"nnoremap <C-t> :e template.py<cr>
 
 map U :action $Redo<CR>
 "map ,, :action GotoFile<CR>
@@ -221,12 +232,11 @@ nnoremap gcc :action CommentByLineComment<cr>
 "nnoremap <leader>rf :action RenameFile<cr>
 "nnoremap <leader>mv :action ActivateMavenProjectsToolWindow<cr>
 "nnoremap <leader>dc :action ChooseDebugConfiguration<cr>
-"nnoremap <leader>rc :action ChooseRunConfiguration<cr>
+"nnoremap <leader>rc :action chooseRunConfiguration<cr>
 "nnoremap <leader>q  :action CloseActiveTab<cr>
 ""nnoremap <leader>gi :action GotoImplementation<cr>
 ""nnoremap <leader>gs :action GotoSuperMethod<cr>
 ""nnoremap <leader>gd :action GotoDeclaration<cr>
-""nnoremap <leader>gt :action GotoTest<cr>
 "nnoremap <leader>tl Vy<cr>:action ActivateTerminalToolWindow<cr>
 "vnoremap <leader>tl y<cr>:action ActivateTerminalToolWindow<cr>
 "nnoremap ]e :action GotoNextError<cr>

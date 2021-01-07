@@ -3,6 +3,8 @@ export PATH=/usr/local/bin:$PATH
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
+
+# Source work first, so we can override
 source_if_exists $HOME/wdf/work.zsh
 
 export PATH=/usr/git:$PATH
@@ -13,6 +15,12 @@ if [[ ! -d ~/.zplug ]]; then
 fi
 
 source ~/.zplug/init.zsh
+
+## VIM
+## Needs to be up here cuz if its below 'something' fzf ^R doesn't work
+bindkey -v
+bindkey -M vicmd v edit-command-line
+autoload edit-command-line; zle -N edit-command-line
 
 zplugs=() # Reset zplugs
 zplug "cdown/clipmenu", use:'*', as:command
@@ -40,9 +48,8 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load #--verbose
+zplug load --verbose
 fpath[1,0]=~/.zsh/completion/
-#fpath=(~/homebrew/share/zsh-completions $fpath)
 
 ##[homebrew setting for installed to user own directory]
 # export HOMEBREW=$HOME/homebrew
@@ -71,6 +78,7 @@ case `uname` in
   Darwin)
     alias ls='ls -G'
 
+    [ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
     # Python has been installed as
     #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
     
@@ -121,7 +129,7 @@ case `uname` in
     # the file name.
 
 
-    fortune
+#    fortune
   ;;
   Linux)
     alias ls='ls --color'
@@ -131,7 +139,7 @@ case `uname` in
     export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
     export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
     export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
-    /usr/games/fortune
+#    /usr/games/fortune
   ;;
   FreeBSD)
   ;;
@@ -187,10 +195,6 @@ export COMPLETION_WAITING_DOTS="true"
 export ZSH_AUTOSUGGEST_USE_ASYNC="true"
 bindkey '^ ' autosuggest-accept
 
-# VIM
-bindkey -v
-bindkey -M vicmd v edit-command-line
-autoload edit-command-line; zle -N edit-command-line
 
 # IngoHeimbach/zsh-easy-motion"
 # Space+b/f/w/e...
@@ -440,15 +444,6 @@ alias blog='vi ~/projects/joe.ai/content/'
 alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 
 # FUNCTIONS
-
-# PATH for the Google Cloud SDK and completion
-source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
-source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
-
-
-# OPAM configuration
-source_if_exists $HOME/.opam/opam-init/init.zsh
-source_if_exists $HOME/bazel.zsh
 
 # GIT
 #
@@ -957,10 +952,10 @@ bindkey '^O' tmux-copy-widget
 
 autoload -Uz compinit
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Also here to override aliases
-source_if_exists $HOME/wdf/work.zsh
+#source_if_exists $HOME/wdf/work.zsh
 
 
 
@@ -1019,4 +1014,3 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
  
 [[ -e ~/mdproxy/mdproxy_zshrc ]] && source ~/mdproxy/mdproxy_zshrc # MDPROXY-ZSHRC
-[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env

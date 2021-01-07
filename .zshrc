@@ -19,7 +19,8 @@ zplug "cdown/clipmenu", use:'*', as:command
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
-zplug "fcsonline/tmux-thumbs"
+zplug "laktak/extrakto"
+#zplug "fcsonline/tmux-thumbs"
 #zplug "Morantron/tmux-fingers"
 zplug "zsh-users/zsh-autosuggestions", use:"zsh-autosuggestions.zsh"
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
@@ -43,6 +44,14 @@ zplug load #--verbose
 fpath[1,0]=~/.zsh/completion/
 #fpath=(~/homebrew/share/zsh-completions $fpath)
 
+##[homebrew setting for installed to user own directory]
+# export HOMEBREW=$HOME/homebrew
+# export PATH=$HOMEBREW/bin:$PATH
+# export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
+# export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
+# export C_INCLUDE_PATH=$HOMEBREW/include
+# export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+
 
 export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
@@ -61,11 +70,37 @@ export PATH=$PATH:$MY_PYTHON_BIN
 case `uname` in
   Darwin)
     alias ls='ls -G'
+
+    # Python has been installed as
+    #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
     
+    # Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
+    # `python3`, `python3-config`, `pip3` etc., respectively, have been installed into
+    #   /Users/joetoth/homebrew/opt/python@3.8/libexec/bin
+    # You can install Python packages with
+    #   /Users/joetoth/homebrew/opt/python@3.8/bin/pip3 install <package>
+    # They will install into the site-package directory
+    #   /Users/joetoth/homebrew/lib/python3.8/site-packages
+ 
+    # See: https://docs.brew.sh/Homebrew-and-Python
+    
+    # python@3.8 is keg-only, which means it was not symlinked into /Users/joetoth/homebrew,
+    # because this is an alternate version of another formula.
+    
+    # If you need to have python@3.8 first in your PATH run:
+    export PATH="$HOME/homebrew/opt/python@3.8/bin:$PATH"
+    
+    # For compilers to find python@3.8 you may need to set:
+    export LDFLAGS="-L$HOME/homebrew/opt/python@3.8/lib"
+    
+    # For pkg-config to find python@3.8 you may need to set:
+    export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
+        
     # Paths for Homebrew
-    export PATH=$HOME/homebrew/bin:$PATH:$HOME/Library/Python/3.7/bin
-    export PATH=$PATH:$HOME/Library/Python/3.6/bin
-    export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
+    export PATH=$HOME/homebrew/sbin:$HOME/homebrew/bin:$PATH
+    # :$PATH:$HOME/Library/Python/3.7/bin
+    # export PATH=$PATH:$HOME/Library/Python/3.6/bin
+    # export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
     # export PATH=$HOME/opt/nvim/bin:$PATH
     #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
     ## coreutils must be installed for gnu ls
@@ -157,6 +192,9 @@ bindkey -v
 bindkey -M vicmd v edit-command-line
 autoload edit-command-line; zle -N edit-command-line
 
+# IngoHeimbach/zsh-easy-motion"
+# Space+b/f/w/e...
+bindkey -M vicmd ' ' vi-easy-motion
 
 KEYTIMEOUT=10
 
@@ -394,7 +432,7 @@ alias clipster-daemon='clipster -f ~/clipster.ini -d'
 alias lock='xscreensaver-command -lock'
 alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
-alias cda='cd ~/projects/psycho'
+alias cda='cd ~/projects/joetoth.com'
 alias vpn='sudo openvpn --config $HOME/vpn/1.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'

@@ -116,6 +116,8 @@ Plug 'junegunn/vim-peekaboo' " Registers / Copy / Paste
 
 " Search & Replace
 " Plug 'haya14busa/incsearch.vim'
+" C-r search and replace
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Syntax {{{
 Plug 'tpope/vim-commentary'
@@ -446,8 +448,6 @@ inoremap <c-a><c-a> <esc>:exe "tabn ".g:lasttab<CR>
 tnoremap <c-a><c-a> <c-w>:exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
-
-nmap <leader>gp :Gpush<cr>
 
 " ** Search and replace
 " / for searching

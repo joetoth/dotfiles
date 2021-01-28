@@ -4,9 +4,6 @@ source_if_exists() {
   [[ -s $1 ]] && source $1
 }
 
-# Source work first, so we can override
-source_if_exists $HOME/wdf/work.zsh
-
 export PATH=/usr/git:$PATH
 
 if [[ ! -d ~/.zplug ]]; then
@@ -24,7 +21,7 @@ autoload edit-command-line; zle -N edit-command-line
 
 zplugs=() # Reset zplugs
 zplug "cdown/clipmenu", use:'*', as:command
-zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
+#zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
 zplug "laktak/extrakto"
@@ -213,21 +210,21 @@ setopt noflowcontrol
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE
 
-# Enable approximate completions
-zstyle ':completion:*' completer _complete _ignored _approximate
-zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3)) numeric)'
-
-# Automatically update PATH entries
-zstyle ':completion:*' rehash true
-
-# Use menu completion
-zstyle ':completion:*' menu select
-
-# Verbose completion results
-zstyle ':completion:*' verbose true
-
-# Smart matching of dashed values, e.g. f-b matching foo-bar
-zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*'
+## Enable approximate completions
+#zstyle ':completion:*' completer _complete _ignored _approximate
+#zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3)) numeric)'
+#
+## Automatically update PATH entries
+#zstyle ':completion:*' rehash true
+#
+## Use menu completion
+#zstyle ':completion:*' menu select
+#
+## Verbose completion results
+#zstyle ':completion:*' verbose true
+#
+## Smart matching of dashed values, e.g. f-b matching foo-bar
+#zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*'
 
 # match case-insenstive
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -236,13 +233,13 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 zstyle ':completion:*' group-name ''
 
 # Don't insert a literal tab when trying to complete in an empty buffer
-# zstyle ':completion:*' insert-tab false
+zstyle ':completion:*' insert-tab false
 
 # Keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
 
 # Don't try parent path completion if the directories exist
-zstyle ':completion:*' accept-exact-dirs true
+#zstyle ':completion:*' accept-exact-dirs true
 
 # Always use menu selection for `cd -`
 zstyle ':completion:*:*:cd:*:directory-stack' force-list always
@@ -1014,3 +1011,8 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
  
 [[ -e ~/mdproxy/mdproxy_zshrc ]] && source ~/mdproxy/mdproxy_zshrc # MDPROXY-ZSHRC
+
+
+# Source work first, so we can override
+source_if_exists $HOME/wdf/work.zsh
+

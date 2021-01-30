@@ -1,8 +1,20 @@
 export PATH=/usr/local/bin:$PATH
 
+# Predictable SSH authentication socket location.
+#alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+#eval $(tmux showenv -s SSH_AUTH_SOCK)
+#SOCK="/tmp/ssh-agent.sock"
+#if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
+#then
+#    rm -f /tmp/ssh-agent.sock
+#    ln -sf $SSH_AUTH_SOCK $SOCK
+#    export SSH_AUTH_SOCK=$SOCK
+#fi
+
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
+source_if_exists $HOME/wdf/work.zsh
 
 export PATH=/usr/git:$PATH
 
@@ -13,16 +25,11 @@ fi
 
 source ~/.zplug/init.zsh
 
-## VIM
-## Needs to be up here cuz if its below 'something' fzf ^R doesn't work
-bindkey -v
-bindkey -M vicmd v edit-command-line
-autoload edit-command-line; zle -N edit-command-line
-
 zplugs=() # Reset zplugs
 zplug "cdown/clipmenu", use:'*', as:command
-#zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
+zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+zplug "hchbaw/zce.zsh", use:"*.zsh", defer:2
 zplug "IngoHeimbach/zsh-easy-motion"
 zplug "laktak/extrakto"
 #zplug "fcsonline/tmux-thumbs"
@@ -35,7 +42,7 @@ zplug "so-fancy/diff-so-fancy", as:command
 # ga, glo, gi, gd, gcf, gss, gclean, 
 zplug "wfxr/forgit", defer:1
 # starts ssh-agent and sets SSH_AUTH_SOCK
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+# zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -45,37 +52,33 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load --verbose
+zplug load #--verbose
 fpath[1,0]=~/.zsh/completion/
+#fpath=(~/homebrew/share/zsh-completions $fpath)
 
-##[homebrew setting for installed to user own directory]
-# export HOMEBREW=$HOME/homebrew
-# export PATH=$HOMEBREW/bin:$PATH
-# export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
-# export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
-# export C_INCLUDE_PATH=$HOMEBREW/include
-# export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+# Easy Motion in insert and visual mode
+bindkey -M vicmd "^X" zce
+bindkey "^X" zce
 
-
-export GOPATH=$HOME/projects/go
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
 
-export FILAMENT_SDK=$HOME/opt/filament
-export PATH="$FILAMENT_SDK/bin:$PATH"
-
-
-export ANDROID_HOME=$HOME/opt/android-sdk-linux
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
-export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
-export PATH=$PATH:$MY_PYTHON_BIN
+# Android
+# export ANDROID_HOME=$HOME/opt/android-sdk-linux
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
 
 case `uname` in
   Darwin)
     alias ls='ls -G'
+    ##[homebrew setting for installed to user own directory]
+    # export HOMEBREW=$HOME/homebrew
+    # export PATH=$HOMEBREW/bin:$PATH
+    # export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
+    # export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
+    # export C_INCLUDE_PATH=$HOMEBREW/include
+    # export CPLUS_INCLUDE_PATH=$HOMEBREW/include
 
-    [ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
     # Python has been installed as
     #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
     
@@ -93,16 +96,16 @@ case `uname` in
     # because this is an alternate version of another formula.
     
     # If you need to have python@3.8 first in your PATH run:
-    export PATH="$HOME/homebrew/opt/python@3.8/bin:$PATH"
+    # export PATH="$HOME/homebrew/opt/python@3.8/bin:$PATH"
     
-    # For compilers to find python@3.8 you may need to set:
-    export LDFLAGS="-L$HOME/homebrew/opt/python@3.8/lib"
+    # # For compilers to find python@3.8 you may need to set:
+    # export LDFLAGS="-L$HOME/homebrew/opt/python@3.8/lib"
     
-    # For pkg-config to find python@3.8 you may need to set:
-    export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
+    # # For pkg-config to find python@3.8 you may need to set:
+    # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
         
     # Paths for Homebrew
-    export PATH=$HOME/homebrew/sbin:$HOME/homebrew/bin:$PATH
+    export PATH=$HOME/homebrew/sbin:$HOME/homebrew/bin:$HOME/homebrew/opt:$PATH
     # :$PATH:$HOME/Library/Python/3.7/bin
     # export PATH=$PATH:$HOME/Library/Python/3.6/bin
     # export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
@@ -117,16 +120,15 @@ case `uname` in
     # export LDFLAGS="-L/usr/local/opt/llvm/lib"
     # export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
-    export PATH=$VULKAN_SDK/bin:$PATH
+    # Vulkan
+    # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    # export PATH=$VULKAN_SDK/bin:$PATH
     # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
     # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
     # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
     # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
     # the file name.
-
-
-#    fortune
+    fortune
   ;;
   Linux)
     alias ls='ls --color'
@@ -136,7 +138,7 @@ case `uname` in
     export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
     export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
     export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
-#    /usr/games/fortune
+    /usr/games/fortune
   ;;
   FreeBSD)
   ;;
@@ -145,15 +147,9 @@ esac
 
 export EDITOR='vi'
 export VISUAL='vi'
-export BROWSER=google-chrome
-export R_LIBS=$HOME/rlibs
+export BROWSER='google-chrome'
+
 export FZF_DEFAULT_OPTS="--extended-exact"
-export FZF_DEFAULT_COMMAND='rg ""'
-## To apply the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export CLOUDSDK_COMPUTE_ZONE="us-east1-b"
-export MY_PYTHON_BIN="$HOME/bin/python"
-export PYTHONIOENCODING="utf-8"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export PYTHONSTARTUP="$HOME/bin/python/startup.py"
 
@@ -192,10 +188,10 @@ export COMPLETION_WAITING_DOTS="true"
 export ZSH_AUTOSUGGEST_USE_ASYNC="true"
 bindkey '^ ' autosuggest-accept
 
-
-# IngoHeimbach/zsh-easy-motion"
-# Space+b/f/w/e...
-bindkey -M vicmd ' ' vi-easy-motion
+# VIM
+bindkey -v
+bindkey -M vicmd v edit-command-line
+autoload edit-command-line; zle -N edit-command-line
 
 KEYTIMEOUT=10
 
@@ -210,7 +206,7 @@ setopt noflowcontrol
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE
 
-## Enable approximate completions
+# Enable approximate completions
 #zstyle ':completion:*' completer _complete _ignored _approximate
 #zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3)) numeric)'
 #
@@ -225,68 +221,50 @@ zstyle ':completion::complete:*' cache-path $ZSH_CACHE
 #
 ## Smart matching of dashed values, e.g. f-b matching foo-bar
 #zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*'
-
-# match case-insenstive
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# Group results by category
-zstyle ':completion:*' group-name ''
-
-# Don't insert a literal tab when trying to complete in an empty buffer
-zstyle ':completion:*' insert-tab false
-
-# Keep directories and files separated
-zstyle ':completion:*' list-dirs-first true
-
-# Don't try parent path completion if the directories exist
+#
+## match case-insenstive
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+#
+## Group results by category
+#zstyle ':completion:*' group-name ''
+#
+## Don't insert a literal tab when trying to complete in an empty buffer
+## zstyle ':completion:*' insert-tab false
+#
+## Keep directories and files separated
+#zstyle ':completion:*' list-dirs-first true
+#
+## Don't try parent path completion if the directories exist
 #zstyle ':completion:*' accept-exact-dirs true
-
-# Always use menu selection for `cd -`
-zstyle ':completion:*:*:cd:*:directory-stack' force-list always
-zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
-
-# Pretty messages during pagination
-zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
-zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
-
-# Nicer format for completion messages
-zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
-zstyle ':completion:*:corrections' format '%U%F{green}%d (errors: %e)%f%u'
-zstyle ':completion:*:warnings' format '%F{202}%BSorry, no matches for: %F{214}%d%b'
-
-# Show message while waiting for completion
-zstyle ':completion:*' show-completer true
-
-# Prettier completion for processes
-zstyle ':completion:*:*:*:*:processes' force-list always
-zstyle ':completion:*:*:*:*:processes' menu yes select
-zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,args -w -w"
-
+#
+## Always use menu selection for `cd -`
+#zstyle ':completion:*:*:cd:*:directory-stack' force-list always
+#zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+#
+## Pretty messages during pagination
+#zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+#zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+#
+## Nicer format for completion messages
+#zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+#zstyle ':completion:*:corrections' format '%U%F{green}%d (errors: %e)%f%u'
+#zstyle ':completion:*:warnings' format '%F{202}%BSorry, no matches for: %F{214}%d%b'
+#
+## Show message while waiting for completion
+#zstyle ':completion:*' show-completer true
+#
+## Prettier completion for processes
+#zstyle ':completion:*:*:*:*:processes' force-list always
+#zstyle ':completion:*:*:*:*:processes' menu yes select
+#zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+#zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,args -w -w"
+#
 # Use ls-colors for path completions
 function _set-list-colors() {
 	zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 	unfunction _set-list-colors
 }
 sched 0 _set-list-colors  # deferred since LC_COLORS might not be available yet
-
-# Don't complete hosts from /etc/hosts
-zstyle -e ':completion:*' hosts 'reply=()'
-
-# Don't complete uninteresting stuff unless we really want to.
-zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec)|TRAP*)'
-zstyle ':completion:*:*:*:users' ignored-patterns \
-		adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
-		clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
-		gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm \
-		ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios \
-		named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn \
-		operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
-		rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
-		usbmux uucp vcsa wwwrun xfs cron mongodb nullmail portage redis \
-		shoutcast tcpdump '_*'
-zstyle ':completion:*' single-ignored show
-
 #
 # Debian / Ubuntu sets these to vi-up-line-or-history etc,
 # which places the cursor at the start of line, not end of line.
@@ -297,52 +275,6 @@ bindkey -M viins "\eOA" up-line-or-history
 bindkey -M viins "\eOB" down-line-or-history
 bindkey '^N' up-line-or-search
 bindkey '^P' down-line-or-search
-#bindkey -M viins 'jj' vi-cmd-mode
-
-# gruvbox theme
-#dark0_hard="#1D2021"
-#dark0="#282828"
-#dark0_soft="#32302F"
-#dark1="#3c3836"
-#dark2="#504945"
-#dark3="#665c54"
-#dark4="#7C6F64"
-#
-#gray_245="#928374"
-#gray_244="#928374"
-#
-#light0_hard="#FB4934"
-#light0="#FBF1C7"
-#light0_soft="#F2E5BC"
-#light1="#EBDBB2"
-#light2="#D5C4A1"
-#light3="#BDAE93"
-#light4="#A89984"
-#
-#bright_red="#FB4934"
-#bright_green="#B8BB26"
-#bright_yellow="#FABD2F"
-#bright_blue="#83A598"
-#bright_purple="#D3869B"
-#bright_aqua="#8EC07C"
-#bright_orange="#FE8019"
-#
-#neutral_red="#CC241D"
-#neutral_green="#98971A"
-#neutral_yellow="#D79921"
-#neutral_blue="#458588"
-#neutral_purple="#B16286"
-#neutral_aqua="#689D6A"
-#neutral_orange="#D65D0E"
-#
-#faded_red="#9D0006"
-#faded_green="#79740E"
-#faded_yellow="#B57614"
-#faded_blue="#076678"
-#faded_purple="#8F3F71"
-#faded_aqua="#427B58"
-#faded_orange="#AF3A03"
-#
 
 function check_last_exit_code() {
   local LAST_EXIT_CODE=$?
@@ -356,20 +288,6 @@ function check_last_exit_code() {
 }
 
 RPROMPT='$(check_last_exit_code)'
-
-# Predictable SSH authentication socket location.
-#alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
-#eval $(tmux showenv -s SSH_AUTH_SOCK)
-#SOCK="/tmp/ssh-agent.sock"
-#if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
-#then
-#    rm -f /tmp/ssh-agent.sock
-#    ln -sf $SSH_AUTH_SOCK $SOCK
-#    export SSH_AUTH_SOCK=$SOCK
-#fi
-
-bindkey "^Xz" zce
-
 
 
 
@@ -442,6 +360,18 @@ alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 
 # FUNCTIONS
 
+# PATH for the Google Cloud SDK and completion
+source_if_exists $HOME/opt/google-cloud-sdk/path.zsh.inc
+source_if_exists $HOME/opt/google-cloud-sdk/completion.zsh.inc 
+
+
+# OPAM configuration
+source_if_exists $HOME/.opam/opam-init/init.zsh
+source_if_exists $HOME/bazel.zsh
+
+tb() {
+  tensorboard --logdir "$@"
+}
 # GIT
 #
 git_log_defaults="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%<(70,trunc)%s %Creset%<(15,trunc)%cn%C(auto)%d"
@@ -462,52 +392,6 @@ g() {
   fi
 }
 
-gl() {
-  LINES=20
-  if [ $1 ]; then
-    LINES=$1
-  fi
-  git log --decorate --all --pretty="$git_log_defaults" "-$LINES"
-}
-
-glb() {
-  LINES=20
-  if [ $1 ]; then
-    LINES=$1
-  fi
-  git log --decorate --pretty="$git_log_defaults" "-$LINES"
-}
-
-git-mini-log() {
-  git log --pretty=format:"%C(3)%h%C(5) %<(8,trunc)%an %C(10)%ad %Creset%<(50,trunc)%s" --date=format:%d/%m/%y "$@"
-}
-
-tb() {
-  tensorboard --logdir "$@"
-}
-
-gc() {
-  if [[ $@ == "-vp" ]]; then
-    clear && git commit -vp
-  else
-    git commit "$@"
-  fi
-}
-
-D() {
-  if test "$#" = 0; then
-    (
-      git diff --color | diff-so-fancy
-      git ls-files --others --exclude-standard | while read -r i; do git diff --color -- /dev/null "$i" | diff-so-fancy; done
-    ) | less -R
-  else
-    git diff "$@"
-  fi
-}
-
-d() {
-  git diff 
-}
 
 alias gac='git commit -a -m'
 alias gco='git checkout'
@@ -520,6 +404,7 @@ alias gs='git stash'
 alias gsp='git stash pop'
 
 
+# Mercurial
 # No arguments: `hg xl`
 # With arguments: acts like `hg`
 alias hg='chg'
@@ -533,52 +418,6 @@ h() {
   fi
 }
 
-gl() {
-  LINES=20
-  if [ $1 ]; then
-    LINES=$1
-  fi
-  git log --decorate --all --pretty="$git_log_defaults" "-$LINES"
-}
-
-glb() {
-  LINES=20
-  if [ $1 ]; then
-    LINES=$1
-  fi
-  git log --decorate --pretty="$git_log_defaults" "-$LINES"
-}
-
-git-mini-log() {
-  git log --pretty=format:"%C(3)%h%C(5) %<(8,trunc)%an %C(10)%ad %Creset%<(50,trunc)%s" --date=format:%d/%m/%y "$@"
-}
-
-tb() {
-  tensorboard --logdir "$@"
-}
-
-gc() {
-  if [[ $@ == "-vp" ]]; then
-    clear && git commit -vp
-  else
-    git commit "$@"
-  fi
-}
-
-D() {
-  if test "$#" = 0; then
-    (
-      git diff --color | diff-so-fancy
-      git ls-files --others --exclude-standard | while read -r i; do git diff --color -- /dev/null "$i" | diff-so-fancy; done
-    ) | less -R
-  else
-    git diff "$@"
-  fi
-}
-
-
-
-# Mercurial
 alias hgc='hg commit'
 alias hgb='hg branch'
 alias hgba='hg branches'
@@ -603,10 +442,6 @@ alias hgun='hg resolve --list'
 alias u='hg uploadchain'
 alias ua='hg uploadall'
 
-
-d() {
-  git diff 
-}
 
 function lvar() {
   lvar=$(</dev/stdin)
@@ -658,17 +493,12 @@ function writecmd() {
     perl -e '$TIOCSTI = 0x5412; $l = <STDIN>; $lc = $ARGV[0] eq "-run" ? "\n" : ""; $l =~ s/\s*$/$lc/; map { ioctl STDOUT, $TIOCSTI, $_; } split "", $l;' -- $1
 }
 
-function x() {
-print -s "$@"
-}
-
 # Remove Bluelight
 night_mode() {
     for disp in $(xrandr | sed -n 's/^\([^ ]*\).*\<connected\>.*/\1/p'); do
         xrandr --output $disp --gamma $1 --brightness $2
     done
 }
-
 alias bluelight_on='night_mode 1:1:1   1.0'
 alias bluelight_off='night_mode 1:1:0.7   1.0'
  
@@ -723,81 +553,6 @@ record_changes() {
   done
 }
 
-# fbr - checkout git branch
-fbr() {
-  local branches branch
-  branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //")
-}
-
-# fco - checkout git branch/tag
-fco() {
-  local tags branches target
-  tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-  branches=$(
-    git branch --all | grep -v HEAD             |
-    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-  target=$(
-    (echo "$tags"; echo "$branches") |
-    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-  git checkout $(echo "$target" | awk '{print $2}')
-}
-# fcoc - checkout git commit
-fcoc() {
-  local commits commit
-  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
-  commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
-}
-# fshow - git commit browser
-fshow() {
-  local out sha q
-  while out=$(
-      git log --decorate=short --graph --oneline --color=always |
-      fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
-    q=$(head -1 <<< "$out")
-    while read sha; do
-      [ -n "$sha" ] && git show --color=always $sha | less -R
-    done < <(sed '1d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
-  done
-}
-# fcs - get git commit sha
-# example usage: git rebase -i `fcs`
-fcs() {
-  local commits commit
-  commits=$(git log --color=always --pretty=oneline --abbrev-commit --reverse) &&
-  commit=$(echo "$commits" | fzf --tac +s +m -e --ansi --reverse) &&
-  echo -n $(echo "$commit" | sed "s/ .*//")
-}
-# fstash - easier way to deal with stashes
-# type fstash to get a list of your stashes
-# enter shows you the contents of the stash
-# ctrl-d shows a diff of the stash against your current HEAD
-# ctrl-b checks the stash out as a branch, for easier merging
-fstash() {
-  local out q k sha
-    while out=$(
-      git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
-      fzf --ansi --no-sort --query="$q" --print-query \
-          --expect=ctrl-d,ctrl-b);
-    do
-      q=$(head -1 <<< "$out")
-      k=$(head -2 <<< "$out" | tail -1)
-      sha=$(tail -1 <<< "$out" | cut -d' ' -f1)
-      [ -z "$sha" ] && continue
-      if [ "$k" = 'ctrl-d' ]; then
-        git diff $sha
-      elif [ "$k" = 'ctrl-b' ]; then
-        git stash branch "stash-$sha" $sha
-        break;
-      else
-        git stash show -p $sha
-      fi
-    done
-}
 
 c() {
   local cols sep
@@ -826,37 +581,6 @@ ch() {
   fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
-fancy-branch() {
-  local tags localbranches remotebranches target
-  tags=$(
-  git tag | awk '{print "\x1b[33;1mtag\x1b[m\t" $1}') || return
-  localbranches=$(
-  git for-each-ref --sort=-committerdate refs/heads/ |
-  sed 's|.*refs/heads/||' |
-  awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-  remotebranches=$(
-  git branch --remote | grep -v HEAD             |
-  sed "s/.* //"       | sed "s#remotes/[^/]*/##" |
-  sort -u             | awk '{print "\x1b[31;1mremote\x1b[m\t" $1}') || return
-  target=$(
-  (echo "$localbranches"; echo "$tags"; echo "$remotebranches";) |
-  fzf --no-hscroll --ansi +m -d "\t" -n 2) || return
-  if [[ -z "$BUFFER" ]]; then
-    if [[ $(echo "$target" | awk '{print $1}') == 'remote' ]]; then
-      target=$(echo "$target" | awk '{print $2}' | sed 's|.*/||')
-      git checkout "$target"
-      zle accept-line
-    else
-      git checkout $(echo "$target" | awk '{print $2}')
-      zle accept-line
-    fi
-  else
-    res=$(echo "$target" | awk '{print $2}')
-    LBUFFER="$(echo "$LBUFFER" | xargs) ${res}"
-    zle redisplay
-  fi
-}
-
 fkill() {
   pid=$(ps -ef | sed 1d | fzf -m -e | awk '{print $2}')
 
@@ -883,34 +607,38 @@ unenc () {
 
 
 ### WIDGETS
-
-# CTRL-U - Select user
-#__user() {
-#  local cmd="cat $HOME/users.csv"
-#  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
-#    printf '%q ' "$item"
-#  done
-#  echo
-#}
 #
-#fzf-user-widget() {
-#  LBUFFER="${LBUFFER}$(__user)"
-#  zle redisplay
-#}
-#zle     -N   fzf-user-widget
-#bindkey '^U' fzf-user-widget
-
-__tmux-up() {
-  tmux copy-mode && tmux send-keys "C-u"
+# CTRL-F - 
+__find() {
+  local cmd="rg \"\""
+  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+    printf '%q ' "$item"
+  done
   echo
 }
 
-tmux-up-widget() {
-  LBUFFER="${LBUFFER}$(__tmux-up)"
+fzf-find-widget() {
+  LBUFFER="${LBUFFER}$(__find)"
   zle redisplay
 }
-zle     -N   tmux-up-widget
-bindkey '^U' tmux-up-widget
+zle     -N   fzf-find-widget
+bindkey '^F' fzf-find-widget
+
+# CTRL-U - Select user
+__user() {
+  local cmd="cat $HOME/users.csv"
+  eval "$cmd" | $(__fzfcmd) --ansi -m | while read item; do
+    printf '%q ' "$item"
+  done
+  echo
+}
+
+fzf-user-widget() {
+  LBUFFER="${LBUFFER}$(__user)"
+  zle redisplay
+}
+zle     -N   fzf-user-widget
+bindkey '^U' fzf-user-widget
 
 # CTRL-B - Select from clipboard history
 __clipster() {
@@ -949,10 +677,10 @@ bindkey '^O' tmux-copy-widget
 
 autoload -Uz compinit
 
-#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Also here to override aliases
-#source_if_exists $HOME/wdf/work.zsh
+source_if_exists $HOME/wdf/work.zsh
 
 
 
@@ -1010,9 +738,26 @@ BASE16_THEME=tomorrow-night
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
  
-[[ -e ~/mdproxy/mdproxy_zshrc ]] && source ~/mdproxy/mdproxy_zshrc # MDPROXY-ZSHRC
+[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
-# Source work first, so we can override
-source_if_exists $HOME/wdf/work.zsh
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+[[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 
+fixup_ssh_auth_sock() {
+  if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
+  then
+    local new_sock=$(echo /tmp/ssh-*/agent.*(=UNomY1))
+     if [[ -n ${new_sock} ]]
+     then
+       export SSH_AUTH_SOCK=${new_sock}
+     fi
+  fi
+}
+if [[ -n ${SSH_AUTH_SOCK} ]]
+then
+  add-zsh-hook preexec fixup_ssh_auth_sock
+fi

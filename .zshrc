@@ -23,7 +23,8 @@ source_if_exists() {
 }
 source_if_exists $HOME/wdf/work.zsh
 
-#export PATH=/usr/git:$PATH
+# For work since zplug doesn't like the git version name
+export PATH=/usr/git:$PATH
 
 if [[ ! -d ~/.zplug ]]; then
   git clone https://github.com/zplug/zplug ~/.zplug
@@ -677,7 +678,7 @@ autoload -Uz compinit
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ## Also here to override aliases
-source_if_exists $HOME/wdf/work.zsh
+#source_if_exists $HOME/wdf/work.zsh
 
 
 

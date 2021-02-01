@@ -21,7 +21,7 @@ fi
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
-source_if_exists $HOME/wdf/work.zsh
+#source_if_exists $HOME/wdf/work.zsh
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -73,81 +73,68 @@ export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/
 ## export PATH=$PATH:$ANDROID_HOME/tools
 ## export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
 
-#case `uname` in
-#  Darwin)
-#    alias ls='ls -G'
-#    ##[homebrew setting for installed to user own directory]
-#    # export HOMEBREW=$HOME/homebrew
-#    # export PATH=$HOMEBREW/bin:$PATH
-#    # export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
-#    # export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
-#    # export C_INCLUDE_PATH=$HOMEBREW/include
-#    # export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+case `uname` in
+  Darwin)
+    alias ls='ls -G'
 
-#    # Python has been installed as
-#    #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
+    # Paths for Homebrew
+    export HOMEBREW=$HOME/homebrew
+    export PATH=$HOMEBREW/sbin:$HOMEBREW/bin:$HOMEBREW/opt:$PATH
+    export PATH=$HOMEBREW/bin:$PATH
+    export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
+    export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
+    export C_INCLUDE_PATH=$HOMEBREW/include
+    export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+
+    # Python has been installed as
+    #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
     
-#    # Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
-#    # `python3`, `python3-config`, `pip3` etc., respectively, have been installed into
-#    #   /Users/joetoth/homebrew/opt/python@3.8/libexec/bin
-#    # You can install Python packages with
-#    #   /Users/joetoth/homebrew/opt/python@3.8/bin/pip3 install <package>
-#    # They will install into the site-package directory
-#    #   /Users/joetoth/homebrew/lib/python3.8/site-packages
+    # Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
+    # `python3`, `python3-config`, `pip3` etc., respectively, have been installed into
+    #   /Users/joetoth/homebrew/opt/python@3.8/libexec/bin
+    # You can install Python packages with
+    #   /Users/joetoth/homebrew/opt/python@3.8/bin/pip3 install <package>
+    # They will install into the site-package directory
+    #   /Users/joetoth/homebrew/lib/python3.8/site-packages
  
-#    # See: https://docs.brew.sh/Homebrew-and-Python
+    # See: https://docs.brew.sh/Homebrew-and-Python
     
-#    # python@3.8 is keg-only, which means it was not symlinked into /Users/joetoth/homebrew,
-#    # because this is an alternate version of another formula.
+    # python@3.8 is keg-only, which means it was not symlinked into /Users/joetoth/homebrew,
+    # because this is an alternate version of another formula.
     
-#    # If you need to have python@3.8 first in your PATH run:
-#    # export PATH="$HOME/homebrew/opt/python@3.8/bin:$PATH"
+    # If you need to have python@3.8 first in your PATH run:
+    # export PATH="$HOME/homebrew/opt/python@3.8/bin:$PATH"
     
-#    # # For compilers to find python@3.8 you may need to set:
-#    # export LDFLAGS="-L$HOME/homebrew/opt/python@3.8/lib"
+    # # For compilers to find python@3.8 you may need to set:
+    # export LDFLAGS="-L$HOME/homebrew/opt/python@3.8/lib"
     
-#    # # For pkg-config to find python@3.8 you may need to set:
-#    # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
+    # # For pkg-config to find python@3.8 you may need to set:
+    # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
         
-#    # Paths for Homebrew
-#    export PATH=$HOME/homebrew/sbin:$HOME/homebrew/bin:$HOME/homebrew/opt:$PATH
-#    # :$PATH:$HOME/Library/Python/3.7/bin
-#    # export PATH=$PATH:$HOME/Library/Python/3.6/bin
-#    # export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
-#    # export PATH=$HOME/opt/nvim/bin:$PATH
-#    #export PATH="$HOME/homebrew/opt/bison/bin:$PATH"
-#    ## coreutils must be installed for gnu ls
-#    #export PATH="$HOME/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-#    #export CXXFLAGS="-I$HOME/homebrew/include, -I$HOME/homebrew/opt/llvm/include, -I$HOME/homebrew/opt/llvm/include/c++/v1"
-#    #export CFLAGS="$CXXFLAGS"
-#    #export LDFLAGS="-L$HOME/homebrew/opt/llvm/lib -Wl,-rpath,$HOME/homebrew/opt/llvm/lib"
-#    # export PATH="/usr/local/opt/llvm/bin:$PATH"
-#    # export LDFLAGS="-L/usr/local/opt/llvm/lib"
-#    # export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-#    # Vulkan
-#    # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
-#    # export PATH=$VULKAN_SDK/bin:$PATH
-#    # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
-#    # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
-#    # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
-#    # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
-#    # the file name.
-#    fortune
-#  ;;
-#  Linux)
-#    alias ls='ls --color'
-#    export CPATH="$HOME/opt/cuda-10.0/include:$HOME/opt/cuda-10.0/nvvm/include"
-#    export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
-#    export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
-#    export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
-#    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
-#    export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
-#    /usr/games/fortune
-#  ;;
-#  FreeBSD)
-#  ;;
-#esac
+    # Vulkan
+    # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    # export PATH=$VULKAN_SDK/bin:$PATH
+    # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
+    # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
+    # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
+    # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
+    # the file name.
+    fortune
+  ;;
+  Linux)
+    alias ls='ls --color'
+    export CPATH="$HOME/opt/cuda-10.0/include:$HOME/opt/cuda-10.0/nvvm/include"
+    export LD_LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
+    export LIBRARY_PATH="$HOME/opt/cuda-10.0/lib64:$HOME/opt/cuda-10.0/nvvm/lib64"
+    export PATH="$HOME/opt/cuda-10.0/bin:$PATH:$HOME/opt/cuda-10.0/nvvm/bin":$VULKAN_SDK/x86_64/bin
+    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
+    /usr/games/fortune
+  ;;
+  FreeBSD)
+  ;;
+esac
 
 
 export EDITOR='vi'
@@ -202,6 +189,17 @@ bindkey -r '\C-s'
 stty -ixon
 setopt noflowcontrol
 
+BASE16_THEME=tomorrow-night
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+ 
+#[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
+
+## The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+## The next line enables shell command completion for gcloud.
+if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 ## Z Style
 ## ------------------------------------------------------------------------------
@@ -732,16 +730,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ##}
 ##zle     -N   termjt-screen-widget
 ##bindkey '^S' 'termjt-screen-widget'
-BASE16_THEME=tomorrow-night
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
- 
-#[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
 
-## The next line updates PATH for the Google Cloud SDK.
-#if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-## The next line enables shell command completion for gcloud.
-#if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-#[[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
+[[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 

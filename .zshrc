@@ -3,6 +3,13 @@ export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
 autoload -U add-zsh-hook
 
+# gcert() {
+#  if [[ -n $TMUX ]]; then
+#        eval $(tmux show-environment -s)
+#  fi
+#  command gcert "$@"
+#}
+
 fixup_ssh_auth_sock() {
   if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
   then
@@ -18,10 +25,13 @@ then
   add-zsh-hook preexec fixup_ssh_auth_sock
 fi
 
+
+# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
-#source_if_exists $HOME/wdf/work.zsh
+source_if_exists $HOME/wdf/work.zsh
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -111,7 +121,6 @@ case `uname` in
     # # For pkg-config to find python@3.8 you may need to set:
     # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
         
-
     # Vulkan
     # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
     # export PATH=$VULKAN_SDK/bin:$PATH
@@ -131,8 +140,6 @@ case `uname` in
     export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
     export PATH="$VULKAN_SDK/x86_64/bin:$PATH"
     /usr/games/fortune
-  ;;
-  FreeBSD)
   ;;
 esac
 
@@ -348,7 +355,7 @@ alias zr='source $HOME/.zshrc'
 #alias lock='xscreensaver-command -lock'
 #alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
-alias cda='cd ~/projects/joetoth.com'
+alias cdm='cd ~/projects/joetoth.com'
 alias vpn='sudo openvpn --config $HOME/vpn/1.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.txt'
 alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'

@@ -1,4 +1,3 @@
-#!/bin/zsh
 export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
 autoload -U add-zsh-hook
@@ -435,13 +434,13 @@ h() {
 #alias hgo='hg outgoing'
 #alias hgp='hg push'
 #alias hgs='hg status'
-#alias hs='hg status'
 #alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n" '
 ## this is the 'git commit --amend' equivalent
 #alias hgca='hg qimport -r tip ; hg qrefresh -e ; hg qfinish tip'
 ## list unresolved files (since hg does not list unmerged files in the status command)
 #alias hgun='hg resolve --list'
 
+alias hs='hg status'
 alias u='hg uploadchain'
 alias ua='hg uploadall'
 

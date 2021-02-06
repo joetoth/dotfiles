@@ -919,6 +919,19 @@ source_if_exists $HOME/wdf/work.zsh
 
 # Battery
 # upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"
+#
+# Setup WIFI
+# ifconfig: Enable your wireless device.
+# iwlist: List the available wireless access points.
+# iwconfig: Configure your wireless connection.
+# dhclient: Get your IP Address via dhcp.
+# wpa_supplicant: For use with WPA authentication.
+#
+#  ifconfig wlan0 up
+#  ifconfig wlan0 scan
+#  iwconfig wlan0 essid NETWORK_NAME key WIRELESS_KEY
+#  dhclient wlan0
+#
 # Wireless commands
 # iw dev
 # ip link set wlan0 up  
@@ -976,3 +989,4 @@ BASE16_SHELL=$HOME/.config/base16-shell/
  
 [[ -e ~/mdproxy/mdproxy_zshrc ]] && source ~/mdproxy/mdproxy_zshrc # MDPROXY-ZSHRC
 [ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
+if [ -e /home/joetoth/.nix-profile/etc/profile.d/nix.sh ]; then . /home/joetoth/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -12,18 +12,19 @@ def save_history(history_path=history_path):
   import readline
   readline.write_history_file(history_path)
 
+print('history_path:', history_path)
 if os.path.exists(history_path):
   readline.read_history_file(history_path)
 
 atexit.register(save_history)
 del atexit, readline, rlcompleter, save_history, history_path
 
-
 try:
   import sys
-  print('adding thrifpy to path')
-  print(sys.path)
-  sys.path.insert(0,'/opt/clion-beta/plugins/python-ce/helpers/third_party/thriftpy')
+  print('adding thrifpy to sys.path', sys.path)
+  path = '/opt/clion-beta/plugins/python-ce/helpers/third_party/thriftpy'
+  print('thrifpy path', path)
+  sys.path.insert(0, path)
   from _shaded_thriftpy.server import TServer
 except Exception as e:
   print(e)
@@ -60,9 +61,12 @@ if ipython:
   ipython.magic("load_ext autoreload")
   ipython.magic("autoreload 2")
   print("autoreload enabled")
-  ipython.magic("load_ext ipython_autoimport")
   # pip install ipython_autotimport
-  print("ipython_autoimport enabled")
+  try:
+    ipython.magic("load_ext ipython_autoimport")
+    print("ipython_autoimport enabled")
+  except Exception as e:
+    print(e)
 
 
-print('PYTHONSTARTUP LOADED', __file__)
+print('PYTHONSTARTUP LOADED', sys.argv[0])

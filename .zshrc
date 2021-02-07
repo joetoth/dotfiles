@@ -142,10 +142,6 @@ case `uname` in
   ;;
 esac
 
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$HOME/opt/maven/bin:$HOME/opt/google-cloud-sdk/bin
-export PATH=$PATH:$MY_PYTHON_BIN
-
 export EDITOR='vi'
 export VISUAL='vi'
 export BROWSER='google-chrome'

@@ -30,7 +30,7 @@ fi
 source_if_exists() {
   [[ -s $1 ]] && source $1
 }
-source_if_exists $HOME/wdf/work.zsh
+source_if_exists "$HOME/wdf/work.zsh"
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -71,8 +71,8 @@ fpath[1,0]=~/.zsh/completion/
 fpath=(~/homebrew/share/zsh-completions $fpath)
 
 # Easy Motion in insert and visual mode
-bindkey -M vicmd "^X" zce
-bindkey "^X" zce
+bindkey -M vicmd "^Q" zce
+bindkey "^Q" zce
 
 export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
 

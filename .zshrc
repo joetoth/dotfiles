@@ -1,13 +1,17 @@
- export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
+# export SSH_AUTH_SOCK="${HOME}/.ssh/ssh-agent.socket"
+export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
-# autoload -U add-zsh-hook
-
+autoload -U add-zsh-hook
 gcert() {
   if [[ -n $TMUX ]]; then
-        eval $(tmux show-environment -s)
+    eval $(tmux show-environment -s)
   fi
+
   command gcert "$@"
 }
+
+# Fix SSH_AUTH_SOCK
+# This script sets the current value of $SSH_AUTH_SOCK, or looks for the most recent socket file in /tmp/ssh-*/agent.*
 
 # fixup_ssh_auth_sock() {
 #   if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
@@ -15,7 +19,9 @@ gcert() {
 #     local new_sock=$(echo /tmp/ssh-*/agent.*(=UNomY1))
 #      if [[ -n ${new_sock} ]]
 #      then
-#        export SSH_AUTH_SOCK=${new_sock}
+#        echo "new sock"
+#        ln -s ${new_sock} ${SSH_AUTH_SOCK} 
+#        # export SSH_AUTH_SOCK=${new_sock}
 #      fi
 #   fi
 # }
@@ -23,43 +29,56 @@ gcert() {
 # then
 #   add-zsh-hook preexec fixup_ssh_auth_sock
 # fi
+# echo $SSH_AUTH_SOCK
+# echo $SSH_AUTH_SOCK
 
-typeset ssh_environment
+# typeset ssh_environment
 
-function start_ssh_agent() {
-       local lifetime
-       local -a identities
+# function start_ssh_agent() {
+#        local lifetime
+#        local -a identities
 
-       zstyle -s :plugins:ssh-agent lifetime lifetime
+#        zstyle -s :plugins:ssh-agent lifetime lifetime
 
-       ssh-agent -s ${lifetime:+-t} ${lifetime} | sed 's/^echo/#echo/' >! $ssh_environment
-       chmod 600 $ssh_environment
-       source $ssh_environment > /dev/null
+#        ssh-agent -s ${lifetime:+-t} ${lifetime} | sed 's/^echo/#echo/' >! $ssh_environment
+#        chmod 600 $ssh_environment
+#        source $ssh_environment > /dev/null
 
-       zstyle -a :plugins:ssh-agent identities identities
+#        zstyle -a :plugins:ssh-agent identities identities
 
-       echo starting ssh-agent...
-       ssh-add $HOME/.ssh/${^identities}
-}
+#        echo starting ssh-agent...
+#        ssh-add $HOME/.ssh/${^identities}
+# }
 
-ssh_environment="$HOME/.ssh/environment-$HOST"
+# ssh_environment="$HOME/.ssh/environment-$HOST"
 
-if [[ -f "$ssh_environment" ]]; then
-       source $ssh_environment > /dev/null
-       ps x | grep ssh-agent | grep -q $SSH_AGENT_PID || {
-               start_ssh_agent
-       }
-else
-       start_ssh_agent
-fi
+# if [[ -f "$ssh_environment" ]]; then
+#        source $ssh_environment > /dev/null
+#        ps x | grep ssh-agent | grep -q $SSH_AGENT_PID || {
+#                start_ssh_agent
+#        }
+# else
+#        start_ssh_agent
+# fi
 
-unset ssh_environment
-unfunction start_ssh_agent
+# unset ssh_environment
+# unfunction start_ssh_agent
 
 
-# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
-export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
+# echo $SSH_AUTH_SOCK
+# echo $SSH_AUTH_SOCK
 
+
+  # # setsid runs the following heredoc in the background so this bash
+  # # function returns immediately now without blocking on prodfs startup.
+  # setsid bash <<EOF
+# while [[ ! -f /google/bin/users/catalinp/prodfs/prodfs.sh ]]; do
+  # sleep .1  # BinFS takes a while to be ready (b/141844990).
+# done
+# /google/bin/users/catalinp/prodfs/prodfs.sh start > /dev/null
+# EOF
+
+echo $SSH_AUTH_SOCK
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -83,6 +102,12 @@ zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
+#
+# Restart ssh-agent on linux per-user.
+# killall ssh-agent; eval `ssh-agent`
+# OSX
+# sudo launchctl stop com.openssh.sshd
+# sudo launchctl start com.openssh.sshd
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

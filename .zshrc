@@ -1,13 +1,13 @@
-export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
+ export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
-autoload -U add-zsh-hook
+# autoload -U add-zsh-hook
 
-# gcert() {
-#  if [[ -n $TMUX ]]; then
-#        eval $(tmux show-environment -s)
-#  fi
-#  command gcert "$@"
-#}
+gcert() {
+  if [[ -n $TMUX ]]; then
+        eval $(tmux show-environment -s)
+  fi
+  command gcert "$@"
+}
 
 # fixup_ssh_auth_sock() {
 #   if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
@@ -27,30 +27,30 @@ autoload -U add-zsh-hook
 typeset ssh_environment
 
 function start_ssh_agent() {
-	local lifetime
-	local -a identities
+       local lifetime
+       local -a identities
 
-	zstyle -s :plugins:ssh-agent lifetime lifetime
+       zstyle -s :plugins:ssh-agent lifetime lifetime
 
-	ssh-agent -s ${lifetime:+-t} ${lifetime} | sed 's/^echo/#echo/' >! $ssh_environment
-	chmod 600 $ssh_environment
-	source $ssh_environment > /dev/null
+       ssh-agent -s ${lifetime:+-t} ${lifetime} | sed 's/^echo/#echo/' >! $ssh_environment
+       chmod 600 $ssh_environment
+       source $ssh_environment > /dev/null
 
-	zstyle -a :plugins:ssh-agent identities identities
+       zstyle -a :plugins:ssh-agent identities identities
 
-	echo starting ssh-agent...
-	ssh-add $HOME/.ssh/${^identities}
+       echo starting ssh-agent...
+       ssh-add $HOME/.ssh/${^identities}
 }
 
 ssh_environment="$HOME/.ssh/environment-$HOST"
 
 if [[ -f "$ssh_environment" ]]; then
-	source $ssh_environment > /dev/null
-	ps x | grep ssh-agent | grep -q $SSH_AGENT_PID || {
-		start_ssh_agent
-	}
+       source $ssh_environment > /dev/null
+       ps x | grep ssh-agent | grep -q $SSH_AGENT_PID || {
+               start_ssh_agent
+       }
 else
-	start_ssh_agent
+       start_ssh_agent
 fi
 
 unset ssh_environment
@@ -58,11 +58,8 @@ unfunction start_ssh_agent
 
 
 # export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
-source_if_exists() {
-  [[ -s $1 ]] && source $1
-}
-source_if_exists "$HOME/wdf/work.zsh"
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -86,8 +83,6 @@ zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
-# starts ssh-agent and sets SSH_AUTH_SOCK
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -113,6 +108,7 @@ export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/
 ## export PATH=$PATH:$ANDROID_HOME/platform-tools
 ## export PATH=$PATH:$ANDROID_HOME/tools
 ## export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
+
 
 case `uname` in
   Darwin)
@@ -335,6 +331,8 @@ RPROMPT='$(check_last_exit_code)'
 #alias cpg='rsync --progress -rltDvu --modify-window=1'
 #alias reset-keyboard='setxkbmap -model pc104 -layout us'
 #alias xo='xdg-open'
+alias cda='cd ~/projects/a'
+alias cdd='cd ~/projects/dotfiles'
 alias psa="ps aux"
 #alias psg="ps aux | grep "
 #alias alsg="alias | grep "
@@ -402,6 +400,16 @@ alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 ## OPAM configuration
 #source_if_exists $HOME/.opam/opam-init/init.zsh
 #source_if_exists $HOME/bazel.zsh
+#
+#
+# ln() {
+#   echo $1
+#   if [[ -s $1 ]]; then
+#     ln -f $1 $2
+#   else
+#     ln -f $2 $1
+#   fi
+# }
 
 tb() {
   tensorboard --logdir "$@"
@@ -771,3 +779,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 [[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 
+[[ -e $HOME/wdf/work.zsh ]] && source $HOME/wdf/work.zsh

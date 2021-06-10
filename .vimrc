@@ -290,6 +290,7 @@ set hlsearch
 set mouse=a
 
 " scrolling settings
+set scroll=10
 set scrolloff=10
 set sidescrolloff=10
 

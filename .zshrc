@@ -1,14 +1,20 @@
-# export SSH_AUTH_SOCK="${HOME}/.ssh/ssh-agent.socket"
 export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
 
-autoload -U add-zsh-hook
-gcert() {
-  if [[ -n $TMUX ]]; then
-    eval $(tmux show-environment -s)
-  fi
+# Set keymap to vim
+bindkey -v
 
-  command gcert "$@"
-}
+
+#autoload -U add-zsh-hook
+#gcert() {
+#  if [[ -n $TMUX ]]; then
+#    eval $(tmux show-environment -s)
+#  fi
+#
+#  command gcert "$@"
+#}
+
+# Fix SSH_AUTH_SOCK
+# This script sets the current value of $SSH_AUTH_SOCK, or looks for the most recent socket file in /tmp/ssh-*/agent.*
 
 # Fix SSH_AUTH_SOCK
 # This script sets the current value of $SSH_AUTH_SOCK, or looks for the most recent socket file in /tmp/ssh-*/agent.*
@@ -145,8 +151,7 @@ case `uname` in
     export PATH=$HOMEBREW/bin:$PATH
     export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
     export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
-    export C_INCLUDE_PATH=$HOMEBREW/include
-    export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+    export CPATH=$HOMEBREW/include
 
     # Python has been installed as
     #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
@@ -174,11 +179,11 @@ case `uname` in
     # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
         
     # Vulkan
-    # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
-    # export PATH=$VULKAN_SDK/bin:$PATH
-    # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
-    # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
-    # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
+    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    export PATH=$VULKAN_SDK/bin:$PATH
+    export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
+    export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
+    export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
     # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
     # the file name.
     fortune
@@ -209,8 +214,7 @@ export PYTHONSTARTUP="$HOME/bin/python/startup.py"
 #------------------------------------------------------------------------------
 # VIM
 KEYTIMEOUT=10
-bindkey -v
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd '\C-v' edit-command-line
 autoload edit-command-line; zle -N edit-command-line
 autoload -U run-help
 autoload -U up-line-or-beginning-search
@@ -255,10 +259,10 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 #[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
 
 ## The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/opt/google-cloud-sdk/path.zsh.inc'; fi
 
 ## The next line enables shell command completion for gcloud.
-if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/joetoth/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/opt/google-cloud-sdk/completion.zsh.inc'; fi
 
 ## Z Style
 ## ------------------------------------------------------------------------------
@@ -461,14 +465,14 @@ g() {
 
 
 alias gac='git commit -a -m'
-#alias gco='git checkout'
-#alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
-#alias gn='git diff --name-only --relative | uniq'
-#alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
-#alias grc='git add -A && git rebase --continue'
-#alias gaa='git add -A'
-#alias gs='git stash'
-#alias gsp='git stash pop'
+alias gco='git checkout'
+alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
+alias gn='git diff --name-only --relative | uniq'
+alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
+alias grc='git add -A && git rebase --continue'
+alias gaa='git add -A'
+alias gs='git stash'
+alias gsp='git stash pop'
 
 
 ## Mercurial
@@ -805,3 +809,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 
 [[ -e $HOME/wdf/work.zsh ]] && source $HOME/wdf/work.zsh
+export PATH="/Users/joetoth/homebrew/opt/python@3.8/bin:$PATH"

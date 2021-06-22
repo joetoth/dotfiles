@@ -1,4 +1,4 @@
-export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
+export PATH=/usr/local/bin:$PATH
 
 # Set keymap to vim
 bindkey -v
@@ -132,7 +132,8 @@ fpath=(~/homebrew/share/zsh-completions $fpath)
 bindkey -M vicmd "^Q" zce
 bindkey "^Q" zce
 
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin:$HOME/projects/depot_tools
+
 
 ## Android
 ## export ANDROID_HOME=$HOME/opt/android-sdk-linux
@@ -806,7 +807,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ##zle     -N   termjt-screen-widget
 ##bindkey '^S' 'termjt-screen-widget'
 
-[[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 
 [[ -e $HOME/wdf/work.zsh ]] && source $HOME/wdf/work.zsh
 export PATH="/Users/joetoth/homebrew/opt/python@3.8/bin:$PATH"
+[[ -e "/Users/joetoth/mdproxy/data/mdproxy_zshrc" ]] && source "/Users/joetoth/mdproxy/data/mdproxy_zshrc" # MDPROXY-ZSHRC

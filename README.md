@@ -1,6 +1,10 @@
 # dotfiles
 git clone --recursive https://github.com/joetoth/dotfiles.git
 
+sudo apt install stow
+
+rm $HOME/.bashrc $HOME/.vimrc $HOME/.zshrc
+
 stow dotfiles/
 
 base16 tomorrow-night

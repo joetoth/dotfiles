@@ -1,36 +1,90 @@
-export PATH=/usr/local/bin:$PATH:$HOME/mdproxy
+export PATH=/usr/local/bin:$PATH
 
-autoload -U add-zsh-hook
+# Set keymap to vim
+bindkey -v
 
-# gcert() {
+
+#autoload -U add-zsh-hook
+#gcert() {
 #  if [[ -n $TMUX ]]; then
-#        eval $(tmux show-environment -s)
+#    eval $(tmux show-environment -s)
 #  fi
+#
 #  command gcert "$@"
 #}
 
-fixup_ssh_auth_sock() {
-  if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
-  then
-    local new_sock=$(echo /tmp/ssh-*/agent.*(=UNomY1))
-     if [[ -n ${new_sock} ]]
-     then
-       export SSH_AUTH_SOCK=${new_sock}
-     fi
-  fi
-}
-if [[ -n ${SSH_AUTH_SOCK} ]]
-then
-  add-zsh-hook preexec fixup_ssh_auth_sock
-fi
+# Fix SSH_AUTH_SOCK
+# This script sets the current value of $SSH_AUTH_SOCK, or looks for the most recent socket file in /tmp/ssh-*/agent.*
+
+# Fix SSH_AUTH_SOCK
+# This script sets the current value of $SSH_AUTH_SOCK, or looks for the most recent socket file in /tmp/ssh-*/agent.*
+
+# fixup_ssh_auth_sock() {
+#   if [[ -n ${SSH_AUTH_SOCK} && ! -e ${SSH_AUTH_SOCK} ]]
+#   then
+#     local new_sock=$(echo /tmp/ssh-*/agent.*(=UNomY1))
+#      if [[ -n ${new_sock} ]]
+#      then
+#        echo "new sock"
+#        ln -s ${new_sock} ${SSH_AUTH_SOCK} 
+#        # export SSH_AUTH_SOCK=${new_sock}
+#      fi
+#   fi
+# }
+# if [[ -n ${SSH_AUTH_SOCK} ]]
+# then
+#   add-zsh-hook preexec fixup_ssh_auth_sock
+# fi
+# echo $SSH_AUTH_SOCK
+# echo $SSH_AUTH_SOCK
+
+# typeset ssh_environment
+
+# function start_ssh_agent() {
+#        local lifetime
+#        local -a identities
+
+#        zstyle -s :plugins:ssh-agent lifetime lifetime
+
+#        ssh-agent -s ${lifetime:+-t} ${lifetime} | sed 's/^echo/#echo/' >! $ssh_environment
+#        chmod 600 $ssh_environment
+#        source $ssh_environment > /dev/null
+
+#        zstyle -a :plugins:ssh-agent identities identities
+
+#        echo starting ssh-agent...
+#        ssh-add $HOME/.ssh/${^identities}
+# }
+
+# ssh_environment="$HOME/.ssh/environment-$HOST"
+
+# if [[ -f "$ssh_environment" ]]; then
+#        source $ssh_environment > /dev/null
+#        ps x | grep ssh-agent | grep -q $SSH_AGENT_PID || {
+#                start_ssh_agent
+#        }
+# else
+#        start_ssh_agent
+# fi
+
+# unset ssh_environment
+# unfunction start_ssh_agent
 
 
-# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+# echo $SSH_AUTH_SOCK
+# echo $SSH_AUTH_SOCK
 
-source_if_exists() {
-  [[ -s $1 ]] && source $1
-}
-source_if_exists $HOME/wdf/work.zsh
+
+  # # setsid runs the following heredoc in the background so this bash
+  # # function returns immediately now without blocking on prodfs startup.
+  # setsid bash <<EOF
+# while [[ ! -f /google/bin/users/catalinp/prodfs/prodfs.sh ]]; do
+  # sleep .1  # BinFS takes a while to be ready (b/141844990).
+# done
+# /google/bin/users/catalinp/prodfs/prodfs.sh start > /dev/null
+# EOF
+
+echo $SSH_AUTH_SOCK
 
 # For work since zplug doesn't like the git version name
 export PATH=/usr/git:$PATH
@@ -54,8 +108,12 @@ zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-completions"
 zplug "so-fancy/diff-so-fancy", as:command
-# starts ssh-agent and sets SSH_AUTH_SOCK
-#zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+#
+# Restart ssh-agent on linux per-user.
+# killall ssh-agent; eval `ssh-agent`
+# OSX
+# sudo launchctl stop com.openssh.sshd
+# sudo launchctl start com.openssh.sshd
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -71,16 +129,18 @@ fpath[1,0]=~/.zsh/completion/
 fpath=(~/homebrew/share/zsh-completions $fpath)
 
 # Easy Motion in insert and visual mode
-bindkey -M vicmd "^X" zce
-bindkey "^X" zce
+bindkey -M vicmd "^Q" zce
+bindkey "^Q" zce
 
-export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin
+export PATH=/usr/local/bin:$PATH:$GOROOT/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/bin:$HOME/opt/go/bin:$HOME/.cargo/bin:$HOME/opt/flutter/bin:$HOME/projects/depot_tools
+
 
 ## Android
 ## export ANDROID_HOME=$HOME/opt/android-sdk-linux
 ## export PATH=$PATH:$ANDROID_HOME/platform-tools
 ## export PATH=$PATH:$ANDROID_HOME/tools
 ## export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3
+
 
 case `uname` in
   Darwin)
@@ -92,8 +152,7 @@ case `uname` in
     export PATH=$HOMEBREW/bin:$PATH
     export LIBRARY_PATH=$HOMEBREW/lib:$LIBRARY_PATH
     export DYLD_FALLBACK_LIBRARY_PATH=$HOMEBREW/lib
-    export C_INCLUDE_PATH=$HOMEBREW/include
-    export CPLUS_INCLUDE_PATH=$HOMEBREW/include
+    export CPATH=$HOMEBREW/include
 
     # Python has been installed as
     #   /Users/joetoth/homebrew/opt/python@3.8/bin/python3
@@ -121,11 +180,11 @@ case `uname` in
     # export PKG_CONFIG_PATH="$HOME/homebrew/opt/python@3.8/lib/pkgconfig"
         
     # Vulkan
-    # export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
-    # export PATH=$VULKAN_SDK/bin:$PATH
-    # export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
-    # export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
-    # export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
+    export VULKAN_SDK=$HOME/opt/vulkansdk/macOS
+    export PATH=$VULKAN_SDK/bin:$PATH
+    export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib
+    export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
+    export VK_ICD_FILENAMES=$VULKAN_SDK/Applications/vulkaninfo.app/Contents/Resources/vulkan/icd.d/MoltenVK_icd.json
     # Instead cp this file to /etc/vulkan/icd.d/ and edit to remove the leading path and just have
     # the file name.
     fortune
@@ -155,8 +214,7 @@ export PYTHONSTARTUP="$HOME/bin/python/startup.py"
 #------------------------------------------------------------------------------
 # VIM
 KEYTIMEOUT=10
-bindkey -v
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd '\C-v' edit-command-line
 autoload edit-command-line; zle -N edit-command-line
 autoload -U run-help
 autoload -U up-line-or-beginning-search
@@ -201,10 +259,10 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 #[ -f "/Users/joetoth/.ghcup/env" ] && source "/Users/joetoth/.ghcup/env" # ghcup-env
 
 ## The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/joetoth/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/joetoth/opt/google-cloud-sdk/path.zsh.inc'; fi
 
 ## The next line enables shell command completion for gcloud.
-if [ -f '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/joetoth/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/joetoth/opt/google-cloud-sdk/completion.zsh.inc'; fi
 
 ## Z Style
 ## ------------------------------------------------------------------------------
@@ -302,6 +360,8 @@ RPROMPT='$(check_last_exit_code)'
 #alias cpg='rsync --progress -rltDvu --modify-window=1'
 alias reset-keyboard='setxkbmap -model pc104 -layout us'
 #alias xo='xdg-open'
+alias cda='cd ~/projects/a'
+alias cdd='cd ~/projects/dotfiles'
 alias psa="ps aux"
 #alias psg="ps aux | grep "
 #alias alsg="alias | grep "
@@ -369,6 +429,16 @@ alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 ## OPAM configuration
 #source_if_exists $HOME/.opam/opam-init/init.zsh
 #source_if_exists $HOME/bazel.zsh
+#
+#
+# ln() {
+#   echo $1
+#   if [[ -s $1 ]]; then
+#     ln -f $1 $2
+#   else
+#     ln -f $2 $1
+#   fi
+# }
 
 tb() {
   tensorboard --logdir "$@"
@@ -395,14 +465,14 @@ g() {
 
 
 alias gac='git commit -a -m'
-#alias gco='git checkout'
-#alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
-#alias gn='git diff --name-only --relative | uniq'
-#alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
-#alias grc='git add -A && git rebase --continue'
-#alias gaa='git add -A'
-#alias gs='git stash'
-#alias gsp='git stash pop'
+alias gco='git checkout'
+alias git-magic-rebase='git rebase --onto work $(git5 status --base) $(git rev-parse --abbrev-ref HEAD)'
+alias gn='git diff --name-only --relative | uniq'
+alias glg="git log --graph --decorate --all --pretty='$git_log_defaults'"
+alias grc='git add -A && git rebase --continue'
+alias gaa='git add -A'
+alias gs='git stash'
+alias gsp='git stash pop'
 
 
 ## Mercurial
@@ -736,5 +806,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 ##zle     -N   termjt-screen-widget
 ##bindkey '^S' 'termjt-screen-widget'
 
-[[ -e /Users/joetoth/mdproxy/data/mdproxy_zshrc ]] && source /Users/joetoth/mdproxy/data/mdproxy_zshrc # MDPROXY-ZSHRC
 
+[[ -e $HOME/wdf/work.zsh ]] && source $HOME/wdf/work.zsh
+export PATH="/Users/joetoth/homebrew/opt/python@3.8/bin:$PATH"
+[[ -e "/Users/joetoth/mdproxy/data/mdproxy_zshrc" ]] && source "/Users/joetoth/mdproxy/data/mdproxy_zshrc" # MDPROXY-ZSHRC

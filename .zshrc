@@ -300,7 +300,7 @@ RPROMPT='$(check_last_exit_code)'
 ## ------------------------------------------------------------------------------
 #alias n='vi ~/projects/joetoth.com/content/_researching/_notes.md'
 #alias cpg='rsync --progress -rltDvu --modify-window=1'
-#alias reset-keyboard='setxkbmap -model pc104 -layout us'
+alias reset-keyboard='setxkbmap -model pc104 -layout us'
 #alias xo='xdg-open'
 alias psa="ps aux"
 #alias psg="ps aux | grep "
@@ -354,9 +354,9 @@ alias zr='source $HOME/.zshrc'
 #alias battery='upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage"'
 alias cdp='cd ~/projects'
 alias cdm='cd ~/projects/joetoth.com'
-alias vpn='sudo openvpn --config $HOME/vpn/1.ovpn --auth-user-pass $HOME/ovpn.txt'
-alias vpn2='sudo openvpn --config $HOME/vpn/2.ovpn --auth-user-pass $HOME/ovpn.txt'
-alias vpn3='sudo openvpn --config $HOME/vpn/3.ovpn --auth-user-pass $HOME/ovpn.txt'
+alias vpn_udp='sudo openvpn --config $HOME/vpn/udp.ovpn --auth-user-pass $HOME/ovpn.txt'
+alias vpn_tcp='sudo openvpn --config $HOME/vpn/tcp.ovpn --auth-user-pass $HOME/ovpn.txt'
+alias vpn='vpn_udp'
 alias large_files_in_home='find ~/ -xdev -type f -size +100M'
 
 ## FUNCTIONS
@@ -463,11 +463,11 @@ alias ua='hg uploadall'
 #  xrandr --auto --output eDP1 --right-of HDMI2
 #}
 
-#function atmobile() {
-#  reset-keyboard
-#  cp ~/.Xmodmap-lenovo ~/.Xmodmap
-#  xmodmap ~/.Xmodmap
-#}
+function atmobile() {
+  reset-keyboard
+  cp ~/.Xmodmap-lenovo ~/.Xmodmap
+  xmodmap ~/.Xmodmap
+}
 
 #function atworkmobile() {
 #  reset-keyboard

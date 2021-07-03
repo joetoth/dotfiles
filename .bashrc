@@ -715,3 +715,4 @@
 #
 ## added by Miniconda3 installer
 #export PATH="/home/joetoth/miniconda3/bin:$PATH"
+. "$HOME/.cargo/env"

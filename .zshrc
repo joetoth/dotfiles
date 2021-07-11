@@ -661,13 +661,17 @@ function atmobile() {
 #  fi
 #}
 
-#fport() {
-#  pid=$(lsof -P | fzf -e | awk '{print $2}')
-#  if [ "x$pid" != "x" ]
-#  then
-#    kill -${1:-9} $pid
-#  fi
-#}
+wport() {
+  pid=$(lsof -P | fzf -e)
+}
+
+fport() {
+  pid=$(lsof -P | fzf -e | awk '{print $2}')
+  if [ "x$pid" != "x" ]
+  then
+    kill -${1:-9} $pid
+  fi
+}
 
 
 #alias enc_dir='tar -czf - * | openssl enc -e -pbkdf2 -out'

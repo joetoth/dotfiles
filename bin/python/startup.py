@@ -1,23 +1,26 @@
 import os
 from os.path import expanduser
 
+try:
 # Add auto-completion and store history file of Python interpreter commands.
-import atexit
-import readline
-import rlcompleter
-
-history_path = os.path.expanduser("~/.pyhistory")
-
-def save_history(history_path=history_path):
+  import atexit
   import readline
-  readline.write_history_file(history_path)
-
-print('history_path:', history_path)
-if os.path.exists(history_path):
-  readline.read_history_file(history_path)
-
-atexit.register(save_history)
-del atexit, readline, rlcompleter, save_history, history_path
+  import rlcompleter
+  
+  history_path = os.path.expanduser("~/.pyhistory")
+  
+  def save_history(history_path=history_path):
+    import readline
+    readline.write_history_file(history_path)
+  
+  print('history_path:', history_path)
+  if os.path.exists(history_path):
+    readline.read_history_file(history_path)
+  
+  atexit.register(save_history)
+  del atexit, readline, rlcompleter, save_history, history_path
+except Exception as e:
+  print(e)
 
 try:
   import sys
